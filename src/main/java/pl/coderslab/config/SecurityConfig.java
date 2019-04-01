@@ -19,10 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/admin").authenticated()
-//                .antMatchers("/user").hasRole("USER")
-//---------- logowanie przez formularz (bez "login page będzie wygenerowany):----------------------------------------
+                .antMatchers("/user/**").hasRole("USER")
+                .anyRequest().permitAll()
                 .and().formLogin()/*.loginPage("/login")*/
-//                bez "logoutSuccessUrl" domyślny adres to "/login?logout"
                 .and().logout().logoutSuccessUrl("/")
                 .permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");

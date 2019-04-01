@@ -1,6 +1,8 @@
 package pl.coderslab.model;
 
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,7 +14,8 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    @Email
+    private String email;
 
     private String password;
 
@@ -31,12 +34,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
