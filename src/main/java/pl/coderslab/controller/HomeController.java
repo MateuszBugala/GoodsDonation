@@ -21,22 +21,8 @@ public class HomeController {
 
     @RequestMapping("/")
     public String home() {
-        return "home";
+        return "index";
     }
-
-    @GetMapping("/admin")
-    @ResponseBody
-    public String admin() {
-        return "admin";
-    }
-
-
-//    @Secured("ROLE_USER")
-    @GetMapping("/user")
-    public String user() {
-        return "home";
-    }
-
 
 //  create test users:
     @GetMapping("/create-user")

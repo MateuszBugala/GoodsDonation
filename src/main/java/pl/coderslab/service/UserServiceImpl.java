@@ -1,6 +1,7 @@
 package pl.coderslab.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.coderslab.model.Role;
@@ -10,6 +11,7 @@ import pl.coderslab.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -49,5 +51,18 @@ public class UserServiceImpl implements UserService {
         Role userRole = roleRepository.findByName("ROLE_ADMIN");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
+    }
+
+
+    public User authorization(String emailCandidate, String passwordCandidate) {
+        List<User> userList = userRepository.findAll();
+        for (User user : userList) {
+            if (emailCandidate.equals(user.getEmail())) {
+                if (passwordEncoder.matches(user.getPassword(), passwordCandidate)) {
+                    return user;
+                }
+            }
+        }
+        return null;
     }
 }
