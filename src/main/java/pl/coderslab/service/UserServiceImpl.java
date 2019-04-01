@@ -65,4 +65,22 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User findById(Long id) {
+        return userRepository.findOne(id);
+    }
+
+    public void update(User entity) {
+        String pass = findById(entity.getId()).getPassword();
+        entity.setPasswordNoEncryption(pass);
+        userRepository.save(entity);
+    }
+
+    public void delete(Long id) {
+        userRepository.delete(id);
+    }
 }

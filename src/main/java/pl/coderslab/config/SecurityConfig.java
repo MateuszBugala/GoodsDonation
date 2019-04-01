@@ -18,11 +18,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/admin").authenticated()
-                .antMatchers("/user/**").hasRole("USER")
-                .anyRequest().permitAll()
+                .antMatchers("/users/**").authenticated()
+                .antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+//                .anyRequest().permitAll()
                 .and().formLogin()/*.loginPage("/login")*/
-                .and().logout().logoutSuccessUrl("/")
+                .and().logout()/*.logoutSuccessUrl("/")*/
                 .permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
     }

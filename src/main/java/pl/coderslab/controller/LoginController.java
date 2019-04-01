@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping(path = "/login", produces = "text/html; charset=UTF-8")
-@SessionAttributes({"currentUser", "currentUserGroup"})
+@SessionAttributes({"currentUser"})
 public class LoginController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class LoginController {
     @PostMapping("/")
     public String authorize(@Valid User user, @RequestParam String password, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "login/login";
+            return "login";
         }
         String emailCandidate = user.getEmail();
         String passwordCandidate = password;
@@ -41,7 +41,8 @@ public class LoginController {
         } else {
             return "redirect:/login?error=true";
         }
-
     }
+
+
 
 }
