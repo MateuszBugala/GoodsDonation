@@ -5,7 +5,7 @@
 </head>
 <body>
 
-Sorry, nie masz dostępu...
+Niestety nie masz dostępu...
 
 </body>
 </html>

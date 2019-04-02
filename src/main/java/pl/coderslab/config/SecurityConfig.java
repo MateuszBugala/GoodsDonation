@@ -11,7 +11,7 @@ import pl.coderslab.service.SpringDataUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true) /*umożliwia uprawnienia za pomocą adnotacji na poziomie metod/akcji kontrolera*/
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -20,8 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/users/**").authenticated()
                 .antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
-//                .anyRequest().permitAll()
-                .and().formLogin()/*.loginPage("/login")*/
+                .anyRequest().permitAll()
+                .and().formLogin().loginPage("/login")
                 .and().logout()/*.logoutSuccessUrl("/")*/
                 .permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
