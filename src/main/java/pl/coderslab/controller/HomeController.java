@@ -44,19 +44,25 @@ public class HomeController {
         User user = new User();
         user.setEmail("user@user.com");
         user.setPassword("1");
+        user.setName("User1");
         userService.saveUser(user);
-        return "user created";
+        User user2 = new User();
+        user2.setEmail("admin@admin.com");
+        user2.setPassword("1");
+        user2.setName("Admin1");
+        userServiceImpl.saveAdmin(user2);
+        return "users created";
     }
 
-    @GetMapping("/create-admin")
-    @ResponseBody
-    public String createAdmin() {
-        User user = new User();
-        user.setEmail("admin@admin.com");
-        user.setPassword("1");
-        userServiceImpl.saveAdmin(user);
-        return "admin created";
-    }
+//    @GetMapping("/create-admin")
+//    @ResponseBody
+//    public String createAdmin() {
+//        User user = new User();
+//        user.setEmail("admin@admin.com");
+//        user.setPassword("1");
+//        userServiceImpl.saveAdmin(user);
+//        return "admin created";
+//    }
 
 
 }
