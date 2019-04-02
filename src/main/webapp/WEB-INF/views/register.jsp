@@ -14,13 +14,19 @@
     <table>
         <tr>
             <td>Email:</td>
-            <td><form:input path="email" cssStyle="width: 230px"/><br></td>
+            <td><form:input type="email" path="email" cssStyle="width: 230px"/><br></td>
             <td><form:errors path="email" cssClass="error-message" element="div"/></td>
         </tr>
 
         <tr>
+            <td>Imię:</td>
+            <td><form:input path="name" cssStyle="width: 230px"/><br></td>
+            <td><form:errors path="name" cssClass="error-message" element="div"/></td>
+        </tr>
+
+        <tr>
             <td>Hasło:</td>
-            <td><form:input path="password" cssStyle="width: 230px"/><br></td>
+            <td><form:input type="password" path="password" cssStyle="width: 230px"/><br></td>
             <td><form:errors path="password" cssClass="error-message" element="div"/></td>
         </tr>
     </table>
