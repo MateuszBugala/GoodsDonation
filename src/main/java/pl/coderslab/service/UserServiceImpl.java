@@ -23,14 +23,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-//    pytanie dlaczego ten konstruktor; czemu nie @Autowired powyżej?
-//    public UserServiceImpl(UserRepository userRepository,
-//                           RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//        this.userRepository = userRepository;
-//        this.roleRepository = roleRepository;
-//    }
-
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);

@@ -2,9 +2,7 @@ package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,7 +11,6 @@ import pl.coderslab.service.CurrentUser;
 import pl.coderslab.service.UserService;
 import pl.coderslab.service.UserServiceImpl;
 
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(path = "/", produces = "text/html; charset=UTF-8")
@@ -39,14 +36,6 @@ public class HomeController {
     public String dashboard() {
         return "app/dashboard";
     }
-
-    @RequestMapping("/logout")
-    public String logout() {
-        SecurityContextHolder.clearContext();
-//        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
-        return "redirect:/";
-    }
-
 
     //  create test users:
     @GetMapping("/create-user")

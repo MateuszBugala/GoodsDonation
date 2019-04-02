@@ -1,6 +1,7 @@
 package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +22,7 @@ public class LoginController {
     private UserServiceImpl userService;
 
     @GetMapping("/login")
-    public String login(Model model, HttpSession session) {
+    public String login(Model model) {
         model.addAttribute("user", new User());
         return "login";
     }
@@ -43,6 +44,14 @@ public class LoginController {
         }
     }
 
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        SecurityContextHolder.clearContext();
+//        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+//        session.invalidate();
+        return "redirect:/";
+    }
 
 
 }
