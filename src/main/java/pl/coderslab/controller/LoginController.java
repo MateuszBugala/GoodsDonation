@@ -27,23 +27,6 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String authorize(@Valid User user, @RequestParam String password, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "login";
-        }
-        String emailCandidate = user.getEmail();
-        String passwordCandidate = password;
-        User authorizedUser = userService.authorization(emailCandidate, passwordCandidate);
-
-        if (authorizedUser != null) {
-            model.addAttribute("currentUser", authorizedUser);
-            return "login/loginSuccess";
-        } else {
-            return "redirect:/login?error=true";
-        }
-    }
-
 
     @RequestMapping("/logout")
     public String logout(HttpSession session) {

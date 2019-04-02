@@ -20,7 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/users/all").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll()
-                .and().formLogin().loginPage("/login")
+                .and().csrf().disable().formLogin().loginPage("/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
                 .and().logout()/*.logoutSuccessUrl("/")*/
                 .permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
