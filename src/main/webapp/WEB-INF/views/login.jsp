@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
 <header>
@@ -29,12 +29,17 @@
 
 <section class="login-page">
     <h2>Zaloguj się</h2>
-    <form>
+
+    <form:form method="post" modelAttribute="user" action="/login">
         <div class="form-group">
-            <input type="email" name="email" placeholder="Email" />
+            <form:input type="email" path="email" placeholder="Email"/>
+            <form:errors path="email" cssClass="" element="div"/>
         </div>
+
         <div class="form-group">
-            <input type="password" name="password" placeholder="Hasło" />
+            <form:input type="password" path="password" placeholder="Hasło"/>
+            <form:errors path="password" cssClass="" element="div"/>
+
             <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
         </div>
 
@@ -42,7 +47,26 @@
             <a href="#" class="btn btn--without-border">Załóż konto</a>
             <button class="btn" type="submit">Zaloguj się</button>
         </div>
-    </form>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form:form>
+
+    <%--<form method="post" action="/login">--%>
+        <%--<div class="form-group">--%>
+            <%--<input type="email" name="email" placeholder="Email" />--%>
+        <%--</div>--%>
+        <%--<div class="form-group">--%>
+            <%--<input type="password" name="password" placeholder="Hasło" />--%>
+            <%--<a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>--%>
+        <%--</div>--%>
+
+        <%--<div class="form-group form-group--buttons">--%>
+            <%--<a href="#" class="btn btn--without-border">Załóż konto</a>--%>
+            <%--<button class="btn" type="submit">Zaloguj się</button>--%>
+        <%--</div>--%>
+
+        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+    <%--</form>--%>
+
 </section>
 
 <footer>
@@ -51,10 +75,10 @@
         <h3>Formularz kontaktowy</h3>
         <form>
             <div class="form-group form-group--50">
-                <input type="text" name="name" placeholder="Imię" />
+                <input type="text" name="name" placeholder="Imię"/>
             </div>
             <div class="form-group form-group--50">
-                <input type="text" name="surname" placeholder="Nazwisko" />
+                <input type="text" name="surname" placeholder="Nazwisko"/>
             </div>
 
             <div class="form-group">
