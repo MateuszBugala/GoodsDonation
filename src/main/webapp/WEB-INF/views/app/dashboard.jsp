@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="pl">
 <head>
     <meta charset="UTF-8" />
@@ -13,7 +14,10 @@
     <nav class="container container--70">
         <ul class="nav--actions">
             <li class="logged-user">
-                Witaj Agata
+                <sec:authentication property="principal" var="principal"/>
+                Witaj ${principal.user.name}
+                <%--za pomocą kontrolera--%>
+                <%--Witaj ${currentUser.name}--%>
                 <ul class="dropdown">
                     <li><a href="#">Profil</a></li>
                     <li><a href="#">Ustawienia</a></li>
