@@ -1,40 +1,97 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html lang="pl">
 <head>
-    <title>Users - add</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
-
 <body>
-<button onclick="location.href='http://localhost:8080/'" type="button">HOME</button>
+<header>
+    <nav class="container container--70">
+        <ul class="nav--actions">
+            <li><a href="#">Zaloguj</a></li>
+            <li class="highlighted"><a href="#">Załóż konto</a></li>
+        </ul>
 
-<h1>Add a user:</h1>
+        <ul>
+            <li><a href="#">Start</a></li>
+            <li><a href="#">O co chodzi?</a></li>
+            <li><a href="#">O nas</a></li>
+            <li><a href="#">Fundacje i organizacje</a></li>
+            <li><a href="#">Kontakt</a></li>
+        </ul>
+    </nav>
+</header>
 
-<form:form method="post" modelAttribute="user">
-    <table>
-        <tr>
-            <td>Email:</td>
-            <td><form:input type="email" path="email" cssStyle="width: 230px"/><br></td>
-            <td><form:errors path="email" cssClass="error-message" element="div"/></td>
-        </tr>
+<section class="login-page">
+    <h2>Załóż konto</h2>
 
-        <tr>
-            <td>Imię:</td>
-            <td><form:input path="name" cssStyle="width: 230px"/><br></td>
-            <td><form:errors path="name" cssClass="error-message" element="div"/></td>
-        </tr>
+    <form:form method="post" modelAttribute="user">
+        <div class="form-group">
+            <form:input type="email" path="email" placeholder="Email"/>
+            <form:errors path="email" cssClass="" element="div"/>
+        </div>
 
-        <tr>
-            <td>Hasło:</td>
-            <td><form:input type="password" path="password" cssStyle="width: 230px"/><br></td>
-            <td><form:errors path="password" cssClass="error-message" element="div"/></td>
-        </tr>
-    </table>
+        <div class="form-group">
+            <form:input path="name" placeholder="Imię"/>
+            <form:errors path="name" cssClass="" element="div"/>
+        </div>
 
-    <input type="submit" value="Send" style="margin-top: 30px">
-
-</form:form>
+        <div class="form-group">
+            <form:input type="password" path="password" placeholder="Hasło"/>
+            <form:errors path="password" cssClass="" element="div"/>
+        </div>
 
 
+        <%--<div class="form-group">--%>
+            <%--<input type="password" name="password2" placeholder="Powtórz hasło"/>--%>
+        <%--</div>--%>
+
+        <div class="form-group form-group--buttons">
+            <a href="login.html" class="btn btn--without-border">Zaloguj się</a>
+            <button class="btn" type="submit">Załóż konto</button>
+        </div>
+    </form:form>
+
+</section>
+
+<footer>
+    <div class="contact">
+        <h2>Skontaktuj się z nami</h2>
+        <h3>Formularz kontaktowy</h3>
+        <form>
+            <div class="form-group form-group--50">
+                <input type="text" name="name" placeholder="Imię"/>
+            </div>
+            <div class="form-group form-group--50">
+                <input type="text" name="surname" placeholder="Nazwisko"/>
+            </div>
+
+            <div class="form-group">
+            <textarea
+                    name="message"
+                    placeholder="Wiadomość"
+                    rows="1"
+            ></textarea>
+            </div>
+
+            <button class="btn" type="submit">Wyślij</button>
+        </form>
+    </div>
+    <div class="bottom-line">
+        <span class="bottom-line--copy">Copyright &copy; 2018</span>
+        <div class="bottom-line--icons">
+            <a href="#" class="btn btn--small"
+            ><img src="images/icon-facebook.svg"
+            /></a>
+            <a href="#" class="btn btn--small"
+            ><img src="images/icon-instagram.svg"
+            /></a>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
