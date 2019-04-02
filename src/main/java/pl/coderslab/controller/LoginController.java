@@ -13,20 +13,20 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping(path = "/login", produces = "text/html; charset=UTF-8")
+@RequestMapping(produces = "text/html; charset=UTF-8")
 @SessionAttributes({"currentUser"})
 public class LoginController {
 
     @Autowired
     private UserServiceImpl userService;
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String login(Model model, HttpSession session) {
         model.addAttribute("user", new User());
         return "login";
     }
 
-    @PostMapping("/")
+    @PostMapping("/login")
     public String authorize(@Valid User user, @RequestParam String password, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "login";
