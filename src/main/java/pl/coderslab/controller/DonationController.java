@@ -56,5 +56,40 @@ public class DonationController {
         return "redirect:/donations/step-4";
     }
 
+    @GetMapping("/step-4")
+    public String step4a(Model model) {
+        return "app/donations/form4";
+    }
+
+    @PostMapping("/step-4")
+    public String step4b(Model model) {
+        return "redirect:/donations/step-5";
+    }
+
+    @GetMapping("/step-5")
+    public String step5a(Model model) {
+        return "app/donations/form5";
+    }
+
+    @PostMapping("/step-5")
+    public String step5b(Model model) {
+        return "redirect:/donations/step-6";
+    }
+
+    @GetMapping("/step-6")
+    public String step6a(Model model) {
+        return "app/donations/form6";
+    }
+
+    @PostMapping("/step-6")
+    public String step6b(Model model) {
+        return "redirect:/donations/step-7";
+    }
+
+    @RequestMapping("/step-7")
+    public String step7(Model model) {
+        return "app/donations/form7";
+    }
+
 
 }
