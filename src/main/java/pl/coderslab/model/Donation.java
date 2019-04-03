@@ -26,7 +26,7 @@ public class Donation {
     private String pickUpstreet;
     private String pickUpcity;
     private String pickUpzip;
-    private String pickUpphoneNumber;
+    private int pickUpphoneNumber;
 
     private LocalDate pickUpDate;
     private LocalTime pickUpTime;
@@ -98,11 +98,11 @@ public class Donation {
         this.pickUpzip = pickUpzip;
     }
 
-    public String getPickUpphoneNumber() {
+    public int getPickUpphoneNumber() {
         return pickUpphoneNumber;
     }
 
-    public void setPickUpphoneNumber(String pickUpphoneNumber) {
+    public void setPickUpphoneNumber(int pickUpphoneNumber) {
         this.pickUpphoneNumber = pickUpphoneNumber;
     }
 

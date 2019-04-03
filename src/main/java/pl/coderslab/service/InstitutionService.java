@@ -31,4 +31,8 @@ public class InstitutionService {
         institutionRepository.delete(id);
     }
 
+    public List<Institution> findAllByCityId (Long id) {
+        return institutionRepository.findAllByCityId(id);
+    }
+
 }

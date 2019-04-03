@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import pl.coderslab.model.Donation;
 import pl.coderslab.model.User;
 import pl.coderslab.service.CurrentUser;
 import pl.coderslab.service.UserService;
@@ -15,6 +17,7 @@ import pl.coderslab.service.UserServiceImpl;
 
 @Controller
 @RequestMapping(path = "/", produces = "text/html; charset=UTF-8")
+@SessionAttributes({"donation"})
 public class HomeController {
 
     @Autowired
@@ -29,8 +32,11 @@ public class HomeController {
     }
 
     @RequestMapping("/dashboard")
-    public String dashboard(/*@AuthenticationPrincipal CurrentUser currentUser, Model model*/) {
-//        model.addAttribute("currentUser", currentUser.getUser());
+    public String dashboard(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        Donation donation = new Donation();
+        donation.setUser(currentUser.getUser());
+        donation.setRealized(false);
+        model.addAttribute("donation", donation);
         return "app/dashboard";
     }
 

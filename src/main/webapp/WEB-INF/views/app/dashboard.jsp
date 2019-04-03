@@ -48,21 +48,6 @@
                 Uzupełnij szczegóły dotyczące Twoich rzeczy. Dzięki temu będziemy
                 wiedzieć komu najlepiej je przekazać.
             </p>
-            <p data-step="2">
-                Uzupełnij szczegóły dotyczące Twoich rzeczy. Dzięki temu będziemy
-                wiedzieć komu najlepiej je przekazać.
-            </p>
-            <p data-step="3">
-                Jeśli wiesz komu chcesz pomóc, możesz wpisać nazwę tej organizacji w
-                wyszukiwarce. Możesz też filtrować organizacje po ich lokalizacji
-                bądź celu ich pomocy.
-            </p>
-            <p data-step="4">
-                Na podstawie Twoich kryteriów oraz rzeczy, które masz do oddania
-                wybraliśmy organizacje, którym możesz pomóc. Wybierz jedną, do
-                której trafi Twoja przesyłka.
-            </p>
-            <p data-step="5">Podaj adres oraz termin odbioru rzeczy.</p>
         </div>
     </div>
 
@@ -76,25 +61,15 @@
 
                 <div class="form-group form-group--checkbox">
                     <label>
-                        <input
-                                type="checkbox"
-                                name="products[]"
-                                value="clothes-to-use"
-                        />
+                        <input type="checkbox" name="donatedItems" value="clothes-to-use"/>
                         <span class="checkbox"></span>
-                        <span class="description"
-                        >ubrania, które nadają się do ponownego użycia</span
-                        >
+                        <span class="description">ubrania, które nadają się do ponownego użycia</span>
                     </label>
                 </div>
 
                 <div class="form-group form-group--checkbox">
                     <label>
-                        <input
-                                type="checkbox"
-                                name="products[]"
-                                value="clothes-useless"
-                        />
+                        <input type="checkbox" name="donatedItems" value="clothes-useless"/>
                         <span class="checkbox"></span>
                         <span class="description">ubrania, do wyrzucenia</span>
                     </label>
@@ -102,7 +77,7 @@
 
                 <div class="form-group form-group--checkbox">
                     <label>
-                        <input type="checkbox" name="products[]" value="toys"/>
+                        <input type="checkbox" name="donatedItems" value="toys"/>
                         <span class="checkbox"></span>
                         <span class="description">zabawki</span>
                     </label>
@@ -110,7 +85,7 @@
 
                 <div class="form-group form-group--checkbox">
                     <label>
-                        <input type="checkbox" name="products[]" value="books"/>
+                        <input type="checkbox" name="donatedItems" value="books"/>
                         <span class="checkbox"></span>
                         <span class="description">książki</span>
                     </label>
@@ -118,7 +93,7 @@
 
                 <div class="form-group form-group--checkbox">
                     <label>
-                        <input type="checkbox" name="products[]" value="other"/>
+                        <input type="checkbox" name="donatedItems" value="other"/>
                         <span class="checkbox"></span>
                         <span class="description">inne</span>
                     </label>

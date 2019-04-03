@@ -3,17 +3,22 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import pl.coderslab.model.Donation;
+import pl.coderslab.model.Institution;
 import pl.coderslab.service.CityService;
 import pl.coderslab.service.DonationService;
 import pl.coderslab.service.InstitutionService;
 
+import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
 @Controller
 @RequestMapping(path = "/donations", produces = "text/html; charset=UTF-8")
+@SessionAttributes({"donation", "selCity"})
 public class DonationController {
 
     @Autowired
@@ -32,7 +37,10 @@ public class DonationController {
     }
 
     @PostMapping("/step-1")
-    public String step1b(Model model) {
+    public String step1b(Model model, @RequestParam String donatedItems, HttpSession session) {
+        Donation donation = (Donation) session.getAttribute("donation");
+        donation.setDonatedItems(donatedItems);
+        model.addAttribute("donation", donation);
         return "redirect:/donations/step-2";
     }
 
@@ -42,27 +50,38 @@ public class DonationController {
     }
 
     @PostMapping("/step-2")
-    public String step2b(Model model) {
+    public String step2b(Model model, @RequestParam int bagsQty, HttpSession session ) {
+        Donation donation = (Donation) session.getAttribute("donation");
+        donation.setQty(bagsQty);
+        model.addAttribute("donation", donation);
         return "redirect:/donations/step-3";
     }
 
     @GetMapping("/step-3")
     public String step3a(Model model) {
+        model.addAttribute("cities", cityService.findAll());
         return "app/donations/form3";
     }
 
     @PostMapping("/step-3")
-    public String step3b(Model model) {
+    public String step3b(Model model, @RequestParam Long selCity) {
+        model.addAttribute("selCity", selCity);
         return "redirect:/donations/step-4";
     }
 
     @GetMapping("/step-4")
-    public String step4a(Model model) {
+    public String step4a(Model model, HttpSession session) {
+        Long selCityId = (Long) session.getAttribute("selCity");
+        List<Institution> chosenInstitutions =  institutionService.findAllByCityId(selCityId);
+        model.addAttribute("chosenInstitutions", chosenInstitutions);
         return "app/donations/form4";
     }
 
     @PostMapping("/step-4")
-    public String step4b(Model model) {
+    public String step4b(Model model, @RequestParam Long selIntitution, HttpSession session) {
+        Donation donation = (Donation) session.getAttribute("donation");
+        donation.setInstitution(institutionService.findById(selIntitution));
+        model.addAttribute("donation", donation);
         return "redirect:/donations/step-5";
     }
 
@@ -72,7 +91,23 @@ public class DonationController {
     }
 
     @PostMapping("/step-5")
-    public String step5b(Model model) {
+    public String step5b(Model model, @RequestParam String address,
+                         @RequestParam String city,
+                         @RequestParam String postcode,
+                         @RequestParam int phone,
+                         @RequestParam String data,
+                         @RequestParam String time,
+                         @RequestParam String remarks,
+                         HttpSession session) {
+        Donation donation = (Donation) session.getAttribute("donation");
+        donation.setPickUpstreet(address);
+        donation.setPickUpcity(city);
+        donation.setPickUpzip(postcode);
+        donation.setPickUpphoneNumber(phone);
+        donation.setPickUpDate(LocalDate.parse(data));
+        donation.setPickUpTime(LocalTime.parse(time));
+        donation.setPickUpRemarks(remarks);
+        model.addAttribute("donation", donation);
         return "redirect:/donations/step-6";
     }
 
@@ -82,7 +117,10 @@ public class DonationController {
     }
 
     @PostMapping("/step-6")
-    public String step6b(Model model) {
+    public String step6b(Model model,HttpSession session, SessionStatus status) {
+        Donation donation = (Donation) session.getAttribute("donation");
+        donationService.save(donation);
+        status.setComplete();
         return "redirect:/donations/step-7";
     }
 

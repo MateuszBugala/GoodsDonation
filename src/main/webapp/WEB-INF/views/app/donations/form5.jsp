@@ -24,7 +24,7 @@
         <form method="post">
             <!-- STEP 5 -->
             <div data-step="5" class="active">
-                <h3>Podaj adres oraz termin odbioru rzecz przez kuriera:</h3>
+                <h3>Podaj adres oraz termin odbioru rzeczy przez kuriera:</h3>
 
                 <div class="form-section form-section--columns">
                     <div class="form-section--column">
@@ -45,7 +45,7 @@
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Numer telefonu <input type="phone" name="phone"/>
+                                Numer telefonu <input type="number" name="phone"/>
                             </label>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <div class="form-group form-group--inline">
                             <label>
                                 Uwagi dla kuriera
-                                <textarea name="more_info" rows="5"></textarea>
+                                <textarea name="remarks" rows="5"></textarea>
                             </label>
                         </div>
                     </div>

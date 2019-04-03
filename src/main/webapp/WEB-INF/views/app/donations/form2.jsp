@@ -35,7 +35,7 @@
                 <div class="form-group form-group--inline">
                     <label>
                         Liczba 60l worków:
-                        <input type="number" name="bags" step="1" min="1"/>
+                        <input type="number" name="bagsQty" value="1" step="1" required min="1"/>
                     </label>
                 </div>
 
