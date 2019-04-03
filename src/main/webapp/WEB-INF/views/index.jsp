@@ -6,19 +6,24 @@
     <%@ include file="dependecies.jsp" %>
 </head>
 <body>
-<header class="header--main-page">
+<header class="header--main-page" id="start">
     <nav class="container container--70">
         <ul class="nav--actions">
-            <li><a href="http://localhost:8080/login" class="btn btn--small btn--without-border">Zaloguj</a></li>
-            <li><a href="http://localhost:8080/users/add" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+            <li><a href="${pageContext.request.contextPath}/login"
+                   class="btn btn--small btn--without-border">Zaloguj</a></li>
+            <li><a href="${pageContext.request.contextPath}/users/add" class="btn btn--small btn--highlighted">Załóż
+                konto</a></li>
         </ul>
 
         <ul>
-            <li><a href="#" class="btn btn--without-border active">Start</a></li>
-            <li><a href="#" class="btn btn--without-border">O co chodzi?</a></li>
-            <li><a href="#" class="btn btn--without-border">O nas</a></li>
-            <li><a href="#" class="btn btn--without-border">Fundacje i organizacje</a></li>
-            <li><a href="#" class="btn btn--without-border">Kontakt</a></li>
+            <li><a href="${pageContext.request.contextPath}/#start" class="btn btn--without-border active">Start</a>
+            </li>
+            <li><a href="${pageContext.request.contextPath}/#steps" class="btn btn--without-border">O co chodzi?</a>
+            </li>
+            <li><a href="${pageContext.request.contextPath}/#about-us" class="btn btn--without-border">O nas</a></li>
+            <li><a href="${pageContext.request.contextPath}/#help" class="btn btn--without-border">Fundacje i
+                organizacje</a></li>
+            <li><a href="${pageContext.request.contextPath}/#contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
     </nav>
 
@@ -30,8 +35,8 @@
             </h1>
 
             <ul class="slogan--buttons">
-                <li><a href="#" class="btn btn--large">Oddaj rzeczy</a></li>
-                <li><a href="#" class="btn btn--large">Zorganizuj zbiórkę</a></li>
+                <li  style="justify-content: center"><a href="${pageContext.request.contextPath}/login" class="btn btn--large">Oddaj rzeczy</a></li>
+                <%--<li><a href="#" class="btn btn--large">Zorganizuj zbiórkę</a></li>--%>
             </ul>
         </div>
     </div>
@@ -62,7 +67,7 @@
     </div>
 </section>
 
-<section class="steps">
+<section class="steps" id="steps">
     <h2>Wystarczą 4 proste kroki</h2>
 
     <div class="steps--container">
@@ -88,10 +93,10 @@
         </div>
     </div>
 
-    <a href="#" class="btn btn--large">Załóż konto</a>
+    <a href="${pageContext.request.contextPath}/users/add" class="btn btn--large">Załóż konto</a>
 </section>
 
-<section class="about-us">
+<section class="about-us" id="about-us">
     <div class="about-us--text">
         <h2>O nas</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vitae animi rem pariatur incidunt libero
@@ -101,7 +106,7 @@
     <div class="about-us--image"><img src="images/about-us.jpg" alt="People in circle"/></div>
 </section>
 
-<section class="help">
+<section class="help" id="help">
     <h2>Komu pomagamy?</h2>
 
     <ul class="help--buttons">
@@ -254,7 +259,9 @@
     </div>
 </section>
 
-<%@ include file="footer.jsp" %>
+<div id="contact">
+    <%@ include file="footer.jsp" %>
+</div>
 
 <script src="js/app.js"></script>
 </body>
