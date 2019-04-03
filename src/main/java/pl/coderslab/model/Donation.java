@@ -16,7 +16,7 @@ public class Donation {
     @ManyToOne
     private User user;
 
-    private List<String> donatedItems;
+    private String donatedItems;
 
     private int qty;
 
@@ -50,11 +50,11 @@ public class Donation {
         this.user = user;
     }
 
-    public List<String> getDonatedItems() {
+    public String getDonatedItems() {
         return donatedItems;
     }
 
-    public void setDonatedItems(List<String> donatedItems) {
+    public void setDonatedItems(String donatedItems) {
         this.donatedItems = donatedItems;
     }
 
