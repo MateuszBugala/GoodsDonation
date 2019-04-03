@@ -1,12 +1,14 @@
 package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.User;
+import pl.coderslab.service.CurrentUser;
 import pl.coderslab.service.UserService;
 import pl.coderslab.service.UserServiceImpl;
 
@@ -22,9 +24,13 @@ public class LoginController {
     private UserServiceImpl userService;
 
     @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("user", new User());
-        return "login";
+    public String login(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        if (currentUser == null) {
+            model.addAttribute("user", new User());
+            return "login";
+        } else {
+            return "redirect:/dashboard";
+        }
     }
 
 

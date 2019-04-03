@@ -24,13 +24,8 @@ public class HomeController {
     private UserServiceImpl userServiceImpl;
 
     @RequestMapping("/")
-    public String home(@AuthenticationPrincipal CurrentUser currentUser) {
-        if (currentUser == null) {
-            return "index";
-        } else {
-            return "redirect:/dashboard";
-        }
-
+    public String home() {
+        return "index";
     }
 
     @RequestMapping("/dashboard")
