@@ -14,6 +14,7 @@ import pl.coderslab.service.InstitutionService;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -72,7 +73,12 @@ public class DonationController {
     @GetMapping("/step-4")
     public String step4a(Model model, HttpSession session) {
         Long selCityId = (Long) session.getAttribute("selCity");
-        List<Institution> chosenInstitutions =  institutionService.findAllByCityId(selCityId);
+        List<Institution> chosenInstitutions = new ArrayList<>();
+        if (selCityId == 0) {
+            chosenInstitutions =  institutionService.findAll();
+        } else {
+            chosenInstitutions =  institutionService.findAllByCityId(selCityId);
+        }
         model.addAttribute("chosenInstitutions", chosenInstitutions);
         return "app/donations/form4";
     }

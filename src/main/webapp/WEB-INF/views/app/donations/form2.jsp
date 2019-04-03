@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="pl">
 <head>
     <title>Document</title>
@@ -35,7 +36,16 @@
                 <div class="form-group form-group--inline">
                     <label>
                         Liczba 60l worków:
-                        <input type="number" name="bagsQty" value="1" step="1" required min="1"/>
+                        <%--<c:choose>--%>
+                            <%--<c:when test="${donation.qty == null}">--%>
+                                <%--<input type="number" name="bagsQty" value="1" step="1" required min="1"/>--%>
+                            <%--</c:when>--%>
+<%----%>
+                            <%--<c:otherwise>--%>
+                                <%--<input type="number" name="bagsQty" value="${donation.qty}" step="1" required min="1"/>--%>
+                            <%--</c:otherwise>--%>
+                        <%--</c:choose>--%>
+                        <input type="number" name="bagsQty" value="${donation.qty}" step="1" required min="1"/>
                     </label>
                 </div>
 
