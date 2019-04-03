@@ -1,6 +1,8 @@
 package pl.coderslab.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "institutions")
@@ -18,6 +20,9 @@ public class Institution {
 
     @ManyToOne
     private City city;
+
+    @OneToMany(mappedBy = "institution", cascade = CascadeType.MERGE)
+    private List<Donation> donations = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -57,5 +62,13 @@ public class Institution {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public List<Donation> getDonations() {
+        return donations;
+    }
+
+    public void setDonations(List<Donation> donations) {
+        this.donations = donations;
     }
 }
