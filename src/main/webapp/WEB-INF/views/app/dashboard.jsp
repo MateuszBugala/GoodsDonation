@@ -59,23 +59,12 @@
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
+                <p>(minimum jedno pole)</p>
 
-                <%--VERSION 1-------------------------------%>
-                <%--<c:forEach items="${donatedItems}" var="item" varStatus="status">--%>
-                <%--<div class="form-group form-group--checkbox">--%>
-                <%--<label>--%>
-                <%--<input type="checkbox" name="donatedItems[]" value="${item.id}" <c:if test="${item.id==donation.donatedItems[status.index].id}"> checked </c:if> />--%>
-                <%--<span class="checkbox"></span>--%>
-                <%--<span class="description">${item.name} &lt;%&ndash;${donation.donatedItems[status.index].id}&ndash;%&gt;</span>--%>
-                <%--</label>--%>
-                <%--</div>--%>
-                <%--</c:forEach>--%>
-
-                <%--VERSION 2-------------------------------%>
                 <c:forEach items="${donatedItems}" var="item" varStatus="status">
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <input type="checkbox" name="donatedItems[]" value="${item.id}"
+                            <input type="checkbox" name="donatedItems[]" value="${item.id}" required class='acb'
                                     <c:forEach items="${donation.donatedItems}" var="sessionItem">
                                         <c:if test="${item.id==sessionItem.id}"> checked </c:if>
                                     </c:forEach>
@@ -94,7 +83,38 @@
     </div>
 </section>
 
+
 <%@ include file="../footer.jsp" %>
+
+<script type="text/javascript">
+
+    function deRequireChbx(elClass) {
+        el=document.getElementsByClassName(elClass);
+
+        var atLeastOneChecked=false;
+        for (i=0; i<el.length; i++) {
+            if (el[i].checked === true) {
+                atLeastOneChecked=true;
+            }
+        }
+
+        if (atLeastOneChecked === true) {
+            for (i=0; i<el.length; i++) {
+                el[i].required = false;
+            }
+        } /*else {
+            for (i=0; i<el.length; i++) {
+                el[i].required = true;
+            }
+        }*/
+    }
+
+    var button = document.querySelector('button[type="submit"]');
+    button.addEventListener('click', function () {
+        deRequireChbx("acb");
+    });
+
+</script>
 
 </body>
 </html>

@@ -36,16 +36,16 @@
                 <div class="form-group form-group--inline">
                     <label>
                         Liczba 60l worków:
-                        <%--<c:choose>--%>
-                            <%--<c:when test="${donation.qty == null}">--%>
-                                <%--<input type="number" name="bagsQty" value="1" step="1" required min="1"/>--%>
-                            <%--</c:when>--%>
-<%----%>
-                            <%--<c:otherwise>--%>
-                                <%--<input type="number" name="bagsQty" value="${donation.qty}" step="1" required min="1"/>--%>
-                            <%--</c:otherwise>--%>
-                        <%--</c:choose>--%>
-                        <input type="number" name="bagsQty" value="${donation.qty}" step="1" required min="1"/>
+                        <c:choose>
+                            <c:when test="${donation.qty == 0}">
+                                <input type="number" name="bagsQty" value="1" step="1" required min="1"/>
+                            </c:when>
+
+                            <c:otherwise>
+                                <input type="number" name="bagsQty" value="${donation.qty}" step="1" required min="1"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <%--<input type="number" name="bagsQty" value="${donation.qty}" step="1" required min="1"/>--%>
                     </label>
                 </div>
 

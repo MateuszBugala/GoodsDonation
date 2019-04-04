@@ -30,22 +30,26 @@
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Ulica <input type="text" name="address" value="${donation.pickUpstreet}" required/> </label>
+                            <label> Ulica <input type="text" name="address" value="${donation.pickUpstreet}" required/>
+                            </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Miasto <input type="text" name="city" value="${donation.pickUpcity}" required/> </label>
-                        </div>
-
-                        <div class="form-group form-group--inline">
-                            <label>
-                                Kod pocztowy <input type="text" name="postcode" value="${donation.pickUpzip}" required pattern="\d{2}-\d{3}" placeholder="xx-xxx"/>
+                            <label> Miasto <input type="text" name="city" value="${donation.pickUpcity}" required/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Numer telefonu <input type="tel" name="phone" value="${donation.pickUpphoneNumber}" required pattern="\d{9}" placeholder="xxxxxxxxx"/>
+                                Kod pocztowy <input type="text" name="postcode" value="${donation.pickUpzip}" required
+                                                    pattern="\d{2}-\d{3}" placeholder="xx-xxx"/>
+                            </label>
+                        </div>
+
+                        <div class="form-group form-group--inline">
+                            <label>
+                                Numer telefonu <input type="tel" name="phone" value="${donation.pickUpphoneNumber}"
+                                                      required pattern="\d{9}" placeholder="123456789"/>
                             </label>
                         </div>
                     </div>
@@ -53,11 +57,13 @@
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Data <input type="date" name="data" value="${donation.pickUpDate}" required/> </label>
+                            <label> Data <input type="date" name="data" value="${donation.pickUpDate}" required
+                                                min="2019-01-01"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Godzina <input type="time" name="time" value="${donation.pickUpTime}" min="09:00" max="18:00" required/> </label>
+                            <label> Godzina <input type="time" name="time" value="${donation.pickUpTime}" min="09:00"
+                                                   max="18:00" required/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
@@ -79,6 +85,15 @@
 </section>
 
 <%@ include file="../../footer.jsp" %>
+
+<script>
+    <%--date must by later min 1 day in future--%>
+    var today = new Date();
+    today.setDate(today.getDate() + 1);
+    var tomorrow = today.toISOString().split('T')[0]
+    document.getElementsByName("data")[0].setAttribute('min', tomorrow);
+
+</script>
 
 </body>
 </html>

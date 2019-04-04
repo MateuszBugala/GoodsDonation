@@ -54,7 +54,6 @@ public class DonationController {
         }
         donation.setDonatedItems(donatedItems);
 
-//        donation.setDonatedItems(donatedItems);
         model.addAttribute("donation", donation);
         return "redirect:/donations/step-2";
     }
@@ -87,7 +86,7 @@ public class DonationController {
     @GetMapping("/step-4")
     public String step4a(Model model, HttpSession session) {
         Long selCityId = (Long) session.getAttribute("selCity");
-        List<Institution> chosenInstitutions = new ArrayList<>();
+        List<Institution> chosenInstitutions;
         if (selCityId == 0) {
             chosenInstitutions =  institutionService.findAll();
         } else {

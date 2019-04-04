@@ -16,8 +16,7 @@
         <div class="form--steps-container">
             <h3>Ważne!</h3>
             <p data-step="4" class="active">
-                Na podstawie Twoich kryteriów oraz rzeczy, które masz do oddania
-                wybraliśmy organizacje, którym możesz pomóc. Wybierz jedną, do
+                Na podstawie Twoich kryteriów wybraliśmy organizacje, którym możesz pomóc. Wybierz jedną, do
                 której trafi Twoja przesyłka.
             </p>
         </div>
@@ -29,16 +28,18 @@
         <form method="post">
             <!-- STEP 4 -->
             <div data-step="4" class="active">
-                <h3>Wybierz organizację, której chcesz pomóc:</h3>
+                <h3>Wybierz jedną organizację, której chcesz pomóc:</h3>
 
                 <c:forEach items="${chosenInstitutions}" var="institution">
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <input type="radio" name="selIntitution" value="${institution.id}" <c:if test="${institution.id==donation.institution.id}"> checked </c:if>/>
+                            <input type="radio" name="selIntitution" value="${institution.id}" required
+                                    <c:if test="${institution.id==donation.institution.id}"> checked </c:if>
+                            />
                             <span class="checkbox radio"></span>
                             <span class="description">
-                            <div class="title">${institution.name}</div>
-                            <div class="subtitle">${institution.mission}</div>
+                                <div class="title">${institution.name}</div>
+                                <div class="subtitle">${institution.mission}</div>
                         </span>
                         </label>
                     </div>
