@@ -14,6 +14,8 @@ import pl.coderslab.service.CurrentUser;
 import pl.coderslab.service.UserService;
 import pl.coderslab.service.UserServiceImpl;
 
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping(path = "/", produces = "text/html; charset=UTF-8")
@@ -32,11 +34,14 @@ public class HomeController {
     }
 
     @RequestMapping("/dashboard")
-    public String dashboard(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
-        Donation donation = new Donation();
-        donation.setUser(currentUser.getUser());
-        donation.setRealized(false);
-        model.addAttribute("donation", donation);
+    public String dashboard(@AuthenticationPrincipal CurrentUser currentUser, Model model, HttpSession session) {
+        Donation donation = (Donation) session.getAttribute("donation");
+        if (donation == null) {
+            donation = new Donation();
+            donation.setUser(currentUser.getUser());
+            donation.setRealized(false);
+            model.addAttribute("donation", donation);
+        }
         return "app/dashboard";
     }
 

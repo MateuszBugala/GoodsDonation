@@ -100,7 +100,7 @@ public class DonationController {
     public String step5b(Model model, @RequestParam String address,
                          @RequestParam String city,
                          @RequestParam String postcode,
-                         @RequestParam int phone,
+                         @RequestParam String phone,
                          @RequestParam String data,
                          @RequestParam String time,
                          @RequestParam String remarks,

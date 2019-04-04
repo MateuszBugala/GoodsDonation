@@ -30,22 +30,22 @@
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Ulica <input type="text" name="address"/> </label>
+                            <label> Ulica <input type="text" name="address" value="${donation.pickUpstreet}" required/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Miasto <input type="text" name="city"/> </label>
+                            <label> Miasto <input type="text" name="city" value="${donation.pickUpcity}" required/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Kod pocztowy <input type="text" name="postcode"/>
+                                Kod pocztowy <input type="text" name="postcode" value="${donation.pickUpzip}" required pattern="\d{2}-\d{3}" placeholder="xx-xxx"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Numer telefonu <input type="number" name="phone"/>
+                                Numer telefonu <input type="tel" name="phone" value="${donation.pickUpphoneNumber}" required pattern="\d{9}" placeholder="xxxxxxxxx"/>
                             </label>
                         </div>
                     </div>
@@ -53,17 +53,17 @@
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Data <input type="date" name="data"/> </label>
+                            <label> Data <input type="date" name="data" value="${donation.pickUpDate}" required/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Godzina <input type="time" name="time"/> </label>
+                            <label> Godzina <input type="time" name="time" value="${donation.pickUpTime}" min="09:00" max="18:00" required/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
                                 Uwagi dla kuriera
-                                <textarea name="remarks" rows="5"></textarea>
+                                <textarea name="remarks" rows="5">${donation.pickUpRemarks}</textarea>
                             </label>
                         </div>
                     </div>
