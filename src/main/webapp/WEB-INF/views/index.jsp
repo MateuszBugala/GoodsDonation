@@ -9,14 +9,12 @@
 <header class="header--main-page" id="start">
     <nav class="container container--70">
         <ul class="nav--actions">
-            <li><a href="${pageContext.request.contextPath}/login"
-                   class="btn btn--small btn--without-border">Zaloguj</a></li>
-            <li><a href="${pageContext.request.contextPath}/users/add" class="btn btn--small btn--highlighted">Załóż
-                konto</a></li>
+            <li><a href="${pageContext.request.contextPath}/login" class="btn btn--small btn--without-border">Zaloguj</a></li>
+            <li><a href="${pageContext.request.contextPath}/users/add" class="btn btn--small btn--highlighted">Załóż konto</a></li>
         </ul>
 
         <ul>
-            <li><a href="${pageContext.request.contextPath}/#start" class="btn btn--without-border active">Start</a>
+            <li><a href="${pageContext.request.contextPath}/#start" class="btn btn--without-border">Start</a>
             </li>
             <li><a href="${pageContext.request.contextPath}/#steps" class="btn btn--without-border">O co chodzi?</a>
             </li>
