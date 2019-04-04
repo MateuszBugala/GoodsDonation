@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="pl">
 <head>
     <title>Document</title>
@@ -59,45 +60,68 @@
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
 
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="checkbox" name="donatedItems" value="clothes-to-use"/>
-                        <span class="checkbox"></span>
-                        <span class="description">ubrania, które nadają się do ponownego użycia</span>
-                    </label>
-                </div>
+                <c:forEach items="${donatedItems}" var="item">
+                    <%--<c:forEach items="${donation.donatedItems}" var="sessionItem">--%>
+                        <div class="form-group form-group--checkbox">
+                            <label>
+                                <input type="checkbox" name="donatedItems[]" value="${item.id}" <c:if
+                                        test="${item.id==sessionItem.id}"> checked </c:if> />
+                                <span class="checkbox"></span>
+                                <span class="description">${item.name}</span>
+                            </label>
+                        </div>
+                    <%--</c:forEach>--%>
+                </c:forEach>
 
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="checkbox" name="donatedItems" value="clothes-useless"/>
-                        <span class="checkbox"></span>
-                        <span class="description">ubrania, do wyrzucenia</span>
-                    </label>
-                </div>
+                <%--<div class="form-group form-group--checkbox">--%>
+                <%--<label>--%>
+                <%--<input type="checkbox" name="donatedItems[]" value="jakaś" <c:if test="${donation.qty > 0}"> checked </c:if> />--%>
+                <%--<span class="checkbox"></span>--%>
+                <%--<span class="description">coś tam coś tam</span>--%>
+                <%--</label>--%>
+                <%--</div>--%>
 
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="checkbox" name="donatedItems" value="toys"/>
-                        <span class="checkbox"></span>
-                        <span class="description">zabawki</span>
-                    </label>
-                </div>
+                <%--initial-------------------------------------------------------------------------%>
 
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="checkbox" name="donatedItems" value="books"/>
-                        <span class="checkbox"></span>
-                        <span class="description">książki</span>
-                    </label>
-                </div>
+                <%--<div class="form-group form-group--checkbox">--%>
+                <%--<label>--%>
+                <%--<input type="checkbox" name="donatedItems[]" value="1" checked/>--%>
+                <%--<span class="checkbox"></span>--%>
+                <%--<span class="description">ubrania, które nadają się do ponownego użycia</span>--%>
+                <%--</label>--%>
+                <%--</div>--%>
 
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="checkbox" name="donatedItems" value="other"/>
-                        <span class="checkbox"></span>
-                        <span class="description">inne</span>
-                    </label>
-                </div>
+                <%--<div class="form-group form-group--checkbox">--%>
+                <%--<label>--%>
+                <%--<input type="checkbox" name="donatedItems[]" value="2"/>--%>
+                <%--<span class="checkbox"></span>--%>
+                <%--<span class="description">ubrania, do wyrzucenia</span>--%>
+                <%--</label>--%>
+                <%--</div>--%>
+
+                <%--<div class="form-group form-group--checkbox">--%>
+                <%--<label>--%>
+                <%--<input type="checkbox" name="donatedItems[]" value="3"/>--%>
+                <%--<span class="checkbox"></span>--%>
+                <%--<span class="description">zabawki</span>--%>
+                <%--</label>--%>
+                <%--</div>--%>
+
+                <%--<div class="form-group form-group--checkbox">--%>
+                <%--<label>--%>
+                <%--<input type="checkbox" name="donatedItems[]" value="books"/>--%>
+                <%--<span class="checkbox"></span>--%>
+                <%--<span class="description">książki</span>--%>
+                <%--</label>--%>
+                <%--</div>--%>
+
+                <%--<div class="form-group form-group--checkbox">--%>
+                <%--<label>--%>
+                <%--<input type="checkbox" name="donatedItems[]" value="other"/>--%>
+                <%--<span class="checkbox"></span>--%>
+                <%--<span class="description">inne</span>--%>
+                <%--</label>--%>
+                <%--</div>--%>
 
                 <div class="form-group form-group--buttons">
                     <button type="submit" class="btn next-step">Dalej</button>

@@ -110,7 +110,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", enabled=" + enabled +
-                ", roles=" + roles +
                 '}';
     }
 }

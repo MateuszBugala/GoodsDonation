@@ -10,3 +10,11 @@ INSERT INTO `institutions` VALUES
 (NULL, 'Pomoc osobom znajdującym się w trudnej sytuacji życiowej', 'Dla dzieci', 2, 1),
 (NULL, 'Pomoc dla osób nie posiadających miejsca zamieszkania', 'Bez domu', 3, 1);
 UNLOCK TABLES;
+
+
+INSERT INTO `donated_items` VALUES
+(1, 'ubrania, które nadają się do ponownego użycia'),
+(2, 'ubrania, do wyrzucenia'),
+(3, 'zabawki'),
+(4, 'książki'),
+(5, 'inne');

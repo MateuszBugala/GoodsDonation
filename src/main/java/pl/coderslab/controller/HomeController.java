@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import pl.coderslab.model.DonatedItem;
 import pl.coderslab.model.Donation;
 import pl.coderslab.model.User;
 import pl.coderslab.service.CurrentUser;
+import pl.coderslab.service.DonatedItemService;
 import pl.coderslab.service.UserService;
 import pl.coderslab.service.UserServiceImpl;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -27,6 +27,14 @@ public class HomeController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+
+    @Autowired
+    private DonatedItemService donatedItemService;
+
+    @ModelAttribute("donatedItems")
+    public List<DonatedItem> findAll() {
+        return donatedItemService.findAll();
+    }
 
     @RequestMapping("/")
     public String home() {

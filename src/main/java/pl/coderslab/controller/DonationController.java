@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import pl.coderslab.model.DonatedItem;
 import pl.coderslab.model.Donation;
 import pl.coderslab.model.Institution;
 import pl.coderslab.service.CityService;
+import pl.coderslab.service.DonatedItemService;
 import pl.coderslab.service.DonationService;
 import pl.coderslab.service.InstitutionService;
 
@@ -26,6 +28,9 @@ public class DonationController {
     private DonationService donationService;
 
     @Autowired
+    private DonatedItemService donatedItemService;
+
+    @Autowired
     private CityService cityService;
 
     @Autowired
@@ -38,9 +43,18 @@ public class DonationController {
     }
 
     @PostMapping("/step-1")
-    public String step1b(Model model, @RequestParam String donatedItems, HttpSession session) {
+    public String step1b(Model model, @RequestParam(name = "donatedItems[]") String[] selectedItems, HttpSession session) {
         Donation donation = (Donation) session.getAttribute("donation");
+
+        List<DonatedItem> donatedItems = new ArrayList<>();
+        for (int i = 0; i < selectedItems.length ; i++) {
+            System.out.println(selectedItems[i]);
+            DonatedItem item = donatedItemService.findById(Long.parseLong(selectedItems[i]));
+            donatedItems.add(item);
+        }
         donation.setDonatedItems(donatedItems);
+
+//        donation.setDonatedItems(donatedItems);
         model.addAttribute("donation", donation);
         return "redirect:/donations/step-2";
     }

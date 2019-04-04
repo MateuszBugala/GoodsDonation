@@ -3,6 +3,7 @@ package pl.coderslab.model;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,8 @@ public class Donation {
     @ManyToOne
     private User user;
 
-    private String donatedItems;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    private List<DonatedItem> donatedItems = new ArrayList<>();
 
     private int qty;
 
@@ -50,11 +52,11 @@ public class Donation {
         this.user = user;
     }
 
-    public String getDonatedItems() {
+    public List<DonatedItem> getDonatedItems() {
         return donatedItems;
     }
 
-    public void setDonatedItems(String donatedItems) {
+    public void setDonatedItems(List<DonatedItem> donatedItems) {
         this.donatedItems = donatedItems;
     }
 
@@ -136,5 +138,24 @@ public class Donation {
 
     public void setRealized(boolean realized) {
         this.realized = realized;
+    }
+
+    @Override
+    public String toString() {
+        return "Donation{" +
+                "id=" + id +
+                ", user=" + user +
+                ", donatedItems=" + donatedItems +
+                ", qty=" + qty +
+                ", institution=" + institution +
+                ", pickUpstreet='" + pickUpstreet + '\'' +
+                ", pickUpcity='" + pickUpcity + '\'' +
+                ", pickUpzip='" + pickUpzip + '\'' +
+                ", pickUpphoneNumber='" + pickUpphoneNumber + '\'' +
+                ", pickUpDate=" + pickUpDate +
+                ", pickUpTime=" + pickUpTime +
+                ", pickUpRemarks='" + pickUpRemarks + '\'' +
+                ", realized=" + realized +
+                '}';
     }
 }
