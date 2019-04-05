@@ -1,6 +1,7 @@
 package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,17 +53,14 @@ public class UserController {
     @GetMapping("/edit/{id}")
     public String update(@PathVariable Long id, Model model, HttpSession session) {
         model.addAttribute("user", userService.findById(id));
-        return "users/edit";
+        return "app/users/edit";
     }
 
     @PostMapping("/edit")
-    public String update(@Valid User user, BindingResult result, Model model, HttpSession session) {
-        if (result.hasErrors()) {
-            return "users/edit";
-        }
-        userService.update(user);
-        model.addAttribute("currentUser", user);
-        return "redirect:/users/all";
+    public String update(@RequestParam Long id, @RequestParam String name, @AuthenticationPrincipal CurrentUser currentUser) {
+        userService.updateName(id, name);
+        currentUser.getUser().setName(name);
+        return "redirect:/users/profile/"+id;
     }
 
     @RequestMapping("/delete/{id}")
@@ -72,6 +70,16 @@ public class UserController {
             return "redirect:/users/all?deleted=true";
         } catch (Exception ConstraintViolationException) {
             return "redirect:/users/all?error=true";
+        }
+    }
+
+    @RequestMapping("/profile/{id}")
+    public String all(Model model, @PathVariable Long id, @AuthenticationPrincipal CurrentUser currentUser) {
+        if (currentUser.getUser().getId() == id) {
+            model.addAttribute("user", userService.findById(id));
+            return "app/users/myAccount";
+        } else {
+            return "redirect:/dashboard";
         }
     }
 

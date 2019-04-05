@@ -29,12 +29,12 @@
 
     <form:form method="post" modelAttribute="user" action="/login">
         <div class="form-group">
-            <form:input type="email" path="email" placeholder="Email"/>
+            <form:input type="email" path="email" placeholder="Email"  style="max-width: 300px"/>
             <form:errors path="email" cssClass="" element="div"/>
         </div>
 
         <div class="form-group">
-            <form:input type="password" path="password" placeholder="Hasło"/>
+            <form:input type="password" path="password" placeholder="Hasło"  style="max-width: 300px"/>
             <form:errors path="password" cssClass="" element="div"/>
 
             <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>

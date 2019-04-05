@@ -72,6 +72,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(entity);
     }
 
+    public void updateName(Long id, String name) {
+        User user = userRepository.findOne(id);
+        user.setName(name);
+        userRepository.save(user);
+    }
+
     public void delete(Long id) {
         userRepository.delete(id);
     }

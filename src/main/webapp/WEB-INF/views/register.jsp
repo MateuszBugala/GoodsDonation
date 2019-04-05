@@ -32,17 +32,17 @@
 
     <form:form method="post" modelAttribute="user">
         <div class="form-group">
-            <form:input type="email" path="email" placeholder="Email"/>
+            <form:input type="email" path="email" placeholder="Email"  style="max-width: 300px"/>
             <form:errors path="email" cssClass="" element="div"/>
         </div>
 
         <div class="form-group">
-            <form:input path="name" placeholder="Imię"/>
+            <form:input path="name" placeholder="Imię"  style="max-width: 300px"/>
             <form:errors path="name" cssClass="" element="div"/>
         </div>
 
         <div class="form-group">
-            <form:input type="password" path="password" placeholder="Hasło"/>
+            <form:input type="password" path="password" placeholder="Hasło"  style="max-width: 300px"/>
             <form:errors path="password" cssClass="" element="div"/>
         </div>
 

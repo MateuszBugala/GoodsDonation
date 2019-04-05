@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="pl">
@@ -7,23 +9,34 @@
 </head>
 <body>
 <header class="header--main-page" id="start">
-    <nav class="container container--70">
-        <ul class="nav--actions">
-            <li><a href="${pageContext.request.contextPath}/login" class="btn btn--small btn--without-border">Zaloguj</a></li>
-            <li><a href="${pageContext.request.contextPath}/users/add" class="btn btn--small btn--highlighted">Załóż konto</a></li>
-        </ul>
+    <sec:authentication property="principal" var="principal"/>
+    <c:choose>
+        <c:when test="${principal == 'anonymousUser'}">
+            <nav class="container container--70">
+                <ul class="nav--actions">
+                    <li><a href="${pageContext.request.contextPath}/login" class="btn btn--small btn--without-border">Zaloguj</a></li>
+                    <li><a href="${pageContext.request.contextPath}/users/add" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+                </ul>
 
-        <ul>
-            <li><a href="${pageContext.request.contextPath}/#start" class="btn btn--without-border">Start</a>
-            </li>
-            <li><a href="${pageContext.request.contextPath}/#steps" class="btn btn--without-border">O co chodzi?</a>
-            </li>
-            <li><a href="${pageContext.request.contextPath}/#about-us" class="btn btn--without-border">O nas</a></li>
-            <li><a href="${pageContext.request.contextPath}/#help" class="btn btn--without-border">Fundacje i
-                organizacje</a></li>
-            <li><a href="${pageContext.request.contextPath}/#contact" class="btn btn--without-border">Kontakt</a></li>
-        </ul>
-    </nav>
+                <ul>
+                    <li><a href="${pageContext.request.contextPath}/#start" class="btn btn--without-border">Start</a>
+                    </li>
+                    <li><a href="${pageContext.request.contextPath}/#steps" class="btn btn--without-border">O co chodzi?</a>
+                    </li>
+                    <li><a href="${pageContext.request.contextPath}/#about-us" class="btn btn--without-border">O nas</a></li>
+                    <li><a href="${pageContext.request.contextPath}/#help" class="btn btn--without-border">Fundacje i
+                        organizacje</a></li>
+                    <li><a href="${pageContext.request.contextPath}/#contact" class="btn btn--without-border">Kontakt</a></li>
+                </ul>
+            </nav>
+        </c:when>
+
+        <c:otherwise>
+            <%@ include file="loggedHeader.jsp" %>
+        </c:otherwise>
+    </c:choose>
+
+
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -39,6 +52,8 @@
         </div>
     </div>
 </header>
+
+
 
 <section class="stats">
     <div class="container container--85">
