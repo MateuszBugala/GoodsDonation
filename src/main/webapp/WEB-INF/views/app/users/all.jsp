@@ -3,50 +3,72 @@
 <html>
 <head>
     <title>Users - list</title>
+    <%@ include file="../../dependecies.jsp" %>
 </head>
 <body>
 
-<button onclick="location.href='http://localhost:8080/'" type="button">HOME</button>
+<%@ include file="../../adminHeader.jsp" %>
 
-<h3>Users list:</h3>
+<section class="form--steps">
+    <div class="form--steps-instructions">
+        <div class="form--steps-container">
+            <h3>Lista użytkowników</h3>
 
-<table border="1">
+            <p data-step="2"  class="active"> <br> </p>
+        </div>
+    </div>
 
-    <thead>
-    <th>LP</th>
-    <th>Email</th>
-    <th>Enabled</th>
-    <th>Role</th>
-    <th colspan="2">Actions</th>
-    </thead>
+    <div class="form--steps-container">
 
-    <tbody>
-    <c:forEach items="${users}" var="user" varStatus="stat">
-        <tr>
-            <td>${stat.index+1}</td>
-            <td>${user.email}</td>
-            <td>${user.enabled}</td>
+        <table border="1">
 
-            <td style="max-width: 400px">
-                <c:forEach items="${user.roles}" var="roles">
-                    ${roles.name}<br>
-                </c:forEach>
-            </td>
+            <thead>
+            <th>LP</th>
+            <th>Email</th>
+            <th>Enabled</th>
+            <th>Role</th>
+            <th colspan="2">Actions</th>
+            </thead>
 
-            <td style="width: 50px; text-align: center"><a href="/users/edit/${user.id}" >Edit</a></td>
-            <td style="width: 50px; text-align: center"><a href="/users/delete/${user.id}" onclick="return confirm('Are you sure you want to delete this item?');" >Delete</a></td>
-        </tr>
-    </c:forEach>
-    </tbody>
+            <tbody>
+            <c:forEach items="${users}" var="user" varStatus="stat">
+                <tr>
+                    <td>${stat.index+1}</td>
+                    <td>${user.email}</td>
+                    <td>${user.enabled}</td>
 
-</table>
+                    <td style="max-width: 400px">
+                        <c:forEach items="${user.roles}" var="roles">
+                            ${roles.name}<br>
+                        </c:forEach>
+                    </td>
 
-<c:if test ="${not empty param.error}">
-    <h4 style="color: red"><span>Item cannot be deleted - it has some records in database</span></h4>
-</c:if>
-<c:if test ="${not empty param.deleted}">
-    <h4 style="color: red"><span>Item has been deleted</span></h4>
-</c:if>
+                    <td style="width: 50px; text-align: center;">
+                        <a href="/users/edit/${user.id}" class="btn--small" style="color: blue; font-weight: bold">Edit</a>
+                    </td>
+                    <td style="width: 50px; text-align: center">
+                        <a href="/users/delete/${user.id}" class="btn--small" style="color: blue; font-weight: bold"
+                           onclick="return confirm('Are you sure you want to delete this item?');" >Delete</a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+
+        </table>
+
+        <c:if test ="${not empty param.error}">
+            <h4 style="color: red"><span>Item cannot be deleted - it has some records in database</span></h4>
+        </c:if>
+        <c:if test ="${not empty param.deleted}">
+            <h4 style="color: red"><span>Item has been deleted</span></h4>
+        </c:if>
+
+
+    </div>
+</section>
+
+
+
 
 </body>
 </html>

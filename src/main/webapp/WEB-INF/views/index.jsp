@@ -9,34 +9,40 @@
 </head>
 <body>
 <header class="header--main-page" id="start">
+
+
+    <sec:authorize access="hasRole('ADMIN')">
+        <%@ include file="adminHeader.jsp" %>
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('USER')">
+        <%@ include file="loggedHeader.jsp" %>
+    </sec:authorize>
+
     <sec:authentication property="principal" var="principal"/>
-    <c:choose>
-        <c:when test="${principal == 'anonymousUser'}">
-            <nav class="container container--70">
-                <ul class="nav--actions">
-                    <li><a href="${pageContext.request.contextPath}/login" class="btn btn--small btn--without-border">Zaloguj</a></li>
-                    <li><a href="${pageContext.request.contextPath}/users/add" class="btn btn--small btn--highlighted">Załóż konto</a></li>
-                </ul>
+    <c:if test="${principal == 'anonymousUser'}">
+        <nav class="container container--70">
+            <ul class="nav--actions">
+                <li><a href="${pageContext.request.contextPath}/login" class="btn btn--small btn--without-border">Zaloguj</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/users/add" class="btn btn--small btn--highlighted">Załóż
+                    konto</a></li>
+            </ul>
 
-                <ul>
-                    <li><a href="${pageContext.request.contextPath}/#start" class="btn btn--without-border">Start</a>
-                    </li>
-                    <li><a href="${pageContext.request.contextPath}/#steps" class="btn btn--without-border">O co chodzi?</a>
-                    </li>
-                    <li><a href="${pageContext.request.contextPath}/#about-us" class="btn btn--without-border">O nas</a></li>
-                    <li><a href="${pageContext.request.contextPath}/#help" class="btn btn--without-border">Fundacje i
-                        organizacje</a></li>
-                    <li><a href="${pageContext.request.contextPath}/#contact" class="btn btn--without-border">Kontakt</a></li>
-                </ul>
-            </nav>
-        </c:when>
-
-        <c:otherwise>
-            <%@ include file="loggedHeader.jsp" %>
-        </c:otherwise>
-    </c:choose>
-
-
+            <ul>
+                <li><a href="${pageContext.request.contextPath}/#start" class="btn btn--without-border">Start</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/#steps" class="btn btn--without-border">O co chodzi?</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/#about-us" class="btn btn--without-border">O nas</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/#help" class="btn btn--without-border">Fundacje i
+                    organizacje</a></li>
+                <li><a href="${pageContext.request.contextPath}/#contact" class="btn btn--without-border">Kontakt</a>
+                </li>
+            </ul>
+        </nav>
+    </c:if>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -46,13 +52,13 @@
             </h1>
 
             <ul class="slogan--buttons">
-                <li  style="justify-content: center"><a href="${pageContext.request.contextPath}/login" class="btn btn--large">Oddaj rzeczy</a></li>
+                <li style="justify-content: center"><a href="${pageContext.request.contextPath}/login"
+                                                       class="btn btn--large">Oddaj rzeczy</a></li>
                 <%--<li><a href="#" class="btn btn--large">Zorganizuj zbiórkę</a></li>--%>
             </ul>
         </div>
     </div>
 </header>
-
 
 
 <section class="stats">

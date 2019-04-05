@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/users/all").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
-                .and().csrf().disable().formLogin().loginPage("/login")
+                .and().csrf().disable().formLogin().loginPage("/login").successForwardUrl("/start")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and().logout()/*.logoutSuccessUrl("/")*/
