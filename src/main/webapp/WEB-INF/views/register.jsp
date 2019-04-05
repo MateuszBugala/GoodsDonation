@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="pl">
 <head>
@@ -7,6 +8,17 @@
     <%@ include file="dependecies.jsp" %>
 </head>
 <body>
+
+<sec:authorize access="hasRole('ADMIN')">
+    <%@ include file="adminHeader.jsp" %>
+</sec:authorize>
+
+<sec:authorize access="hasRole('USER')">
+    <%@ include file="loggedHeader.jsp" %>
+</sec:authorize>
+
+<sec:authentication property="principal" var="principal"/>
+<c:if test="${principal == 'anonymousUser'}">
 <header>
     <nav class="container container--70">
         <ul class="nav--actions">
@@ -23,6 +35,8 @@
         </ul>
     </nav>
 </header>
+</c:if>
+
 
 <section class="login-page">
     <h2>Załóż konto</h2>

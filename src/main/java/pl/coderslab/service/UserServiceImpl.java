@@ -78,6 +78,16 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    public void changeStatus(Long id) {
+        User user = userRepository.findOne(id);
+        if (user.getEnabled() == 0) {
+            user.setEnabled(1);
+        } else {
+            user.setEnabled(0);
+        }
+        userRepository.save(user);
+    }
+
     public void delete(Long id) {
         userRepository.delete(id);
     }

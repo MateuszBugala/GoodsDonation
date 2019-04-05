@@ -12,20 +12,28 @@
 <section class="form--steps">
     <div class="form--steps-instructions">
         <div class="form--steps-container">
-            <h3>Lista użytkowników</h3>
+            <h3 style="display: inline">Lista użytkowników</h3>
+            <%--<button type="button" class="btn btn--without-border active"--%>
+                    <%--style="display: inline; margin-left: 10%"--%>
+                    <%--onclick="location.href='${pageContext.request.contextPath}/users/add'" type="button">Dodaj--%>
+                <%--użytkownika--%>
+            <%--</button>--%>
 
-            <p data-step="2"  class="active"> <br>
-            <c:if test ="${not empty param.error}">
-                <span style="color: darkred">Nie można usunąć - istnieją powiązane wpisy w bazie danych!</>
-            </c:if>
-            <c:if test ="${not empty param.deleted}">
-                <span style="color: darkgreen">Pozycja usunięta pomyślnie</>
-            </c:if>
+            <p data-step="2" class="active"> <br>
+                <c:if test="${not empty param.error}">
+                    <span style="color: darkred">Nie można usunąć - istnieją powiązane wpisy w bazie danych!</>
+                </c:if>
+                <c:if test="${not empty param.deleted}">
+                    <span style="color: darkgreen">Pozycja usunięta pomyślnie</>
+                </c:if>
             </p>
         </div>
     </div>
 
+
+
     <div class="form--steps-container">
+
 
         <table border="1">
 
@@ -34,9 +42,9 @@
             <th>ID</th>
             <th>Email</th>
             <th>Imię</th>
-            <th>Aktywny</th>
-            <th>Role</th>
-            <th colspan="3">Actions</th>
+            <th>Status</th>
+            <th>Rola</th>
+            <th colspan="3">Akcje</th>
             </thead>
 
             <tbody>
@@ -46,7 +54,9 @@
                     <td>${user.id}</td>
                     <td>${user.email}</td>
                     <td>${user.name}</td>
-                    <td>${user.enabled}</td>
+                    <td><c:if test="${user.enabled == 0}">nieaktywny</c:if>
+                        <c:if test="${user.enabled == 1}">aktywny</c:if>
+                    </td>
 
                     <td style="max-width: 400px">
                         <c:forEach items="${user.roles}" var="roles">
@@ -55,14 +65,15 @@
                     </td>
 
                     <td style=" text-align: center">
-                        <a href="#" class="btn--small" style="color: blue; font-weight: bold">Zmień status</a>
+                        <a href="/users/status/${user.id}" class="btn--small" style="color: blue; font-weight: bold">Zmień
+                            status</a>
                     </td>
                     <td style="width: 50px; text-align: center;">
                         <a href="/users/edit/${user.id}" class="btn--small" style="color: blue; font-weight: bold">Edytuj</a>
                     </td>
                     <td style="width: 50px; text-align: center">
                         <a href="/users/delete/${user.id}" class="btn--small" style="color: blue; font-weight: bold"
-                           onclick="return confirm('Are you sure you want to delete this item?');" >Usuń</a>
+                           onclick="return confirm('Are you sure you want to delete this item?');">Usuń</a>
                     </td>
 
                 </tr>
@@ -71,13 +82,17 @@
 
         </table>
 
+        <div style="display: block">
 
-
+            <button type="button" class="btn "
+                    style="display: inline; margin-left: 10%"
+                    onclick="location.href='${pageContext.request.contextPath}/users/add'" type="button">
+                Dodaj nowego użytkownika
+            </button>
+        </div>
 
     </div>
 </section>
-
-
 
 
 </body>

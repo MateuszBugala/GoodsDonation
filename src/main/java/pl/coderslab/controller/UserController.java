@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.model.Role;
 import pl.coderslab.model.User;
 import pl.coderslab.service.CurrentUser;
 import pl.coderslab.service.UserService;
@@ -13,6 +14,7 @@ import pl.coderslab.service.UserServiceImpl;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Set;
 
 @Controller
 @RequestMapping(path = "/users", produces = "text/html; charset=UTF-8")
@@ -37,13 +39,23 @@ public class UserController {
 
 
     @PostMapping("/add")
-    public String save(@Valid User user, BindingResult result) {
+    public String save(@Valid User user, BindingResult result, @AuthenticationPrincipal CurrentUser currentUser) {
         try {
             if (result.hasErrors()) {
                 return "users/add";
             }
             userService.saveUser(user);
-            return "redirect:/";
+//different redirect if user created by admin:
+            if (currentUser != null) {
+                Set<Role> roles = currentUser.getUser().getRoles();
+                for (Role el : roles) {
+                    if (el.getName().equals("ROLE_ADMIN")) {
+                        return "redirect:/users/all";
+                    }
+                }
+            }
+
+            return "redirect:/login";
         } catch (Exception e) {
             return "redirect:/users/add?duplicatedemail=true";
         }
@@ -85,6 +97,12 @@ public class UserController {
         } else {
             return "redirect:/dashboard";
         }
+    }
+
+    @RequestMapping("/status/{id}")
+    public String changeStatus(@PathVariable Long id) {
+        userService.changeStatus(id);
+        return "redirect:/users/all";
     }
 
 }

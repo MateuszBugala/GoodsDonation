@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html lang="pl">
 <head>
     <title>Document</title>
@@ -11,7 +12,13 @@
 
 
 <header class="header--form-page">
-    <%@ include file="../loggedHeader.jsp" %>
+    <security:authorize access="hasRole('ADMIN')">
+        <%@ include file="../adminHeader.jsp" %>
+    </security:authorize>
+
+    <security:authorize access="hasRole('USER')">
+        <%@ include file="../loggedHeader.jsp" %>
+    </security:authorize>
 
     <div class="slogan container container--90">
         <div class="slogan--item">

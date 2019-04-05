@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="pl">
@@ -26,6 +27,9 @@
 
 <section class="login-page">
     <h2>Zaloguj się</h2>
+    <c:if test="${not empty param.error}">
+        <span style="color: darkred">Błędny email lub hasło</>
+    </c:if>
 
     <form:form method="post" modelAttribute="user" action="/login">
         <div class="form-group">
