@@ -1,6 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="pl">
 <head>
@@ -8,7 +9,15 @@
     <%@ include file="../../dependecies.jsp" %>
 </head>
 <body>
-<%@ include file="../../loggedHeader.jsp" %>
+
+<security:authorize access="hasRole('ADMIN')">
+    <%@ include file="../../adminHeader.jsp" %>
+</security:authorize>
+
+<security:authorize access="hasRole('USER')">
+    <%@ include file="../../loggedHeader.jsp" %>
+</security:authorize>
+
 
 <section class="login-page">
     <h2>Moje konto</h2>

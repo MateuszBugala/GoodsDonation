@@ -58,9 +58,13 @@ public class UserController {
 
     @PostMapping("/edit")
     public String update(@RequestParam Long id, @RequestParam String name, @AuthenticationPrincipal CurrentUser currentUser) {
+        if (currentUser.getUser().getId() == id) {
+            userService.updateName(id, name);
+            currentUser.getUser().setName(name);
+            return "redirect:/users/profile/"+id;
+        }
         userService.updateName(id, name);
-        currentUser.getUser().setName(name);
-        return "redirect:/users/profile/"+id;
+        return "redirect:/users/all";
     }
 
     @RequestMapping("/delete/{id}")
