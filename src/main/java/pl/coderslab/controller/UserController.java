@@ -61,6 +61,25 @@ public class UserController {
         }
     }
 
+    @GetMapping("/add-admin")
+    public String addAdmin(Model model, HttpSession session) {
+        model.addAttribute("user", new User());
+        return "register";
+    }
+
+
+    @PostMapping("/add-admin")
+    public String saveAdmin(@Valid User user, BindingResult result) {
+        try {
+            if (result.hasErrors()) {
+                return "users/add";
+            }
+            userService.saveAdmin(user);
+            return "redirect:/users/all";
+        } catch (Exception e) {
+            return "redirect:/users/add?duplicatedemail=true";
+        }
+    }
 
     @GetMapping("/edit/{id}")
     public String update(@PathVariable Long id, Model model, HttpSession session) {

@@ -21,10 +21,10 @@
 
             <p data-step="2" class="active"> <br>
                 <c:if test="${not empty param.error}">
-                    <span style="color: darkred">Nie można usunąć - istnieją powiązane wpisy w bazie danych!</>
+                    <span style="color: darkred">Nie można usunąć - istnieją powiązane wpisy w bazie danych!</span>
                 </c:if>
                 <c:if test="${not empty param.deleted}">
-                    <span style="color: darkgreen">Pozycja usunięta pomyślnie</>
+                    <span style="color: darkgreen">Pozycja usunięta pomyślnie</span>
                 </c:if>
             </p>
         </div>
@@ -88,6 +88,15 @@
                     style="display: inline; margin-left: 10%"
                     onclick="location.href='${pageContext.request.contextPath}/users/add'" type="button">
                 Dodaj nowego użytkownika
+            </button>
+        </div>
+
+        <div style="display: block">
+
+            <button type="button" class="btn "
+                    style="display: inline; margin-left: 10%"
+                    onclick="location.href='${pageContext.request.contextPath}/users/add-admin'" type="button">
+                Dodaj nowego administratora
             </button>
         </div>
 
