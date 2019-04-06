@@ -5,10 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.model.City;
 import pl.coderslab.model.Institution;
+import pl.coderslab.model.InstitutionType;
+import pl.coderslab.service.CityService;
 import pl.coderslab.service.InstitutionService;
+import pl.coderslab.service.InstitutionTypeService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/institutions", produces = "text/html; charset=UTF-8")
@@ -17,12 +22,27 @@ public class InstitutionController {
     @Autowired
     private InstitutionService institutionService;
 
+    @Autowired
+    private InstitutionTypeService institutionTypeService;
+
+    @Autowired
+    private CityService cityService;
+
+    @ModelAttribute("institutionTypes")
+    public List<InstitutionType> getInstitutionTypes() {
+        return institutionTypeService.findAll();
+    }
+
+    @ModelAttribute("cities")
+    public List<City> getCities() {
+        return cityService.findAll();
+    }
+
     @RequestMapping("/all")
     public String all(Model model) {
         model.addAttribute("institutions", institutionService.findAll());
         return "app/institutions/all";
     }
-
 
     @GetMapping("/add")
     public String add(Model model) {
