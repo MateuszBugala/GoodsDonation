@@ -12,7 +12,7 @@
 <section class="form--steps">
     <div class="form--steps-instructions">
         <div class="form--steps-container">
-            <h3 style="display: inline">Lista zaufanych instytucji</h3>
+            <h3 style="display: inline">Lista miast</h3>
 
             <p data-step="2" class="active"> <br>
                 <c:if test="${not empty param.error}">
@@ -36,29 +36,21 @@
             <th>LP</th>
             <th>ID</th>
             <th>Nazwa</th>
-            <th>Misja</th>
-            <th>Typ</th>
-            <th>Miasto</th>
             <th colspan="2">Akcje</th>
             </thead>
 
             <tbody>
-            <c:forEach items="${institutions}" var="institution" varStatus="stat">
+            <c:forEach items="${cities}" var="city" varStatus="stat">
                 <tr>
                     <td>${stat.index+1}</td>
-                    <td>${institution.id}</td>
-                    <td>${institution.name}</td>
-                    <td>${institution.mission}</td>
-                    <td>${institution.institutionType.name}</td>
-                    <td>${institution.city.name}</td>
-
-
+                    <td>${city.id}</td>
+                    <td>${city.name}</td>
 
                     <td style="width: 50px; text-align: center;">
-                        <a href="/institutions/edit/${institution.id}" class="btn--small" style="color: blue; font-weight: bold">Edytuj</a>
+                        <a href="/cities/edit/${city.id}" class="btn--small" style="color: blue; font-weight: bold">Edytuj</a>
                     </td>
                     <td style="width: 50px; text-align: center">
-                        <a href="/institutions/delete/${institution.id}" class="btn--small" style="color: blue; font-weight: bold"
+                        <a href="/cities/delete/${city.id}" class="btn--small" style="color: blue; font-weight: bold"
                            onclick="return confirm('Czy na pewno usunąć pozycję?');">Usuń</a>
                     </td>
 
@@ -72,17 +64,8 @@
 
             <button type="button" class="btn "
                     style="display: inline; margin-left: 10%"
-                    onclick="location.href='${pageContext.request.contextPath}/institutions/add'" type="button">
-                Dodaj nową instytucję
-            </button>
-        </div>
-
-        <div style="display: block">
-
-            <button type="button" class="btn "
-                    style="display: inline; margin-left: 10%"
-                    onclick="location.href='${pageContext.request.contextPath}/cities/all'" type="button">
-                Lista miast
+                    onclick="location.href='${pageContext.request.contextPath}/cities/add'" type="button">
+                Dodaj nowe miasto
             </button>
         </div>
 
