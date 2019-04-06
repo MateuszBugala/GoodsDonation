@@ -32,18 +32,47 @@
                 <div class="form-section form-section--columns">
                     <div class="form-section--column">
 
-                        <div class="form-group form-group--inline">
-                            <label> Typ instytucji
-                                <form:select path="institutionType" id="type">
-                                    <form:option value="0" label="Wybierz"/><br>
-                                    <form:options items="${institutionTypes}" itemLabel="name" itemValue="id"/>
-                                </form:select><br>
-                                <form:errors path="institutionType" element="div"/>
 
-                            </label>
-                        </div>
 
-                        <div class="form-group form-group--inline">
+                            <%--<c:forEach items="${institutionTypes}" var="institutionType">--%>
+                            <%--<div class="form-group form-group--checkbox">--%>
+                            <%--<label style="justify-content: unset;">--%>
+                            <%----%>
+                            <%--<form:radiobutton path="institutionType" value="${institutionType.id}" id="type" <c:if test="${value=2}">checked="checked"</c:if>/>--%>
+
+                            <%--<span class="checkbox radio"></span>--%>
+                            <%--<span class="description">--%>
+                            <%--<div>${institutionType.name}</div>--%>
+                            <%--</span>--%>
+                            <%--</label>--%>
+                            <%--</div>--%>
+                            <%--</c:forEach>--%>
+
+                                    ${institution.institutionType.id}
+                        <c:forEach items="${institutionTypes}" var="institutionType">
+                            <div class="form-group form-group--checkbox">
+                                <label style="justify-content: unset;">
+                                    <c:choose>
+                                        <c:when test="${institutionType.id==3}">
+                                            <form:radiobutton path="institutionType" value="${institutionType.id}"
+                                                              id="type" checked="checked"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form:radiobutton path="institutionType" value="${institutionType.id}"
+                                                              id="type"/>
+                                        </c:otherwise>
+
+                                    </c:choose>
+
+                                    <span class="checkbox radio"></span>
+                                    <span class="description">
+                                        <div>${institutionType.name}</div>
+                                    </span>
+                                </label>
+                            </div>
+                        </c:forEach>
+
+                        <div class="form-group form-group--inline" style="margin-top: 15%">
                             <label> Nazwa
                                 <form:input type="text" path="name" id="name"/>
                                 <form:errors path="name" cssClass="" element="div"/>
@@ -73,29 +102,30 @@
                     </div>
 
                     <div class="form-section--column">
-                        <div class="form-group form-group--inline" style="margin-top: 60%">
+                        <div class="form-group form-group--inline" style="margin-top: 107%">
                             <label> Jeśli nie znajdujesz na liście
 
-                                <%--<button type="button" class="btn "--%>
+                                    <%--<button type="button" class="btn "--%>
                                     <%--style="display: inline; margin-left: 10%"--%>
-                                        <%--onclick="location.href='${pageContext.request.contextPath}/institutions/add-city'"--%>
-                                        <%--type="button">--%>
+                                    <%--onclick="location.href='${pageContext.request.contextPath}/institutions/add-city'"--%>
+                                    <%--type="button">--%>
                                     <%--Dodaj miasto--%>
-                                <%--</button>            --%>
+                                    <%--</button>            --%>
 
-                                <a type="button" class="btn" style="display: inline; margin-left: 10%" href=''
-    onclick="this.href='${pageContext.request.contextPath}/institutions/city?name='
-            +document.getElementById('name').value+
-            '&type='+document.getElementById('type').value+
-            '&mission='+document.getElementById('mission').value
-            ">Dodaj miasto</a>
+                                <a type="button" class="btn--small btn" style="display: inline; margin-left: 10%"
+                                   href=''
+                                   onclick="this.href='${pageContext.request.contextPath}/institutions/city?name='
+                                           +document.getElementById('name').value+
+                                           '&type='+document.getElementById('type').value+
+                                           '&mission='+document.getElementById('mission').value
+                                           ">Dodaj miasto</a>
                             </label>
                         </div>
                     </div>
 
                 </div>
 
-                <div class="form-group form-group--buttons">
+                <div class="form-group form-group--buttons" style="margin-top: 15%">
                     <button type="button" class="btn prev-step" onclick="history.back()">Wstecz</button>
                     <button type="submit" class="btn next-step">Zapisz</button>
                 </div>
