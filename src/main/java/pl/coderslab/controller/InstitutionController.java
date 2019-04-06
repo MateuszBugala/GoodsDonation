@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import pl.coderslab.model.City;
 import pl.coderslab.model.Institution;
 import pl.coderslab.model.InstitutionType;
@@ -12,11 +13,13 @@ import pl.coderslab.service.CityService;
 import pl.coderslab.service.InstitutionService;
 import pl.coderslab.service.InstitutionTypeService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping(path = "/institutions", produces = "text/html; charset=UTF-8")
+@SessionAttributes({"institutionTemp"})
 public class InstitutionController {
 
     @Autowired
@@ -45,8 +48,14 @@ public class InstitutionController {
     }
 
     @GetMapping("/add")
-    public String add(Model model) {
-        model.addAttribute("institution", new Institution());
+    public String add(Model model, HttpSession session, SessionStatus status) {
+        if (session.getAttribute("institutionTemp") == null) {
+            model.addAttribute("institution", new Institution());
+        } else {
+            Institution institutionTemp = (Institution) session.getAttribute("institutionTemp");
+            model.addAttribute("institution", institutionTemp);
+            status.setComplete();
+        }
         return "app/institutions/add";
     }
 
@@ -84,6 +93,34 @@ public class InstitutionController {
         } catch (Exception ConstraintViolationException) {
             return "redirect:/institutions/all?error=true";
         }
+    }
+
+    @GetMapping("/city")
+    public String addCity(Model model, @RequestParam String name,
+                          @RequestParam String mission,
+                          @RequestParam Long type) {
+        Institution institutionTemp = new Institution();
+        institutionTemp.setName(name);
+        institutionTemp.setMission(mission);
+        institutionTemp.setInstitutionType(institutionTypeService.findOne(type));
+        model.addAttribute("institutionTemp", institutionTemp);
+        return "redirect:/institutions/add-city";
+    }
+
+    @GetMapping("/add-city")
+    public String addCity(Model model) {
+        model.addAttribute("city", new City());
+        return "app/cities/add";
+    }
+
+
+    @PostMapping("/add-city")
+    public String saveCity(@Valid City city, BindingResult result) {
+        if (result.hasErrors()) {
+            return "app/institutions/add-city";
+        }
+        cityService.save(city);
+        return "redirect:/institutions/add";
     }
 
 }

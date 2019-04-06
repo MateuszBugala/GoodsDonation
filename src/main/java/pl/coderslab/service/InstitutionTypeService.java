@@ -18,4 +18,8 @@ public class InstitutionTypeService {
     public List<InstitutionType> findAll() {
         return institutionTypeRepository.findAll();
     }
+
+    public InstitutionType findOne(Long id) {
+        return institutionTypeRepository.findOne(id);
+    }
 }
