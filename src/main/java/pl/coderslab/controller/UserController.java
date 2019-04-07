@@ -99,13 +99,17 @@ public class UserController {
     }
 
     @RequestMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        try {
-            userService.delete(id);
-            return "redirect:/users/all?deleted=true";
-        } catch (Exception ConstraintViolationException) {
-            return "redirect:/users/all?error=true";
+    public String delete(@PathVariable Long id, @AuthenticationPrincipal CurrentUser currentUser) {
+        Long currentUserId = currentUser.getUser().getId();
+        if (currentUserId != id) {
+            try {
+                userService.delete(id);
+                return "redirect:/users/all?deleted=true";
+            } catch (Exception ConstraintViolationException) {
+                return "redirect:/users/all?error=true";
+            }
         }
+        return "redirect:/users/all?error=true";
     }
 
     @RequestMapping("/profile/{id}")
