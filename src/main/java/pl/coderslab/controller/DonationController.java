@@ -3,8 +3,10 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import pl.coderslab.model.City;
 import pl.coderslab.model.DonatedItem;
 import pl.coderslab.model.Donation;
 import pl.coderslab.model.Institution;
@@ -14,6 +16,7 @@ import pl.coderslab.service.DonationService;
 import pl.coderslab.service.InstitutionService;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -148,5 +151,36 @@ public class DonationController {
         return "app/donations/form7";
     }
 
+    @RequestMapping("/details/{id}")
+    public String details(@PathVariable Long id, Model model) {
+        model.addAttribute("donation", donationService.findById(id));
+        return "app/donations/details";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String update(@PathVariable Long id, Model model) {
+        model.addAttribute("donation", donationService.findById(id));
+        return "app/donations/edit";
+    }
+
+
+    @PostMapping("/edit")
+    public String update(@Valid Donation donation, BindingResult result) {
+        if (result.hasErrors()) {
+            return "/donations/edit";
+        }
+        donationService.save(donation);
+        return "redirect:/donations/all";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        try {
+            donationService.delete(id);
+            return "redirect:/donations/all?deleted=true";
+        } catch (Exception ConstraintViolationException) {
+            return "redirect:/donations/all?error=true";
+        }
+    }
 
 }

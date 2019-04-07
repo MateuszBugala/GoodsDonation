@@ -1,7 +1,6 @@
 package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +15,6 @@ import pl.coderslab.service.UserService;
 import pl.coderslab.service.UserServiceImpl;
 
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -62,7 +60,6 @@ public class HomeController {
         if (donation == null) {
             donation = new Donation();
             donation.setUser(currentUser.getUser());
-            donation.setRealized(false);
             model.addAttribute("donation", donation);
         }
         return "app/dashboard";

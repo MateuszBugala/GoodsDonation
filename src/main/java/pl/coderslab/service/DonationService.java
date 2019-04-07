@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.coderslab.model.Donation;
 import pl.coderslab.repository.DonationRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,6 +25,9 @@ public class DonationService {
     }
 
     public void save(Donation entity) {
+        entity.setDonated(false);
+        entity.setPickedUp(false);
+        entity.setCreationTime(LocalDateTime.now());
         donationRepository.save(entity);
     }
 

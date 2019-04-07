@@ -2,57 +2,120 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Donations - list</title>
+    <title>Darowizy</title>
+    <%@ include file="../../dependecies.jsp" %>
 </head>
 <body>
 
-<button onclick="location.href='http://localhost:8080/'" type="button">HOME</button>
+<%@ include file="../../adminHeader.jsp" %>
 
-<h3>Donations list:</h3>
+<section class="form--steps">
+    <div class="form--steps-instructions">
+        <div class="form--steps-container">
+            <h3 style="display: inline">Lista darowizn</h3>
 
-<table border="1">
+            <p data-step="2" class="active"><br>
 
-    <thead>
-        <th>LP</th>
-        <th>user</th>
-        <th>donatedItems</th>
-        <th>qty</th>
-        <th>institution</th>
-        <th>pickUpstreet</th>
-        <th>pickUpcity</th>
-        <th>pickUpzip</th>
-        <th>pickUpphoneNumber</th>
-        <th>pickUpDate</th>
-        <th>pickUpTime</th>
-        <th>pickUpRemarks</th>
-        <th>realized</th>
-        <th colspan="2">Actions</th>
-    </thead>
+                <c:if test="${not empty param.error}">
+                    <span style="color: darkred">Nie można usunąć - istnieją powiązane wpisy w bazie danych!</span>
+                </c:if>
+                <c:if test="${not empty param.deleted}">
+                    <span style="color: darkgreen">Pozycja usunięta pomyślnie</span>
+                </c:if>
+            </p>
+        </div>
+    </div>
 
-    <tbody>
-    <c:forEach items="${donations}" var="donation" varStatus="stat">
-        <tr>
-            <td>${stat.index+1}</td>
-            <td>${donation.user.name}</td>
-            <td>${donation.donatedItems}</td>
-            <td>${donation.qty}</td>
-            <td>${donation.institution.name}</td>
-            <td>${donation.pickUpstreet}</td>
-            <td>${donation.pickUpcity}</td>
-            <td>${donation.pickUpzip}</td>
-            <td>${donation.pickUpphoneNumber}</td>
-            <td>${donation.pickUpDate}</td>
-            <td>${donation.pickUpTime}</td>
-            <td>${donation.pickUpRemarks}</td>
-            <td>${donation.realized}</td>
 
-            <td style="width: 50px; text-align: center"><a href="/books/edit/${donation.id}" >Edit</a></td>
-            <td style="width: 50px; text-align: center"><a href="/books/delete/${donation.id}" onclick="return confirm('Are you sure you want to delete this item?');" >Delete</a></td>
-        </tr>
-    </c:forEach>
-    </tbody>
+    <div class="form--steps-container">
 
-</table>
+
+        <table border="1">
+
+            <thead>
+            <th>LP</th>
+            <th>Numer</th>
+            <th>Użytkownik</th>
+            <%--<th>Darowizna</th>--%>
+            <%--<th>Ilość</th>--%>
+            <th>Dla instytucji</th>
+            <th>Odebrane</th>
+            <th>Data odebrania</th>
+            <th>Przekazane</th>
+            <th>Data przekazania</th>
+            <th>Data utworzenia darowizny</th>
+            <th colspan="2">Akcje</th>
+            </thead>
+
+            <tbody>
+            <c:forEach items="${donations}" var="donation" varStatus="stat">
+                <tr>
+                    <td>${stat.index+1}</td>
+                    <td>${donation.id}</td>
+                    <td>${donation.user.name}</td>
+                    <%--<td style="max-width: 400px">--%>
+                        <%--<c:forEach items="${donation.donatedItems}" var="items">--%>
+                            <%--${items.name}<br>--%>
+                        <%--</c:forEach>--%>
+                    <%--</td>--%>
+
+                    <%--<td>${donation.qty}</td>--%>
+                    <td>${donation.institution.name}</td>
+
+                    <td><c:if test="${donation.pickedUp == false}">nie</c:if>
+                        <c:if test="${donation.pickedUp == true}">tak</c:if>
+                    </td>
+
+                    <td>
+                        <c:choose>
+                            <c:when test="${empty donation.actualPickUpDate}">
+                                ---
+                            </c:when>
+                            <c:otherwise>
+                                ${donation.actualPickUpDate}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+
+                    <td><c:if test="${donation.donated == false}">nie</c:if>
+                        <c:if test="${donation.donated == true}">tak</c:if>
+                    </td>
+
+                    <td>
+                        <c:choose>
+                            <c:when test="${empty donation.donationDate}">
+                                ---
+                            </c:when>
+                            <c:otherwise>
+                                ${donation.donationDate}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+
+                    <td>${donation.creationTime}</td>
+
+                    <td style="width: 50px; text-align: center;">
+                        <a href="/donations/details/${donation.id}" class="btn--small"
+                           style="color: blue; font-weight: bold">Szczegóły</a>
+                    </td>
+
+                </tr>
+            </c:forEach>
+            </tbody>
+
+        </table>
+
+        <div style="display: block">
+
+            <button type="button" class="btn"
+                    style="display: inline; margin-left: 10%"
+                    onclick="location.href='${pageContext.request.contextPath}/dashboard'" type="button">
+                Dodaj nową darowiznę
+            </button>
+        </div>
+
+    </div>
+</section>
 
 
 </body>

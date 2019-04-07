@@ -1,7 +1,9 @@
 package pl.coderslab.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,15 @@ public class Donation {
     private LocalTime pickUpTime;
     private String pickUpRemarks;
 
-    private boolean realized;
+    private boolean pickedUp;
+
+    private LocalDate actualPickUpDate;
+
+    private boolean donated;
+
+    private LocalDate donationDate;
+
+    private LocalDateTime creationTime;
 
     public Long getId() {
         return id;
@@ -132,12 +142,44 @@ public class Donation {
         this.pickUpRemarks = pickUpRemarks;
     }
 
-    public boolean isRealized() {
-        return realized;
+    public boolean isPickedUp() {
+        return pickedUp;
     }
 
-    public void setRealized(boolean realized) {
-        this.realized = realized;
+    public void setPickedUp(boolean pickedUp) {
+        this.pickedUp = pickedUp;
+    }
+
+    public LocalDate getActualPickUpDate() {
+        return actualPickUpDate;
+    }
+
+    public void setActualPickUpDate(LocalDate actualPickUpDate) {
+        this.actualPickUpDate = actualPickUpDate;
+    }
+
+    public boolean isDonated() {
+        return donated;
+    }
+
+    public void setDonated(boolean donated) {
+        this.donated = donated;
+    }
+
+    public LocalDate getDonationDate() {
+        return donationDate;
+    }
+
+    public void setDonationDate(LocalDate donationDate) {
+        this.donationDate = donationDate;
+    }
+
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
     }
 
     @Override
@@ -155,7 +197,7 @@ public class Donation {
                 ", pickUpDate=" + pickUpDate +
                 ", pickUpTime=" + pickUpTime +
                 ", pickUpRemarks='" + pickUpRemarks + '\'' +
-                ", realized=" + realized +
+                ", pickedUp=" + pickedUp +
                 '}';
     }
 }
