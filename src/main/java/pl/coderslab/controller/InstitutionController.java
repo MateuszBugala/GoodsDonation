@@ -98,10 +98,12 @@ public class InstitutionController {
     @GetMapping("/city")
     public String addCity(Model model, @RequestParam String name,
                           @RequestParam String mission,
+                          @RequestParam String needs,
                           @RequestParam Long type) {
         Institution institutionTemp = new Institution();
         institutionTemp.setName(name);
         institutionTemp.setMission(mission);
+        institutionTemp.setNeeds(needs);
         institutionTemp.setInstitutionType(institutionTypeService.findOne(type));
         model.addAttribute("institutionTemp", institutionTemp);
         return "redirect:/institutions/add-city";

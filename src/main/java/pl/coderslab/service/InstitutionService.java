@@ -35,4 +35,8 @@ public class InstitutionService {
         return institutionRepository.findAllByCityId(id);
     }
 
+    public List<Institution> findFirst3 (Long id) {
+        return institutionRepository.findFirst3ByInstitutionTypeId(id);
+    }
+
 }

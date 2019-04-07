@@ -28,16 +28,15 @@
 
 
     <div class="form--steps-container">
-
-
         <table border="1">
 
             <thead>
             <th>LP</th>
             <th>ID</th>
             <th>Nazwa</th>
-            <th>Misja</th>
             <th>Typ</th>
+            <th>Misja</th>
+            <th>Potrzeby</th>
             <th>Miasto</th>
             <th colspan="2">Akcje</th>
             </thead>
@@ -48,8 +47,9 @@
                     <td>${stat.index+1}</td>
                     <td>${institution.id}</td>
                     <td>${institution.name}</td>
-                    <td>${institution.mission}</td>
                     <td>${institution.institutionType.name}</td>
+                    <td>${institution.mission}</td>
+                    <td>${institution.needs}</td>
                     <td>${institution.city.name}</td>
 
 
@@ -70,8 +70,8 @@
 
         <div style="display: block">
 
-            <button type="button" class="btn "
-                    style="display: inline; margin-left: 10%"
+            <button type="button" class="btn"
+                    style="display: inline; margin-left: 10%; background-color: #fff;"
                     onclick="location.href='${pageContext.request.contextPath}/institutions/add'" type="button">
                 Dodaj nową instytucję
             </button>
@@ -80,7 +80,7 @@
         <div style="display: block">
 
             <button type="button" class="btn "
-                    style="display: inline; margin-left: 10%"
+                    style="display: inline; margin-left: 10%; background-color: #fff;"
                     onclick="location.href='${pageContext.request.contextPath}/cities/all'" type="button">
                 Lista miast
             </button>

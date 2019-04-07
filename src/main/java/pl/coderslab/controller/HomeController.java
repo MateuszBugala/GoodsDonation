@@ -9,10 +9,7 @@ import pl.coderslab.model.DonatedItem;
 import pl.coderslab.model.Donation;
 import pl.coderslab.model.Role;
 import pl.coderslab.model.User;
-import pl.coderslab.service.CurrentUser;
-import pl.coderslab.service.DonatedItemService;
-import pl.coderslab.service.UserService;
-import pl.coderslab.service.UserServiceImpl;
+import pl.coderslab.service.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -33,13 +30,23 @@ public class HomeController {
     @Autowired
     private DonatedItemService donatedItemService;
 
+    @Autowired
+    private DonationService donationService;
+
+    @Autowired
+    private InstitutionService institutionService;
+
     @ModelAttribute("donatedItems")
     public List<DonatedItem> findAll() {
         return donatedItemService.findAll();
     }
 
     @RequestMapping("/")
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("qty", donationService.donatedBags());
+        model.addAttribute("institutionsQty", donationService.donatedInstitutions());
+        model.addAttribute("foundations", institutionService.findFirst3(1L));
+        model.addAttribute("ngos", institutionService.findFirst3(2L));
         return "index";
     }
 

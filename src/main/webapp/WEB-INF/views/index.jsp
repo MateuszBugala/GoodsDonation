@@ -64,14 +64,20 @@
 <section class="stats">
     <div class="container container--85">
         <div class="stats--item">
-            <em>10</em>
+            <em>
+                <c:if test="${empty qty}">Jeszcze 0</c:if>
+                <c:if test="${not empty qty}">${qty}</c:if>
+            </em>
             <h3>Oddanych worków</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est beatae, quod accusamus illum
                 tempora!</p>
         </div>
 
         <div class="stats--item">
-            <em>5</em>
+            <em>
+                <c:if test="${institutionsQty == 0}">Jeszcze 0</c:if>
+                <c:if test="${institutionsQty > 0}">${qinstitutionsQtyty}</c:if>
+            </em>
             <h3>Wspartych organizacji</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magnam, sint nihil cupiditate quas
                 quam.</p>
@@ -140,38 +146,18 @@
             zajmują, komu pomagają i czego potrzebują.</p>
 
         <ul class="help--slides-items">
+            <c:forEach items="${foundations}" var="foundation">
             <li>
                 <div class="col">
-                    <div class="title">Fundacja "Dbam o Zdrowie"</div>
-                    <div class="subtitle">Cel i misja: Pomoc dzieciom z ubogich rodzin.</div>
+                    <div class="title">${foundation.name}</div>
+                    <div class="subtitle">Cel i misja: ${foundation.mission}</div>
                 </div>
 
                 <div class="col">
-                    <div class="text">ubrania, jedzenie, sprzęt AGD, meble, zabawki</div>
+                    <div class="text">${foundation.needs}</div>
                 </div>
             </li>
-
-            <li>
-                <div class="col">
-                    <div class="title">Fundacja “Dla dzieci"</div>
-                    <div class="subtitle">Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji życiowej.</div>
-                </div>
-
-                <div class="col">
-                    <div class="text">ubrania, meble, zabawki</div>
-                </div>
-            </li>
-
-            <li>
-                <div class="col">
-                    <div class="title">Fundacja “Bez domu”</div>
-                    <div class="subtitle">Cel i misja: Pomoc dla osób nie posiadających miejsca zamieszkania</div>
-                </div>
-
-                <div class="col">
-                    <div class="text">ubrania, jedzenie, ciepłe koce</div>
-                </div>
-            </li>
+            </c:forEach>
         </ul>
 
         <ul class="help--slides-pagination">
@@ -184,54 +170,23 @@
     <!-- SLIDE 2 -->
     <div class="help--slides" data-id="2">
         <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic officiis mollitia dolor, neque aspernatur
-            accusamus debitis. Ducimus, officia. Quia, sunt illum! Non iste placeat ab ipsum alias
-            quos suscipit corporis!
+            Poniżej znajdzisz zweryfikowane organizacje pozarządowe, z którymi współpracujemy:
         </p>
         <ul class="help--slides-items">
-            <li>
-                <div class="col">
-                    <div class="title">Organizacja 1</div>
-                    <div class="subtitle">Lorem ipsum dolor sit amet consectetur.</div>
-                </div>
+            <c:forEach items="${ngos}" var="ngo">
+                <li>
+                    <div class="col">
+                        <div class="title">${ngo.name}</div>
+                        <div class="subtitle">Cel i misja: ${ngo.mission}</div>
+                    </div>
 
-                <div class="col">
-                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                </div>
-            </li>
+                    <div class="col">
+                        <div class="text">${ngo.needs}</div>
+                    </div>
+                </li>
+            </c:forEach>
 
-            <li>
-                <div class="col">
-                    <div class="title">Organizacja 2</div>
-                    <div class="subtitle">Lorem ipsum dolor sit amet consectetur.</div>
-                </div>
 
-                <div class="col">
-                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                </div>
-            </li>
-
-            <li>
-                <div class="col">
-                    <div class="title">Organizacja 3</div>
-                    <div class="subtitle">Lorem ipsum dolor sit amet consectetur.</div>
-                </div>
-
-                <div class="col">
-                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                </div>
-            </li>
-
-            <li>
-                <div class="col">
-                    <div class="title">Organizacja 4</div>
-                    <div class="subtitle">Lorem ipsum dolor sit amet consectetur.</div>
-                </div>
-
-                <div class="col">
-                    <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                </div>
-            </li>
         </ul>
 
         <ul class="help--slides-pagination">

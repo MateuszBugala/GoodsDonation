@@ -8,7 +8,7 @@
                 Witaj ${principal.user.name}
                 <ul class="dropdown">
                     <li><a href="${pageContext.request.contextPath}/users/profile/${principal.user.id}">Mój profil</a></li>
-                    <li><a href="http://localhost:8080/logout">Wyloguj</a></li>
+                    <li><a href="${pageContext.request.contextPath}/logout">Wyloguj</a></li>
                 </ul>
             </li>
         </ul>

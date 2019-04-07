@@ -72,6 +72,15 @@
                         </div>
 
                         <div class="form-group form-group--inline">
+                            <label>
+                                Potrzeby
+                                <form:textarea path="needs" rows="5" id="needs"/>
+                                <form:errors path="needs" element="div"/>
+
+                            </label>
+                        </div>
+
+                        <div class="form-group form-group--inline">
                             <label> Miasto
                                 <form:select path="city">
                                     <form:option value="0" label="Wybierz"/><br>
@@ -85,7 +94,7 @@
                     </div>
 
                     <div class="form-section--column">
-                        <div class="form-group form-group--inline" style="margin-top: 107%">
+                        <div class="form-group form-group--inline" style="margin-top: 150%">
                             <label> Jeśli nie znajdujesz na liście
 
                                 <a type="button" class="btn--small btn" style="display: inline; margin-left: 10%"
@@ -93,7 +102,8 @@
                                    onclick="this.href='${pageContext.request.contextPath}/institutions/city?name='
                                            +document.getElementById('name').value+
                                            '&type='+document.querySelector('input[name=institutionType]:checked').value+
-                                           '&mission='+document.getElementById('mission').value
+                                           '&mission='+document.getElementById('mission').value+
+                                           '&needs='+document.getElementById('needs').value
                                            ">Dodaj miasto</a>
 
                             </label>
@@ -102,7 +112,7 @@
 
                 </div>
 
-                <div class="form-group form-group--buttons" style="margin-top: 15%">
+                <div class="form-group form-group--buttons" style="margin-top: 40px">
                     <button type="button" class="btn prev-step" onclick="history.back()">Wstecz</button>
                     <button type="submit" class="btn next-step">Zapisz</button>
                 </div>

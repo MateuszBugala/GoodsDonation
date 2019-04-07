@@ -9,4 +9,6 @@ public interface InstitutionRepository extends JpaRepository <Institution, Long>
 
     List<Institution> findAllByCityId (Long id);
 
+    List<Institution> findFirst3ByInstitutionTypeId(Long id);
+
 }

@@ -14,6 +14,7 @@ public class Institution {
 
     private String name;
     private String mission;
+    private String needs;
 
     @ManyToOne
     private InstitutionType institutionType;
@@ -70,5 +71,13 @@ public class Institution {
 
     public void setDonations(List<Donation> donations) {
         this.donations = donations;
+    }
+
+    public String getNeeds() {
+        return needs;
+    }
+
+    public void setNeeds(String needs) {
+        this.needs = needs;
     }
 }

@@ -73,6 +73,15 @@
                         </div>
 
                         <div class="form-group form-group--inline">
+                            <label>
+                                Potrzeby
+                                <form:textarea path="needs" rows="5" id="mission"/>
+                                <form:errors path="needs" element="div"/>
+
+                            </label>
+                        </div>
+
+                        <div class="form-group form-group--inline">
                             <label> Miasto
                                 <form:select path="city">
                                     <form:option value="0" label="Wybierz"/><br>

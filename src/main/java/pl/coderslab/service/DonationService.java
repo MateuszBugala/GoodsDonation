@@ -42,4 +42,12 @@ public class DonationService {
     public List<Donation> findAllByUserId( Long id) {
         return donationRepository.findAllByUserId(id);
     }
+
+    public Long donatedBags() {
+        return donationRepository.donatedBags();
+    }
+
+    public Long donatedInstitutions() {
+        return donationRepository.donatedInstitutions();
+    }
 }
