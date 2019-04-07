@@ -32,42 +32,25 @@
                 <div class="form-section form-section--columns">
                     <div class="form-section--column">
 
-
-
-                            <%--<c:forEach items="${institutionTypes}" var="institutionType">--%>
-                            <%--<div class="form-group form-group--checkbox">--%>
-                            <%--<label style="justify-content: unset;">--%>
-                            <%----%>
-                            <%--<form:radiobutton path="institutionType" value="${institutionType.id}" id="type" <c:if test="${value=2}">checked="checked"</c:if>/>--%>
-
-                            <%--<span class="checkbox radio"></span>--%>
-                            <%--<span class="description">--%>
-                            <%--<div>${institutionType.name}</div>--%>
-                            <%--</span>--%>
-                            <%--</label>--%>
-                            <%--</div>--%>
-                            <%--</c:forEach>--%>
-
-                                    ${institution.institutionType.id}
                         <c:forEach items="${institutionTypes}" var="institutionType">
                             <div class="form-group form-group--checkbox">
                                 <label style="justify-content: unset;">
                                     <c:choose>
-                                        <c:when test="${institutionType.id==3}">
-                                            <form:radiobutton path="institutionType" value="${institutionType.id}"
-                                                              id="type" checked="checked"/>
+                                        <c:when test="${institutionType.id==institution.institutionType.id}">
+                                            <form:radiobutton path="institutionType" value="${institutionType.id}" required="required"
+                                                              checked="checked"/>
                                         </c:when>
                                         <c:otherwise>
-                                            <form:radiobutton path="institutionType" value="${institutionType.id}"
-                                                              id="type"/>
+                                            <form:radiobutton path="institutionType" value="${institutionType.id}" required="required"
+                                                              />
                                         </c:otherwise>
 
                                     </c:choose>
 
                                     <span class="checkbox radio"></span>
                                     <span class="description">
-                                        <div>${institutionType.name}</div>
-                                    </span>
+                            <div>${institutionType.name}</div>
+                            </span>
                                 </label>
                             </div>
                         </c:forEach>
@@ -105,20 +88,14 @@
                         <div class="form-group form-group--inline" style="margin-top: 107%">
                             <label> Jeśli nie znajdujesz na liście
 
-                                    <%--<button type="button" class="btn "--%>
-                                    <%--style="display: inline; margin-left: 10%"--%>
-                                    <%--onclick="location.href='${pageContext.request.contextPath}/institutions/add-city'"--%>
-                                    <%--type="button">--%>
-                                    <%--Dodaj miasto--%>
-                                    <%--</button>            --%>
-
                                 <a type="button" class="btn--small btn" style="display: inline; margin-left: 10%"
                                    href=''
                                    onclick="this.href='${pageContext.request.contextPath}/institutions/city?name='
                                            +document.getElementById('name').value+
-                                           '&type='+document.getElementById('type').value+
+                                           '&type='+document.querySelector('input[name=institutionType]:checked').value+
                                            '&mission='+document.getElementById('mission').value
                                            ">Dodaj miasto</a>
+
                             </label>
                         </div>
                     </div>
