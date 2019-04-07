@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -104,7 +105,19 @@
             </tr>
             <tr>
                 <th>Odebrane</th>
-                <td><c:if test="${donation.pickedUp == false}">nie</c:if>
+                <td>
+                    <c:if test="${donation.pickedUp == false}">nie
+                        <security:authorize access="hasRole('ADMIN')">
+                        <span style="margin-left: 5%">
+                            <form method="post" action="/donations/picked-up" style="display: inline">
+                                <input type="hidden" name="donationId" value="${donation.id}"/>
+                                <input type="date" name="data" required min="2019-01-01" style="display: inline"/>
+
+                                <button type="submit" style="display: inline">Zmień na odebrane</button>
+                            </form>
+                        </span>
+                        </security:authorize>
+                    </c:if>
                     <c:if test="${donation.pickedUp == true}">tak</c:if>
                 </td>
             </tr>
@@ -122,8 +135,21 @@
                 </td>
             </tr>
             <tr>
-                <th>Przekazane</th>
-                <td><c:if test="${donation.donated == false}">nie</c:if>
+                <th>Przekazane instytucji</th>
+                <td><c:if test="${donation.donated == false}">nie
+                    <c:if test="${donation.pickedUp == true}">
+                    <security:authorize access="hasRole('ADMIN')">
+                    <span style="margin-left: 5%">
+                        <form method="post" action="/donations/received" style="display: inline">
+                            <input type="hidden" name="donationId" value="${donation.id}"/>
+                            <input type="date" name="data" required min="2019-01-01" style="display: inline"/>
+
+                            <button type="submit" style="display: inline">Zmień na przekazane</button>
+                        </form>
+                    </span>
+                    </security:authorize>
+                    </c:if>
+                </c:if>
                     <c:if test="${donation.donated == true}">tak</c:if>
                 </td>
             </tr>
@@ -159,15 +185,15 @@
             </div>
         </security:authorize>
 
-        <security:authorize access="hasRole('USER')">
-            <div style="display: block">
-                <button type="button" class="btn "
-                        style="display: inline; margin-left: 10%"
-                        onclick="location.href='${pageContext.request.contextPath}/donations/edit/${donation.id}'">
-                    Edytuj
-                </button>
-            </div>
-        </security:authorize>
+        <%--<security:authorize access="hasRole('USER')">--%>
+        <%--<div style="display: block">--%>
+        <%--<button type="button" class="btn "--%>
+        <%--style="display: inline; margin-left: 10%"--%>
+        <%--onclick="location.href='${pageContext.request.contextPath}/donations/edit/${donation.id}'">--%>
+        <%--Edytuj--%>
+        <%--</button>--%>
+        <%--</div>--%>
+        <%--</security:authorize>--%>
 
     </div>
 </section>

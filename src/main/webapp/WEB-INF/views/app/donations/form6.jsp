@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="pl">
 <head>
     <title>Document</title>
@@ -36,15 +37,17 @@
                         <ul>
                             <li>
                                 <span class="icon icon-bag"></span>
-                                <span class="summary--text"
-                                >4 worki ubrań w dobrym stanie</span
-                                >
+                                <span class="summary--text">Co:
+                                <c:forEach items="${donationTemp.donatedItems}" var="items">
+                                    ${items.name};
+                                </c:forEach>
+                                    <br>Worków: ${donationTemp.qty}</span>
                             </li>
 
                             <li>
                                 <span class="icon icon-hand"></span>
                                 <span class="summary--text"
-                                >Dla fundacji "${donation.institution.name}" z miasta ${donation.institution.city.name}</span
+                                >Dla fundacji "${donationTemp.institution.name}" z miasta ${donationTemp.institution.city.name}</span
                                 >
                             </li>
                         </ul>
@@ -54,19 +57,19 @@
                         <div class="form-section--column">
                             <h4>Adres odbioru:</h4>
                             <ul>
-                                <li>${donation.pickUpstreet}</li>
-                                <li>${donation.pickUpcity}</li>
-                                <li>${donation.pickUpzip}</li>
-                                <li>${donation.pickUpphoneNumber}</li>
+                                <li>${donationTemp.pickUpstreet}</li>
+                                <li>${donationTemp.pickUpcity}</li>
+                                <li>${donationTemp.pickUpzip}</li>
+                                <li>${donationTemp.pickUpphoneNumber}</li>
                             </ul>
                         </div>
 
                         <div class="form-section--column">
                             <h4>Termin odbioru:</h4>
                             <ul>
-                                <li>${donation.pickUpDate}</li>
-                                <li>${donation.pickUpTime}</li>
-                                <li>Uwagi: ${donation.pickUpRemarks}</li>
+                                <li>${donationTemp.pickUpDate}</li>
+                                <li>${donationTemp.pickUpTime}</li>
+                                <li>Uwagi: ${donationTemp.pickUpRemarks}</li>
                             </ul>
                         </div>
                     </div>

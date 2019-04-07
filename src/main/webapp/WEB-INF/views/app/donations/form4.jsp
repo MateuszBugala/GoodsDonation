@@ -41,7 +41,7 @@
                     <div class="form-group form-group--checkbox">
                         <label>
                             <input type="radio" name="selIntitution" value="${institution.id}" required
-                                    <c:if test="${institution.id==donation.institution.id}"> checked </c:if>
+                                    <c:if test="${institution.id==donationTemp.institution.id}"> checked </c:if>
                             />
                             <span class="checkbox radio"></span>
                             <span class="description">

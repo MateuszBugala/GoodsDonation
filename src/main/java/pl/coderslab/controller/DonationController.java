@@ -22,7 +22,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path = "/donations", produces = "text/html; charset=UTF-8")
-@SessionAttributes({"donation", "selCity"})
+@SessionAttributes({"donationTemp", "selCity"})
 public class DonationController {
 
     @Autowired
@@ -52,7 +52,7 @@ public class DonationController {
 
     @PostMapping("/step-1")
     public String step1b(Model model, @RequestParam(name = "donatedItems[]") String[] selectedItems, HttpSession session) {
-        Donation donation = (Donation) session.getAttribute("donation");
+        Donation donation = (Donation) session.getAttribute("donationTemp");
 
         List<DonatedItem> donatedItems = new ArrayList<>();
         for (int i = 0; i < selectedItems.length ; i++) {
@@ -62,7 +62,7 @@ public class DonationController {
         }
         donation.setDonatedItems(donatedItems);
 
-        model.addAttribute("donation", donation);
+        model.addAttribute("donationTemp", donation);
         return "redirect:/donations/step-2";
     }
 
@@ -73,9 +73,9 @@ public class DonationController {
 
     @PostMapping("/step-2")
     public String step2b(Model model, @RequestParam int bagsQty, HttpSession session ) {
-        Donation donation = (Donation) session.getAttribute("donation");
+        Donation donation = (Donation) session.getAttribute("donationTemp");
         donation.setQty(bagsQty);
-        model.addAttribute("donation", donation);
+        model.addAttribute("donationTemp", donation);
         return "redirect:/donations/step-3";
     }
 
@@ -106,9 +106,9 @@ public class DonationController {
 
     @PostMapping("/step-4")
     public String step4b(Model model, @RequestParam Long selIntitution, HttpSession session) {
-        Donation donation = (Donation) session.getAttribute("donation");
+        Donation donation = (Donation) session.getAttribute("donationTemp");
         donation.setInstitution(institutionService.findById(selIntitution));
-        model.addAttribute("donation", donation);
+        model.addAttribute("donationTemp", donation);
         return "redirect:/donations/step-5";
     }
 
@@ -126,7 +126,7 @@ public class DonationController {
                          @RequestParam String time,
                          @RequestParam String remarks,
                          HttpSession session) {
-        Donation donation = (Donation) session.getAttribute("donation");
+        Donation donation = (Donation) session.getAttribute("donationTemp");
         donation.setPickUpstreet(address);
         donation.setPickUpcity(city);
         donation.setPickUpzip(postcode);
@@ -134,7 +134,7 @@ public class DonationController {
         donation.setPickUpDate(LocalDate.parse(data));
         donation.setPickUpTime(LocalTime.parse(time));
         donation.setPickUpRemarks(remarks);
-        model.addAttribute("donation", donation);
+        model.addAttribute("donationTemp", donation);
         return "redirect:/donations/step-6";
     }
 
@@ -145,7 +145,7 @@ public class DonationController {
 
     @PostMapping("/step-6")
     public String step6b(Model model,HttpSession session, SessionStatus status) {
-        Donation donation = (Donation) session.getAttribute("donation");
+        Donation donation = (Donation) session.getAttribute("donationTemp");
         donationService.save(donation);
         status.setComplete();
         return "redirect:/donations/step-7";
@@ -187,5 +187,25 @@ public class DonationController {
             return "redirect:/donations/all?error=true";
         }
     }
+
+    @PostMapping("/picked-up")
+    public String pickedUp(@RequestParam Long donationId,@RequestParam String data, Model model) {
+        Donation donation = donationService.findById(donationId);
+        donation.setPickedUp(true);
+        donation.setActualPickUpDate(LocalDate.parse(data));
+        donationService.update(donation);
+        return "redirect:/donations/details/"+donationId;
+    }
+
+    @PostMapping("/received")
+    public String received(@RequestParam Long donationId,@RequestParam String data, Model model) {
+        Donation donation = donationService.findById(donationId);
+        donation.setDonated(true);
+        donation.setDonationDate(LocalDate.parse(data));
+        donationService.update(donation);
+        return "redirect:/donations/details/"+donationId;
+    }
+
+
 
 }

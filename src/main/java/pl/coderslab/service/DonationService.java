@@ -31,6 +31,10 @@ public class DonationService {
         donationRepository.save(entity);
     }
 
+    public void update(Donation entity) {
+        donationRepository.save(entity);
+    }
+
     public void delete(Long id) {
         donationRepository.delete(id);
     }

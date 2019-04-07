@@ -48,7 +48,7 @@
             <th>Dla instytucji</th>
             <th>Odebrane</th>
             <th>Data odebrania</th>
-            <th>Przekazane</th>
+            <th>Przekazane instytucji</th>
             <th>Data przekazania</th>
             <th>Data utworzenia darowizny</th>
             <th colspan="2">Akcje</th>

@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping(path = "/", produces = "text/html; charset=UTF-8")
-@SessionAttributes({"donation"})
+@SessionAttributes({"donationTemp"})
 public class HomeController {
 
     @Autowired
@@ -56,11 +56,11 @@ public class HomeController {
 
     @RequestMapping("/dashboard")
     public String dashboard(@AuthenticationPrincipal CurrentUser currentUser, Model model, HttpSession session) {
-        Donation donation = (Donation) session.getAttribute("donation");
+        Donation donation = (Donation) session.getAttribute("donationTemp");
         if (donation == null) {
             donation = new Donation();
             donation.setUser(currentUser.getUser());
-            model.addAttribute("donation", donation);
+            model.addAttribute("donationTemp", donation);
         }
         return "app/dashboard";
     }

@@ -72,7 +72,7 @@
                     <div class="form-group form-group--checkbox">
                         <label>
                             <input type="checkbox" name="donatedItems[]" value="${item.id}" required class='acb'
-                                    <c:forEach items="${donation.donatedItems}" var="sessionItem">
+                                    <c:forEach items="${donationTemp.donatedItems}" var="sessionItem">
                                         <c:if test="${item.id==sessionItem.id}"> checked </c:if>
                                     </c:forEach>
                             />
