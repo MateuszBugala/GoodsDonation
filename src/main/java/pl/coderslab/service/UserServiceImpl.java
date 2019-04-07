@@ -89,8 +89,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public void delete(Long id) {
-        User user = userRepository.findOne(id);
-        user.setRoles(null);
         userRepository.delete(id);
     }
 }
