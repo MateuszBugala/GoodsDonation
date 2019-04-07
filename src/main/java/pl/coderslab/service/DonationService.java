@@ -34,4 +34,8 @@ public class DonationService {
     public void delete(Long id) {
         donationRepository.delete(id);
     }
+
+    public List<Donation> findAllByUserId( Long id) {
+        return donationRepository.findAllByUserId(id);
+    }
 }

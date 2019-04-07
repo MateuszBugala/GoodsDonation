@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,7 +8,13 @@
 </head>
 <body>
 
-<%@ include file="../../adminHeader.jsp" %>
+<security:authorize access="hasRole('ADMIN')">
+    <%@ include file="../../adminHeader.jsp" %>
+</security:authorize>
+
+<security:authorize access="hasRole('USER')">
+    <%@ include file="../../loggedHeader.jsp" %>
+</security:authorize>
 
 <section class="form--steps">
     <div class="form--steps-instructions">
@@ -138,41 +145,29 @@
                 <td>${donation.creationTime}</td>
             </tr>
 
-            <%--<tr>--%>
-                <%--<th rowspan="2">Akcje</th>--%>
-                <%--<td style="text-align: center;">--%>
-                    <%--<a href="/donations/edit/${donation.id}" class="btn--small"--%>
-                       <%--style="color: blue; font-weight: bold">Edytuj</a>--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td style="text-align: center">--%>
-                    <%--<a href="/donations/delete/${donation.id}" class="btn--small"--%>
-                       <%--style="color: blue; font-weight: bold"--%>
-                       <%--onclick="return confirm('Czy na pewno usunąć pozycję?');">Usuń</a>--%>
-                <%--</td>--%>
-            <%--</tr>--%>
             </tbody>
 
         </table>
 
-        <div style="display: block">
+        <security:authorize access="hasRole('ADMIN')">
+            <div style="display: block">
+                <button class="btn" style="display: inline; margin-left: 10%">
+                    <a href="/donations/delete/${donation.id}"
+                       onclick="return confirm('Czy na pewno usunąć pozycję?')">Usuń
+                    </a>
+                </button>
+            </div>
+        </security:authorize>
 
-            <button type="button" class="btn "
-                    style="display: inline; margin-left: 10%"
-                    onclick="location.href='${pageContext.request.contextPath}/donations/edit/${donation.id}'">
-                Edytuj
-            </button>
-
-        </div>
-
-        <div style="display: block">
-            <button class="btn" style="display: inline; margin-left: 20%">
-                <a href="/donations/delete/${donation.id}"
-                   onclick="return confirm('Czy na pewno usunąć pozycję?')">Usuń
-                </a>
-            </button>
-        </div>
+        <security:authorize access="hasRole('USER')">
+            <div style="display: block">
+                <button type="button" class="btn "
+                        style="display: inline; margin-left: 10%"
+                        onclick="location.href='${pageContext.request.contextPath}/donations/edit/${donation.id}'">
+                    Edytuj
+                </button>
+            </div>
+        </security:authorize>
 
     </div>
 </section>

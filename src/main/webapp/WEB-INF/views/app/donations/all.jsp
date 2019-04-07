@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,7 +8,13 @@
 </head>
 <body>
 
-<%@ include file="../../adminHeader.jsp" %>
+<security:authorize access="hasRole('ADMIN')">
+    <%@ include file="../../adminHeader.jsp" %>
+</security:authorize>
+
+<security:authorize access="hasRole('USER')">
+    <%@ include file="../../loggedHeader.jsp" %>
+</security:authorize>
 
 <section class="form--steps">
     <div class="form--steps-instructions">
@@ -35,9 +42,9 @@
             <thead>
             <th>LP</th>
             <th>Numer</th>
-            <th>Użytkownik</th>
-            <%--<th>Darowizna</th>--%>
-            <%--<th>Ilość</th>--%>
+            <security:authorize access="hasRole('ADMIN')">
+                <th>Użytkownik</th>
+            </security:authorize>
             <th>Dla instytucji</th>
             <th>Odebrane</th>
             <th>Data odebrania</th>
@@ -52,14 +59,11 @@
                 <tr>
                     <td>${stat.index+1}</td>
                     <td>${donation.id}</td>
-                    <td>${donation.user.name}</td>
-                    <%--<td style="max-width: 400px">--%>
-                        <%--<c:forEach items="${donation.donatedItems}" var="items">--%>
-                            <%--${items.name}<br>--%>
-                        <%--</c:forEach>--%>
-                    <%--</td>--%>
 
-                    <%--<td>${donation.qty}</td>--%>
+                    <security:authorize access="hasRole('ADMIN')">
+                        <td>${donation.user.name}</td>
+                    </security:authorize>
+
                     <td>${donation.institution.name}</td>
 
                     <td><c:if test="${donation.pickedUp == false}">nie</c:if>

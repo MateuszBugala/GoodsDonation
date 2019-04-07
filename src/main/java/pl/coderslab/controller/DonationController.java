@@ -1,6 +1,7 @@
 package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,10 +11,7 @@ import pl.coderslab.model.City;
 import pl.coderslab.model.DonatedItem;
 import pl.coderslab.model.Donation;
 import pl.coderslab.model.Institution;
-import pl.coderslab.service.CityService;
-import pl.coderslab.service.DonatedItemService;
-import pl.coderslab.service.DonationService;
-import pl.coderslab.service.InstitutionService;
+import pl.coderslab.service.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -42,6 +40,13 @@ public class DonationController {
     @RequestMapping("/all")
     public String all(Model model) {
         model.addAttribute("donations", donationService.findAll());
+        return "app/donations/all";
+    }
+
+    @RequestMapping("/my-donations")
+    public String myDonations(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        Long userId = currentUser.getUser().getId();
+        model.addAttribute("donations", donationService.findAllByUserId(userId));
         return "app/donations/all";
     }
 
