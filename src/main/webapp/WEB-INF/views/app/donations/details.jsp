@@ -16,8 +16,7 @@
 
             <button type="button" class="btn active"
                     style="display: inline; margin-left: 10%"
-                    onclick="location.href='${pageContext.request.contextPath}/donations/add'" type="button">
-                Dodaj nową darowiznę
+                    onclick="history.back()">Wstecz
             </button>
 
             <p data-step="2" class="active">

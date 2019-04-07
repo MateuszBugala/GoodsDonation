@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html lang="pl">
 <head>
     <title>Document</title>
@@ -8,7 +9,13 @@
 </head>
 <body>
 
-<%@ include file="../../loggedHeader.jsp" %>
+<security:authorize access="hasRole('ADMIN')">
+    <%@ include file="../../adminHeader.jsp" %>
+</security:authorize>
+
+<security:authorize access="hasRole('USER')">
+    <%@ include file="../../loggedHeader.jsp" %>
+</security:authorize>
 
 <section class="form--steps">
     <div class="form--steps-instructions">
