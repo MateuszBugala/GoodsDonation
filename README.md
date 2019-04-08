@@ -1,5 +1,5 @@
 The GoodsDonation project is a light web-based application for people who want to donate some of their daily goods to those in need.
-It works like of hub between many kind of charity institutions and individuals who would like to make a donation.
+It works like a hub between many kind of charity institutions and individuals who would like to make a donation.
 
 It solves a problem of: 
 -	credibility of charity institutions – only verified and profiled institutions can be donees in this app; so that donors know exactly that their donation is received by those who really needs it
