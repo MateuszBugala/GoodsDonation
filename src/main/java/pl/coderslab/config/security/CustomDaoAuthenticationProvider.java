@@ -1,9 +1,10 @@
-package pl.coderslab.service;
+package pl.coderslab.config.security;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import pl.coderslab.config.security.CurrentUser;
 
 public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
 

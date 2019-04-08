@@ -5,6 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.config.security.CurrentUser;
 import pl.coderslab.model.DonatedItem;
 import pl.coderslab.model.Donation;
 import pl.coderslab.model.Role;

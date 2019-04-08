@@ -8,8 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Role;
 import pl.coderslab.model.User;
-import pl.coderslab.service.CurrentUser;
-import pl.coderslab.service.UserService;
+import pl.coderslab.config.security.CurrentUser;
 import pl.coderslab.service.UserServiceImpl;
 
 import javax.servlet.http.HttpSession;

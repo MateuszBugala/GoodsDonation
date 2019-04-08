@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import pl.coderslab.model.City;
+import pl.coderslab.config.security.CurrentUser;
 import pl.coderslab.model.DonatedItem;
 import pl.coderslab.model.Donation;
 import pl.coderslab.model.Institution;
