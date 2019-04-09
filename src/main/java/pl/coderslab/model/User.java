@@ -2,8 +2,11 @@ package pl.coderslab.model;
 
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,11 +19,15 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
     @Email
     private String email;
 
+    @NotBlank
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Hasło musi mieć min. 8 znaków w tym min. 1: małą literę, wielką literę, cyfrę, znak specjalny")
     private String password;
 
+    @NotBlank(message = "Imię nie może być puste")
     private String name;
 
     private int enabled;

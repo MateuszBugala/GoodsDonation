@@ -41,7 +41,7 @@ public class UserController {
     public String save(@Valid User user, BindingResult result, @AuthenticationPrincipal CurrentUser currentUser) {
         try {
             if (result.hasErrors()) {
-                return "users/add";
+                return "register";
             }
             userService.saveUser(user);
 //different redirect if user created by admin:
