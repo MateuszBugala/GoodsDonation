@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3>Cześć <span data-th-text="${name}">Sebastian</span>,</h3>
+<!--<span th:text="${token}"></span>-->
+
+<h4>Kliknij w poniższy link, aby dokończyć tworzenie konta na GoodsDonation:
+    <a href="activate.html" th:href="@{http://localhost:8080/users/activation(token=${token})}">aktywuj konto</a></h4>
+
+</body>
+</html>
