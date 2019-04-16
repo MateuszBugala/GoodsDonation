@@ -54,7 +54,7 @@ public class UserController {
                 }
             }
 
-            return "redirect:/login";
+            return "redirect:/activation?sent=true";
         } catch (Exception e) {
             return "redirect:/users/add?duplicatedemail=true";
         }
@@ -125,6 +125,20 @@ public class UserController {
     public String changeStatus(@PathVariable Long id) {
         userService.changeStatus(id);
         return "redirect:/users/all";
+    }
+
+    @RequestMapping("/activation")
+    public String changeStatus(@RequestParam String token) {
+        User user = userService.findByToken(token);
+        if (user != null) {
+            user.setActivated(true);
+            user.setToken(null);
+            userService.update(user);
+            return "redirect:/activation?active=true";
+        } else {
+            return "redirect:/403";
+        }
+
     }
 
 }

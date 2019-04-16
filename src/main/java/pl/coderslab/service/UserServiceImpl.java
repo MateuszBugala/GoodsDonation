@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.coderslab.model.Role;
+import pl.coderslab.model.Token;
 import pl.coderslab.model.User;
 import pl.coderslab.repository.RoleRepository;
 import pl.coderslab.repository.UserRepository;
@@ -22,6 +23,8 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public User findByEmail(String email) {
@@ -34,6 +37,10 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(1);
         Role userRole = roleRepository.findByName("ROLE_USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        user.setActivated(false);
+        String token = new Token().generateRandom(30);
+        user.setToken(token);
+        emailService.send(user.getEmail(), user.getName(), token);
         userRepository.save(user);
     }
 
@@ -90,5 +97,9 @@ public class UserServiceImpl implements UserService {
 
     public void delete(Long id) {
         userRepository.delete(id);
+    }
+
+    public User findByToken(String token) {
+        return userRepository.findByToken(token);
     }
 }
