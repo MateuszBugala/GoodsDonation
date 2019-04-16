@@ -81,11 +81,12 @@ public class HomeController {
         user.setEmail("user@user.com");
         user.setPassword("1");
         user.setName("User1");
-        userService.saveUser(user);
+        userServiceImpl.saveUser(user);
         User user2 = new User();
         user2.setEmail("admin@admin.com");
         user2.setPassword("1");
         user2.setName("Admin1");
+        user2.setActivated(true);
         userServiceImpl.saveAdmin(user2);
         return "users created";
     }
@@ -96,6 +97,8 @@ public class HomeController {
 //        User user = new User();
 //        user.setEmail("admin@admin.com");
 //        user.setPassword("1");
+//        user.setName("Admin1");
+//        user.setActivated(true);
 //        userServiceImpl.saveAdmin(user);
 //        return "admin created";
 //    }

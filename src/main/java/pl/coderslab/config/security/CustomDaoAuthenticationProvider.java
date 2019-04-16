@@ -14,11 +14,19 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
         CurrentUser user = (CurrentUser) userDetails;
         if (user.getUser().getEnabled() == 0) {
             throw new UserDisabledException("User is disabled");
+        } else if (user.getUser().isActivated() == false) {
+            throw new UserNotActivatedException("User account is not activated");
         }
     }
 
     public static class UserDisabledException extends AuthenticationException {
         public UserDisabledException(String message) {
+            super(message);
+        }
+    }
+
+    public static class UserNotActivatedException extends AuthenticationException {
+        public UserNotActivatedException(String message) {
             super(message);
         }
     }

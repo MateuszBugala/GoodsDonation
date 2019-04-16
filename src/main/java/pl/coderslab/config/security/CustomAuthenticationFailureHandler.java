@@ -20,6 +20,10 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         else if (exception instanceof CustomDaoAuthenticationProvider.UserDisabledException) {
             setDefaultFailureUrl("/403");
         }
+        else if (exception instanceof CustomDaoAuthenticationProvider.UserNotActivatedException) {
+            setDefaultFailureUrl("/403?activated=false");
+        }
+
 
         super.onAuthenticationFailure(request, response, exception);
 
