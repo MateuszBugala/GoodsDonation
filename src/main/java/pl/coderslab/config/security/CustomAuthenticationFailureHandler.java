@@ -14,10 +14,10 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
-        if(exception.getClass().isAssignableFrom(BadCredentialsException.class)) {
+        if(exception instanceof BadCredentialsException) {
             setDefaultFailureUrl("/login?error=true");
         }
-        else if (exception.getClass().isAssignableFrom(CustomDaoAuthenticationProvider.UserDisabledException.class)) {
+        else if (exception instanceof CustomDaoAuthenticationProvider.UserDisabledException) {
             setDefaultFailureUrl("/403");
         }
 
