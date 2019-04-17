@@ -76,7 +76,7 @@ public class HomeController {
     //  create test users:
     @GetMapping("/create-user")
     @ResponseBody
-    public String createUser() {
+    public String createUser() throws UserServiceImpl.DuplicatedEmailException {
         User user = new User();
         user.setEmail("user@user.com");
         user.setPassword("1");

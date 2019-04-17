@@ -32,16 +32,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(1);
-        Role userRole = roleRepository.findByName("ROLE_USER");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        user.setActivated(false);
-        String token = new Token().generateRandom(30);
-        user.setToken(token);
-        emailService.send(user.getEmail(), user.getName(), token);
-        userRepository.save(user);
+    public void saveUser(User user) throws DuplicatedEmailException {
+        if (userRepository.findByEmail(user.getEmail()) == null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setEnabled(1);
+            Role userRole = roleRepository.findByName("ROLE_USER");
+            user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+            user.setActivated(false);
+            String token = new Token().generateRandom(30);
+            user.setToken(token);
+            emailService.send(user.getEmail(), user.getName(), token);
+            userRepository.save(user);
+        }
+        else {
+            throw new DuplicatedEmailException("There is already such email address in database");
+        }
+
+    }
+
+    public static class DuplicatedEmailException extends Exception {
+        public DuplicatedEmailException(String message) {
+            super(message);
+        }
     }
 
     public void saveAdmin(User user) {

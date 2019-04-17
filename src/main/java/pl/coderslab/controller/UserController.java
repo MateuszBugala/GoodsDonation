@@ -55,7 +55,7 @@ public class UserController {
             }
 
             return "redirect:/activation?sent=true";
-        } catch (Exception e) {
+        } catch (UserServiceImpl.DuplicatedEmailException e) {
             return "redirect:/users/add?duplicatedemail=true";
         }
     }
