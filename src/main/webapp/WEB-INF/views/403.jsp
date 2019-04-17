@@ -40,11 +40,15 @@
 
 <c:choose>
     <c:when test="${not empty param.activated}">
-
         <h3>Twoje konto nie zostało jeszcze aktywowane</h3>
         <p data-step="1"  class="active">Sprawdź adres email podany przy logowaniu i kliknij w link aktywacyjny</p>
-
     </c:when>
+
+    <c:when test="${not empty param.expired}">
+        <h3>Link aktywacyjny już wygasł</h3>
+        <p data-step="1"  class="active">Wygeneruj nowy link aktywacyjny i spróbuj jeszcze raz</p>
+    </c:when>
+
     <c:otherwise>
         <h3>Niestety nie masz dostępu do tej strony</h3>
         <p data-step="1"  class="active">Jeśli uważasz, że to błąd, napisz: admin@admin.pl</p>

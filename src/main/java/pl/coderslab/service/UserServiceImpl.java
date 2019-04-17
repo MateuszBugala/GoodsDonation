@@ -8,11 +8,13 @@ import pl.coderslab.model.Role;
 import pl.coderslab.model.Token;
 import pl.coderslab.model.User;
 import pl.coderslab.repository.RoleRepository;
+import pl.coderslab.repository.TokenRepository;
 import pl.coderslab.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,6 +27,8 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private TokenRepository tokenRepository;
 
     @Override
     public User findByEmail(String email) {
@@ -39,10 +43,11 @@ public class UserServiceImpl implements UserService {
             Role userRole = roleRepository.findByName("ROLE_USER");
             user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
             user.setActivated(false);
-            String token = new Token().generateRandom(30);
-            user.setToken(token);
-            emailService.send(user.getEmail(), user.getName(), token);
+            String token = UUID.randomUUID().toString();
             userRepository.save(user);
+            createVerificationToken(user,token);
+            emailService.send(user.getEmail(), user.getName(), token);
+
         }
         else {
             throw new DuplicatedEmailException("There is already such email address in database");
@@ -108,10 +113,28 @@ public class UserServiceImpl implements UserService {
     }
 
     public void delete(Long id) {
+        Token token = tokenRepository.findByUser(findById(id));
+        if (token != null) {
+            deleteVerificationToken(token);
+        }
         userRepository.delete(id);
     }
 
-    public User findByTokenAndEmail(String token, String email) {
-        return userRepository.findByTokenAndEmail(token, email);
+    public User getUser(String verificationToken) {
+        User user = tokenRepository.findByToken(verificationToken).getUser();
+        return user;
+    }
+
+    public Token getVerificationToken(String VerificationToken) {
+        return tokenRepository.findByToken(VerificationToken);
+    }
+
+    public void createVerificationToken(User user, String token) {
+        Token myToken = new Token(token, user);
+        tokenRepository.save(myToken);
+    }
+
+    public void deleteVerificationToken(Token token) {
+        tokenRepository.delete(token.getId());
     }
 }

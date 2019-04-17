@@ -7,12 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Role;
+import pl.coderslab.model.Token;
 import pl.coderslab.model.User;
 import pl.coderslab.config.security.CurrentUser;
 import pl.coderslab.service.UserServiceImpl;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Controller
@@ -129,12 +131,18 @@ public class UserController {
 
     @RequestMapping("/activation")
     public String changeStatus(@RequestParam String token, @RequestParam String to) {
-        User user = userService.findByTokenAndEmail(token, to);
-        if (user != null) {
-            user.setActivated(true);
-            user.setToken(null);
-            userService.update(user);
-            return "redirect:/activation?active=true";
+        User user = userService.getUser(token);
+        Token tokenFromDb = userService.getVerificationToken(token);
+
+        if ((user != null) && (user.getEmail().equals(to))) {
+            if (LocalDateTime.now().isBefore(tokenFromDb.getExpiryDate())) {
+                user.setActivated(true);
+                userService.update(user);
+                userService.deleteVerificationToken(tokenFromDb);
+                return "redirect:/activation?active=true";
+            } else {
+                return "redirect:/403?expired=true";
+            }
         } else {
             return "redirect:/403";
         }

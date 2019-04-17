@@ -91,17 +91,17 @@ public class HomeController {
         return "users created";
     }
 
-//    @GetMapping("/create-admin")
-//    @ResponseBody
-//    public String createAdmin() {
-//        User user = new User();
-//        user.setEmail("admin@admin.com");
-//        user.setPassword("1");
-//        user.setName("Admin1");
-//        user.setActivated(true);
-//        userServiceImpl.saveAdmin(user);
-//        return "admin created";
-//    }
+    @GetMapping("/create-admin")
+    @ResponseBody
+    public String createAdmin() {
+        User user = new User();
+        user.setEmail("admin@admin.com");
+        user.setPassword("1");
+        user.setName("Admin1");
+        user.setActivated(true);
+        userServiceImpl.saveAdmin(user);
+        return "admin created";
+    }
 
 
 }
