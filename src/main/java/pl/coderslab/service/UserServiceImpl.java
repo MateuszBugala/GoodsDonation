@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(id);
     }
 
-    public User findByToken(String token) {
-        return userRepository.findByToken(token);
+    public User findByTokenAndEmail(String token, String email) {
+        return userRepository.findByTokenAndEmail(token, email);
     }
 }

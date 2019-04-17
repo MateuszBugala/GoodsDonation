@@ -19,11 +19,12 @@ public class EmailService {
     @Autowired
     private TemplateEngine templateEngine;
 
-    public String generateMailHtml(String token, String name)
+    public String generateMailHtml(String token, String name, String email)
     {
         Map<String, Object> variables = new HashMap<>();
         variables.put("token", token);
         variables.put("name", name);
+        variables.put("email", email);
 
         final String templateFileName = "mail";
         String output = this.templateEngine.process(templateFileName, new Context(Locale.getDefault(), variables));
@@ -56,7 +57,7 @@ public class EmailService {
 
             String subject = "Aktywuj swoje konto na GoodsDonation";
             message.setSubject(subject);
-            message.setContent(generateMailHtml(token, name), "text/html; charset=UTF-8");
+            message.setContent(generateMailHtml(token, name, to), "text/html; charset=UTF-8");
             Transport.send(message);
             System.out.println("email sent successfully");
         } catch (MessagingException e) {

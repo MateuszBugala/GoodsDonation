@@ -128,8 +128,8 @@ public class UserController {
     }
 
     @RequestMapping("/activation")
-    public String changeStatus(@RequestParam String token) {
-        User user = userService.findByToken(token);
+    public String changeStatus(@RequestParam String token, @RequestParam String to) {
+        User user = userService.findByTokenAndEmail(token, to);
         if (user != null) {
             user.setActivated(true);
             user.setToken(null);
