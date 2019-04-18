@@ -5,12 +5,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.User;
 import pl.coderslab.config.security.CurrentUser;
 import pl.coderslab.service.UserServiceImpl;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(produces = "text/html; charset=UTF-8")
@@ -39,5 +41,27 @@ public class LoginController {
         return "redirect:/";
     }
 
+    @GetMapping("/reset-password")
+    public String resetPassword() {
+        return "resetPassword";
+    }
+
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestParam String email) {
+        userService.resetPassword(email);
+        return "redirect:/reset-password?sent=true";
+    }
+
+    @GetMapping("/new-password")
+    public String newPassword() {
+        return "resetPassword";
+    }
+
+
+    @PostMapping("/new-password")
+    public String newPassword(@RequestParam String email) {
+        return "redirect:/reset-password?sent=true";
+    }
 
 }

@@ -19,20 +19,18 @@ public class EmailService {
     @Autowired
     private TemplateEngine templateEngine;
 
-    public String generateMailHtml(String token, String name, String email)
+    public String generateMailHtml(String token, String name, String email, String templateFileName)
     {
         Map<String, Object> variables = new HashMap<>();
         variables.put("token", token);
         variables.put("name", name);
         variables.put("email", email);
-
-        final String templateFileName = "mail";
         String output = this.templateEngine.process(templateFileName, new Context(Locale.getDefault(), variables));
 
         return output;
     }
 
-    public void send(String to, String name, String token) {
+    public void send(String to,String subject, String name, String token, String emailTemplate) {
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -55,9 +53,8 @@ public class EmailService {
             MimeMessage message = new MimeMessage(session);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-            String subject = "Aktywuj swoje konto na GoodsDonation";
             message.setSubject(subject);
-            message.setContent(generateMailHtml(token, name, to), "text/html; charset=UTF-8");
+            message.setContent(generateMailHtml(token, name, to, emailTemplate), "text/html; charset=UTF-8");
             Transport.send(message);
             System.out.println("email sent successfully");
         } catch (MessagingException e) {

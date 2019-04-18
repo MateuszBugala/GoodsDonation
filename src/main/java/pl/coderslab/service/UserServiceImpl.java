@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
             String token = UUID.randomUUID().toString();
             userRepository.save(user);
             createVerificationToken(user, token);
-            emailService.send(user.getEmail(), user.getName(), token);
+            emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), token, "accountActivation");
 
         } else {
             throw new DuplicatedEmailException("There is already such email address in database");
@@ -151,8 +151,18 @@ public class UserServiceImpl implements UserService {
                 deleteVerificationToken(oldToken);
                 String newToken = UUID.randomUUID().toString();
                 createVerificationToken(user, newToken);
-                emailService.send(user.getEmail(), user.getName(), newToken);
+                emailService.send(user.getEmail(),"Aktywuj swoje konto na GoodsDonation", user.getName(), newToken, "accountActivation");
             }
+        }
+    }
+
+    public void resetPassword(String email) {
+        User user = userRepository.findByEmailAndActivated(email, true);
+        if (user != null) {
+            String newToken = UUID.randomUUID().toString();
+            createVerificationToken(user, newToken);
+
+            emailService.send(user.getEmail(), "Reset hasła GoodsDonation",user.getName(), newToken, "resetPassword");
         }
     }
 

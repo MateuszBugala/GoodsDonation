@@ -25,35 +25,30 @@
     </nav>
 </header>
 
-<section class="login-page">
-    <h2>Zaloguj się</h2>
-    <c:if test="${not empty param.error}">
-        <span style="color: darkred">Błędny email lub hasło</span>
-    </c:if>
+<section class="login-page" style="text-align: center">
 
-    <form:form method="post" modelAttribute="user" action="/login">
-        <div class="form-group">
-            <form:input type="email" path="email" placeholder="Email"  style="max-width: 300px"/>
-            <form:errors path="email" cssClass="" element="div"/>
-        </div>
+    <c:choose>
+        <c:when test="${not empty param.sent}">
+            <h2 style="font-size: 2.5rem">Jeśli podany adres email był w naszej bazie, wysłaliśmy tam link do zmiany hasła</h2>
+        </c:when>
 
-        <div class="form-group">
-            <form:input type="password" path="password" placeholder="Hasło"  style="max-width: 300px"/>
-            <form:errors path="password" cssClass="" element="div"/>
+        <c:otherwise>
+            <h2>Podaj email podany przy rejestracji konta</h2>
+            <form method="post">
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email"  style="max-width: 300px"/>
+                </div>
 
-            <a href="${pageContext.request.contextPath}/reset-password" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
-        </div>
+                <div class="form-group form-group--buttons" style="display: inline-block">
+                    <button class="btn" type="submit">Resetuj hasło</button>
+                </div>
+            </form>
+        </c:otherwise>
 
-        <div class="form-group form-group--buttons">
-            <a href="#" class="btn btn--without-border">Załóż konto</a>
-            <button class="btn" type="submit">Zaloguj się</button>
-        </div>
-    </form:form>
-
+    </c:choose>
 
 </section>
 
-<%@ include file="footer.jsp" %>
 
 </body>
 </html>
