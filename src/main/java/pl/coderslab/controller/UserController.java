@@ -144,9 +144,15 @@ public class UserController {
                 return "redirect:/403?expired=true";
             }
         } else {
-            return "redirect:/403";
+            return "redirect:/403?invalid=true";
         }
 
+    }
+
+    @PostMapping("/resend")
+    public String resendVerificationToken(@RequestParam String email) {
+        userService.resendVerificationToken(email);
+        return "redirect:/activation?resent=true";
     }
 
 }

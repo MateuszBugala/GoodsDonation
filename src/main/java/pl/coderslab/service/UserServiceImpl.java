@@ -11,6 +11,7 @@ import pl.coderslab.repository.RoleRepository;
 import pl.coderslab.repository.TokenRepository;
 import pl.coderslab.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -45,11 +46,10 @@ public class UserServiceImpl implements UserService {
             user.setActivated(false);
             String token = UUID.randomUUID().toString();
             userRepository.save(user);
-            createVerificationToken(user,token);
+            createVerificationToken(user, token);
             emailService.send(user.getEmail(), user.getName(), token);
 
-        }
-        else {
+        } else {
             throw new DuplicatedEmailException("There is already such email address in database");
         }
 
@@ -121,8 +121,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUser(String verificationToken) {
-        User user = tokenRepository.findByToken(verificationToken).getUser();
-        return user;
+        Token token = tokenRepository.findByToken(verificationToken);
+        if (token != null) {
+            User user = token.getUser();
+            return user;
+        } else {
+            return null;
+        }
     }
 
     public Token getVerificationToken(String VerificationToken) {
@@ -137,4 +142,18 @@ public class UserServiceImpl implements UserService {
     public void deleteVerificationToken(Token token) {
         tokenRepository.delete(token.getId());
     }
+
+    public void resendVerificationToken(String email) {
+        User user = userRepository.findByEmailAndActivated(email, false);
+        if (user != null) {
+            Token oldToken = tokenRepository.findByUser(user);
+            if (LocalDateTime.now().isAfter(oldToken.getExpiryDate())) {
+                deleteVerificationToken(oldToken);
+                String newToken = UUID.randomUUID().toString();
+                createVerificationToken(user, newToken);
+                emailService.send(user.getEmail(), user.getName(), newToken);
+            }
+        }
+    }
+
 }

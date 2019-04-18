@@ -61,6 +61,18 @@
                         }, 8000);
                     </script>
                 </c:when>
+
+                <c:when test="${not empty param.resent}">
+
+                    <h3>Jeśli podany adres email był w naszej bazie, wysłaliśmy tam nowy link aktywacyjny</h3>
+                    <p data-step="1"  class="active"></p>
+
+                    <script>
+                        var timer = setTimeout(function() {
+                            window.location = '${pageContext.request.contextPath}/'
+                        }, 8000);
+                    </script>
+                </c:when>
             </c:choose>
         </div>
     </div>
