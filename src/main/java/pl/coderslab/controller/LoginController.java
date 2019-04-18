@@ -7,12 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.model.Token;
 import pl.coderslab.model.User;
 import pl.coderslab.config.security.CurrentUser;
 import pl.coderslab.service.UserServiceImpl;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping(produces = "text/html; charset=UTF-8")
@@ -54,14 +56,29 @@ public class LoginController {
     }
 
     @GetMapping("/new-password")
-    public String newPassword() {
-        return "resetPassword";
+    public String newPassword(@RequestParam String token, @RequestParam String email, Model model) {
+        User user = userService.getUser(token);
+        Token tokenFromDb = userService.getVerificationToken(token);
+
+        if ((user != null) && (user.getEmail().equals(email))) {
+            if (LocalDateTime.now().isBefore(tokenFromDb.getExpiryDate())) {
+                model.addAttribute("email", user.getEmail());
+                return "redirect:/reset-password?valid=true";
+            } else {
+                return "redirect:/reset-password?expired=true";
+            }
+        } else {
+            return "redirect:/reset-password?invalid=true";
+        }
     }
 
 
     @PostMapping("/new-password")
-    public String newPassword(@RequestParam String email) {
-        return "redirect:/reset-password?sent=true";
+    public String newPassword(@RequestParam String password, @RequestParam String email) {
+        User user = userService.findByEmail(email);
+        user.setPassword(password);
+        userService.update(user);
+        return "redirect:/reset-password?reset=true";
     }
 
 }
