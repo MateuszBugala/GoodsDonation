@@ -42,7 +42,8 @@
             <th>ID</th>
             <th>Email</th>
             <th>Imię</th>
-            <th>Status</th>
+            <th>Konto aktywowane</th>
+            <th>Zablokowany</th>
             <th>Rola</th>
             <th colspan="3">Akcje</th>
             </thead>
@@ -54,8 +55,11 @@
                     <td>${user.id}</td>
                     <td>${user.email}</td>
                     <td>${user.name}</td>
-                    <td><c:if test="${user.enabled == 0}">nieaktywny</c:if>
-                        <c:if test="${user.enabled == 1}">aktywny</c:if>
+                    <td><c:if test="${user.activated == false}">nie</c:if>
+                        <c:if test="${user.activated == true}">tak</c:if>
+                    </td>
+                    <td><c:if test="${user.enabled == 0}">tak</c:if>
+                        <c:if test="${user.enabled == 1}">nie</c:if>
                     </td>
 
                     <td style="max-width: 400px">
@@ -66,7 +70,7 @@
 
                     <td style=" text-align: center">
                         <a href="/users/status/${user.id}" class="btn--small" style="color: blue; font-weight: bold">Zmień
-                            status</a>
+                            blokadę</a>
                     </td>
                     <td style="width: 50px; text-align: center;">
                         <a href="/users/edit/${user.id}" class="btn--small" style="color: blue; font-weight: bold">Edytuj</a>

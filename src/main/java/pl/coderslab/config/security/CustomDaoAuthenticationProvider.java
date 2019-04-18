@@ -12,10 +12,10 @@ public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         super.additionalAuthenticationChecks(userDetails, authentication);
         CurrentUser user = (CurrentUser) userDetails;
-        if (user.getUser().getEnabled() == 0) {
-            throw new UserDisabledException("User is disabled");
-        } else if (user.getUser().isActivated() == false) {
+        if (user.getUser().isActivated() == false) {
             throw new UserNotActivatedException("User account is not activated");
+        } else if (user.getUser().getEnabled() == 0) {
+            throw new UserDisabledException("User is disabled");
         }
     }
 
