@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Token;
 import pl.coderslab.model.User;
 import pl.coderslab.config.security.CurrentUser;
+import pl.coderslab.repository.TokenRepository;
 import pl.coderslab.service.UserServiceImpl;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,8 @@ public class LoginController {
 
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private TokenRepository tokenRepository;
 
     @GetMapping("/login")
     public String login(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
@@ -63,6 +66,7 @@ public class LoginController {
         if ((user != null) && (user.getEmail().equals(email))) {
             if (LocalDateTime.now().isBefore(tokenFromDb.getExpiryDate())) {
                 model.addAttribute("email", user.getEmail());
+                model.addAttribute("tokenId", tokenFromDb.getId());
                 return "redirect:/reset-password?valid=true";
             } else {
                 return "redirect:/reset-password?expired=true";
@@ -74,10 +78,11 @@ public class LoginController {
 
 
     @PostMapping("/new-password")
-    public String newPassword(@RequestParam String password, @RequestParam String email) {
+    public String newPassword(@RequestParam String password, @RequestParam String email, @RequestParam Long tokenId) {
         User user = userService.findByEmail(email);
         user.setPassword(password);
         userService.update(user);
+        tokenRepository.delete(tokenId);
         return "redirect:/reset-password?reset=true";
     }
 
