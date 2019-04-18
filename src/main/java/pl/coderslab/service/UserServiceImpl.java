@@ -159,9 +159,12 @@ public class UserServiceImpl implements UserService {
     public void resetPassword(String email) {
         User user = userRepository.findByEmailAndActivated(email, true);
         if (user != null) {
+            Token oldToken = tokenRepository.findByUser(user);
+            if (oldToken != null) {
+                deleteVerificationToken(oldToken);
+            }
             String newToken = UUID.randomUUID().toString();
             createVerificationToken(user, newToken);
-
             emailService.send(user.getEmail(), "Reset hasła GoodsDonation",user.getName(), newToken, "resetPassword");
         }
     }
