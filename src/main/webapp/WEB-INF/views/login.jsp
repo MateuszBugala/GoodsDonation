@@ -25,7 +25,7 @@
     </nav>
 </header>
 
-<section class="login-page">
+<section class="login-page" style="text-align: center">
     <h2>Zaloguj się</h2>
     <c:if test="${not empty param.error}">
         <span style="color: darkred">Błędny email lub hasło</span>
@@ -33,20 +33,22 @@
 
     <form:form method="post" modelAttribute="user" action="/login">
         <div class="form-group">
-            <form:input type="email" path="email" placeholder="Email"  style="max-width: 300px"/>
+            <form:input type="email" path="email" placeholder="Email" style="max-width: 300px"/>
             <form:errors path="email" cssClass="" element="div"/>
         </div>
 
         <div class="form-group">
-            <form:input type="password" path="password" placeholder="Hasło"  style="max-width: 300px"/>
+            <form:input type="password" path="password" placeholder="Hasło" style="max-width: 300px"/>
             <form:errors path="password" cssClass="" element="div"/>
-
-            <a href="${pageContext.request.contextPath}/reset-password" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
         </div>
 
-        <div class="form-group form-group--buttons">
-            <a href="#" class="btn btn--without-border">Załóż konto</a>
+        <div class="form-group form-group--buttons" style="display: inline-block">
             <button class="btn" type="submit">Zaloguj się</button>
+        </div>
+
+        <div class="form-group">
+            <a href="${pageContext.request.contextPath}/reset-password"
+               class="btn btn--small btn--without-border">Nie pamiętam hasła</a>
         </div>
     </form:form>
 

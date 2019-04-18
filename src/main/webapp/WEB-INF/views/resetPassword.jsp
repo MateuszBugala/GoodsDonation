@@ -32,6 +32,36 @@
             <h2 style="font-size: 2.5rem">Jeśli podany adres email był w naszej bazie, wysłaliśmy tam link do zmiany hasła</h2>
         </c:when>
 
+        <c:when test="${not empty param.id}">
+            <h2>Podaj nowe hasło</h2>
+            <form method="post" action="/new-password">
+                <input type="hidden" name="email" value="${param.email}"/>
+                <input type="hidden" name="tokenId" value="${param.id}"/>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Hasło"  style="max-width: 300px"/>
+                </div>
+
+                <div class="form-group form-group--buttons" style="display: inline-block">
+                    <button class="btn" type="submit">Zapisz hasło</button>
+                </div>
+            </form>
+        </c:when>
+
+        <c:when test="${not empty param.expired}">
+            <h2>Link do zmiany hasła już wygasł</h2>
+            <h3>Wygeneruj nowy link i spróbuj jeszcze raz</h3>
+        </c:when>
+
+        <c:when test="${not empty param.invalid}">
+            <h2>Link do zmiany hasła jest nieprawidłowy lub został już wykorzystany</h2>
+        </c:when>
+
+        <c:when test="${not empty param.reset}">
+            <h2>Hasło zostało pomyślnie zmienione</h2>
+            <button class="btn" onclick="location.href='${pageContext.request.contextPath}/login'">Zaloguj się</button>
+        </c:when>
+
+
         <c:otherwise>
             <h2>Podaj email podany przy rejestracji konta</h2>
             <form method="post">

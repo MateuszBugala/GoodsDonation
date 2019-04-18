@@ -96,6 +96,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(entity);
     }
 
+    public void updatePassword(User entity, String password) {
+        entity.setPassword(passwordEncoder.encode(password));
+        userRepository.save(entity);
+    }
+
     public void updateName(Long id, String name) {
         User user = userRepository.findOne(id);
         user.setName(name);
