@@ -37,6 +37,14 @@ public class DonationService {
         return donationRepository.findAll(sortBy("DESC", "actualPickUpDate"));
     }
 
+    public List<Donation> findAllSortByCreationTimeAsc() {
+        return donationRepository.findAll(sortBy("ASC", "creationTime"));
+    }
+
+    public List<Donation> findAllSortByCreationTimeDesc() {
+        return donationRepository.findAll(sortBy("DESC", "creationTime"));
+    }
+
     private Sort sortBy(String direction, String property) {
         return new Sort(Sort.Direction.fromString(direction), property);
     }

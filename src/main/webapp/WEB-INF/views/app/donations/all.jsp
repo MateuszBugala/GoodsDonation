@@ -56,7 +56,10 @@
             </th>
             <th>Przekazane instytucji</th>
             <th>Data przekazania</th>
-            <th>Data utworzenia darowizny</th>
+            <th>
+                <a href="${pageContext.request.contextPath}/donations/all?creationTime=${creationTime eq 'desc' ? 'asc' : 'desc'}"
+                   style="color: blue; font-weight: bold">Data utworzenia darowizny</a>
+            </th>
             <th colspan="2">Akcje</th>
             </thead>
 
