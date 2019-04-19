@@ -44,6 +44,9 @@ public class User {
 
 
     public User() {
+        enabled = 1;
+        activated = false;
+
     }
 
     public User(String email, String password, String name) {

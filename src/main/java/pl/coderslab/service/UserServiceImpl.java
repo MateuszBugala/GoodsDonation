@@ -40,11 +40,9 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) throws DuplicatedEmailException {
         if (userRepository.findByEmail(user.getEmail()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setEnabled(1);
             Role userRole = roleRepository.findByName("ROLE_USER");
             user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-            user.setActivated(false);
-            String token = UUID.randomUUID().toString();
+            String token = UUID.randomUUID().toString(); /*todo*/
             userRepository.save(user);
             createVerificationToken(user, token);
             emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), token, "accountActivation");
@@ -63,7 +61,6 @@ public class UserServiceImpl implements UserService {
 
     public void saveAdmin(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(1);
         Role userRole = roleRepository.findByName("ROLE_ADMIN");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
@@ -145,7 +142,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmailAndActivated(email, false);
         if (user != null) {
             Token oldToken = tokenRepository.findByUser(user);
-            if (LocalDateTime.now().isAfter(oldToken.getExpiryDate())) {
+            if (LocalDateTime.now().isAfter(oldToken.getExpiryDate())) { /*todo wysyłanie przed wygaśnięciem*/
                 deleteVerificationToken(oldToken);
                 String newToken = UUID.randomUUID().toString();
                 createVerificationToken(user, newToken);
