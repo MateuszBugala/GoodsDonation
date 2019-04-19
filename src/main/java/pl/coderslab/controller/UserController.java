@@ -113,14 +113,10 @@ public class UserController {
         return "redirect:/users/all?error=true";
     }
 
-    @RequestMapping("/profile/{id}")
-    public String all(Model model, @PathVariable Long id, @AuthenticationPrincipal CurrentUser currentUser) {
-        if (currentUser.getUser().getId() == id) {
-            model.addAttribute("user", userService.findById(id));
+    @RequestMapping("/profile")
+    public String all(Model model,@AuthenticationPrincipal CurrentUser currentUser) {
+            model.addAttribute("user", userService.findById(currentUser.getUser().getId()));
             return "app/users/myAccount";
-        } else {
-            return "redirect:/dashboard";
-        }
     }
 
     @RequestMapping("/status/{id}")

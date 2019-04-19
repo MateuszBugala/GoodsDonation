@@ -9,8 +9,7 @@
                 <%--za pomocą kontrolera--%>
                 <%--Witaj ${currentUser.name}--%>
                 <ul class="dropdown">
-                    <li><a href="${pageContext.request.contextPath}/users/profile/${principal.user.id}">Mój profil</a></li>
-                    <%--<li><a href="#">Ustawienia</a></li>--%>
+                    <li><a href="${pageContext.request.contextPath}/users/profile">Mój profil</a></li>
                     <li><a href="${pageContext.request.contextPath}/donations/my-donations">Moje darowizny</a></li>
                     <li><a href="${pageContext.request.contextPath}/logout">Wyloguj</a></li>
                 </ul>

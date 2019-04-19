@@ -7,7 +7,7 @@
                 <sec:authentication property="principal" var="principal"/>
                 Witaj ${principal.user.name}
                 <ul class="dropdown">
-                    <li><a href="${pageContext.request.contextPath}/users/profile/${principal.user.id}">Mój profil</a></li>
+                    <li><a href="${pageContext.request.contextPath}/users/profile">Mój profil</a></li>
                     <li><a href="${pageContext.request.contextPath}/logout">Wyloguj</a></li>
                 </ul>
             </li>

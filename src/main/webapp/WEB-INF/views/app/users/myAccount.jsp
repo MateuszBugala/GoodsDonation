@@ -19,7 +19,7 @@
 </security:authorize>
 
 
-<section class="login-page">
+<section class="login-page" style="text-align: center">
     <h2>Moje konto</h2>
     <c:if test="${not empty param.duplicatedemail}">
         <h3 style="color: indianred">Użytkownik z podanym adresem email już istnieje - użyj innego adresu</h3>
@@ -35,7 +35,7 @@
                    style="max-width: 300px; background-color: #ebebeb"/>
         </div>
 
-        <div class="form-group form-group--buttons">
+        <div class="form-group form-group--buttons" style="display: inline-block">
             <button type="button" class="btn btn--without-border" onclick="history.back()">Wróć</button>
             <button type="button" class="btn"
                     onclick="location.href='${pageContext.request.contextPath}/users/edit/${user.id}'">Edytuj dane
@@ -43,8 +43,6 @@
         </div>
     </form:form>
 </section>
-
-<%--<%@ include file="../../footer.jsp" %>--%>
 
 </body>
 </html>
