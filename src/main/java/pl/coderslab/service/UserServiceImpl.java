@@ -142,10 +142,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmailAndActivated(email, false);
         if (user != null) {
             Token oldToken = tokenRepository.findByUser(user);
-            if (LocalDateTime.now().isAfter(oldToken.getExpiryDate())) { /*todo wysyłanie przed wygaśnięciem*/
-                deleteVerificationToken(oldToken);
-                emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), createVerificationToken(user), "accountActivation");
-            }
+            deleteVerificationToken(oldToken);
+            emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), createVerificationToken(user), "accountActivation");
         }
     }
 
