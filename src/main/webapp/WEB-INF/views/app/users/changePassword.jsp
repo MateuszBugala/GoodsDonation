@@ -22,7 +22,7 @@
 <section class="login-page" style="text-align: center">
     <h2>Zmień hasło</h2>
     <c:if test="${not empty param.incorrect}">
-        <h3 style="color: indianred">Dotychczasowe hasło jest nieprawidłowe</h3>
+        <h3 style="color: indianred; font-size: 2.5rem">Dotychczasowe hasło jest nieprawidłowe</h3>
     </c:if>
 
     <form method="post">

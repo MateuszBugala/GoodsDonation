@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService {
 
 
     public boolean authorization(User user, String passwordCandidate) {
-//        User userFromDB = userRepository.findOne(user.getId());
-        return passwordEncoder.matches(passwordCandidate, user.getPassword());
+        User userFromDB = userRepository.findOne(user.getId());
+        return passwordEncoder.matches(passwordCandidate, userFromDB.getPassword());
     }
 
     public List<User> findAll() {
