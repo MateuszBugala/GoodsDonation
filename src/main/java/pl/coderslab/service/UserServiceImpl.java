@@ -70,16 +70,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public User authorization(String emailCandidate, String passwordCandidate) {
-        List<User> userList = userRepository.findAll();
-        for (User user : userList) {
-            if (emailCandidate.equals(user.getEmail())) {
-                if (passwordEncoder.matches(user.getPassword(), passwordCandidate)) {
-                    return user;
-                }
-            }
-        }
-        return null;
+    public boolean authorization(User user, String passwordCandidate) {
+//        User userFromDB = userRepository.findOne(user.getId());
+        return passwordEncoder.matches(passwordCandidate, user.getPassword());
     }
 
     public List<User> findAll() {
@@ -156,7 +149,7 @@ public class UserServiceImpl implements UserService {
                 deleteVerificationToken(oldToken);
                 String newToken = UUID.randomUUID().toString();
                 createVerificationToken(user, newToken);
-                emailService.send(user.getEmail(),"Aktywuj swoje konto na GoodsDonation", user.getName(), newToken, "accountActivation");
+                emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), newToken, "accountActivation");
             }
         }
     }
@@ -170,7 +163,7 @@ public class UserServiceImpl implements UserService {
             }
             String newToken = UUID.randomUUID().toString();
             createVerificationToken(user, newToken);
-            emailService.send(user.getEmail(), "Reset hasła GoodsDonation",user.getName(), newToken, "resetPassword");
+            emailService.send(user.getEmail(), "Reset hasła GoodsDonation", user.getName(), newToken, "resetPassword");
         }
     }
 

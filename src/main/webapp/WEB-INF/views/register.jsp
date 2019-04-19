@@ -40,7 +40,7 @@
 <section class="login-page" style="text-align: center">
     <h2>Załóż konto</h2>
     <c:if test="${not empty param.duplicatedemail}">
-        <h3 style="color: indianred">Użytkownik z podanym adresem email już istnieje - użyj innego adresu</h3>
+        <h3 style="color: indianred; font-size: 2.5rem">Użytkownik z podanym adresem email już istnieje - użyj innego adresu</h3>
     </c:if>
 
     <form:form method="post" modelAttribute="user">

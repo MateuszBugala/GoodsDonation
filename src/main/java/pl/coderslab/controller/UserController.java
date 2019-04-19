@@ -151,5 +151,20 @@ public class UserController {
         return "redirect:/activation?resent=true";
     }
 
+    @GetMapping("/change-password")
+    public String changePassword(){
+        return "app/users/changePassword";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam String oldPassword, @RequestParam String newPassword){
+        if (userService.authorization(currentUser.getUser(),oldPassword)) {
+            userService.updatePassword(userService.findById(currentUser.getUser().getId()), newPassword);
+            return "redirect:/users/profile?changed=true";
+        } else {
+            return "redirect:/users/change-password?incorrect=true";
+        }
+    }
+
 }
 

@@ -28,7 +28,7 @@
 <section class="login-page" style="text-align: center">
     <h2>Zaloguj się</h2>
     <c:if test="${not empty param.error}">
-        <span style="color: darkred">Błędny email lub hasło</span>
+        <span style="color: indianred; font-size: 2.5rem">Błędny email lub hasło</span>
     </c:if>
 
     <form:form method="post" modelAttribute="user" action="/login">

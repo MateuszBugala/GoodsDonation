@@ -20,36 +20,29 @@
 
 
 <section class="login-page" style="text-align: center">
-    <h2>Moje konto</h2>
-    <c:if test="${not empty param.changed}">
-        <h3 style="color: forestgreen; font-size: 2.5rem">Hasło zmieniono pomyślnie</h3>
-    </c:if>
-    <c:if test="${not empty param.duplicatedemail}">
-        <h3 style="color: indianred; font-size: 2.5rem">Użytkownik z podanym adresem email już istnieje - użyj innego adresu</h3>
+    <h2>Zmień hasło</h2>
+    <c:if test="${not empty param.incorrect}">
+        <h3 style="color: indianred">Dotychczasowe hasło jest nieprawidłowe</h3>
     </c:if>
 
-    <form:form modelAttribute="user">
+    <form method="post">
+
         <div class="form-group">
-            <form:input type="email" path="email" placeholder="Email" readonly="true" style="max-width: 300px; background-color: #ebebeb"/>
+            <input type="password" name="oldPassword" placeholder="Dotychczasowe hasło" required style="max-width: 300px"/>
         </div>
 
         <div class="form-group">
-            <form:input path="name" placeholder="Imię" readonly="true"
-                   style="max-width: 300px; background-color: #ebebeb"/>
+            <input type="password" name="newPassword" placeholder="Nowe hasło" required style="max-width: 300px"/>
         </div>
+
 
         <div class="form-group form-group--buttons" style="display: inline-block">
             <button type="button" class="btn btn--without-border" onclick="history.back()">Wróć</button>
-            <button type="button" class="btn"
-                    onclick="location.href='${pageContext.request.contextPath}/users/edit/${user.id}'">Edytuj dane
+            <button type="submit" class="btn">Zmień hasło
             </button>
         </div>
 
-        <div class="form-group">
-            <a href="${pageContext.request.contextPath}/users/change-password"
-               class="btn btn--small btn--without-border">Zmień hasło</a>
-        </div>
-    </form:form>
+    </form>
 </section>
 
 </body>
