@@ -37,8 +37,7 @@
 </header>
 </c:if>
 
-
-<section class="login-page">
+<section class="login-page" style="text-align: center">
     <h2>Załóż konto</h2>
     <c:if test="${not empty param.duplicatedemail}">
         <h3 style="color: indianred">Użytkownik z podanym adresem email już istnieje - użyj innego adresu</h3>
@@ -65,8 +64,7 @@
         <%--<input type="password" name="password2" placeholder="Powtórz hasło"/>--%>
         <%--</div>--%>
 
-        <div class="form-group form-group--buttons">
-            <a href="login.html" class="btn btn--without-border">Zaloguj się</a>
+        <div class="form-group form-group--buttons" style="display: inline-block">
             <button class="btn" type="submit">Załóż konto</button>
         </div>
     </form:form>
