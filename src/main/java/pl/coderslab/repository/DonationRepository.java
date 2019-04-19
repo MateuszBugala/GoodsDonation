@@ -14,4 +14,6 @@ public interface DonationRepository extends JpaRepository <Donation, Long> {
 
     @Query("SELECT count(distinct donations.institution) from Donation donations where donations.institution is not null")
     Long donatedInstitutions();
+
+    List<Donation> findAllOrderByPickedUp(boolean pickedUp);
 }

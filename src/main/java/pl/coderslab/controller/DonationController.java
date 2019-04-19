@@ -38,9 +38,14 @@ public class DonationController {
     private InstitutionService institutionService;
 
     @RequestMapping("/all")
-    public String all(Model model) {
-        model.addAttribute("donations", donationService.findAll());
-        return "app/donations/all";
+    public String all(Model model, String pickedUp) {
+        if (pickedUp != null) {
+            model.addAttribute("donations", donationService.findAllOrderByPickedUp(true));
+            return "app/donations/all";
+        } else {
+            model.addAttribute("donations", donationService.findAll());
+            return "app/donations/all";
+        }
     }
 
     @RequestMapping("/my-donations")

@@ -20,6 +20,10 @@ public class DonationService {
         return donationRepository.findAll();
     }
 
+    public List<Donation> findAllOrderByPickedUp(boolean pickedUp) {
+        return donationRepository.findAllOrderByPickedUp(pickedUp);
+    }
+
     public Donation findById(Long id) {
         return donationRepository.findOne(id);
     }
