@@ -1,6 +1,7 @@
 package pl.coderslab.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.coderslab.model.Donation;
@@ -20,8 +21,16 @@ public class DonationService {
         return donationRepository.findAll();
     }
 
-    public List<Donation> findAllOrderByPickedUp(boolean pickedUp) {
-        return donationRepository.findAllOrderByPickedUp(pickedUp);
+    public List<Donation> findAllSortByPickedUpAsc() {
+        return donationRepository.findAll(sortByPickedUp("ASC"));
+    }
+
+    public List<Donation> findAllSortByPickedUpDesc() {
+        return donationRepository.findAll(sortByPickedUp("DESC"));
+    }
+
+    private Sort sortByPickedUp(String direction) {
+        return new Sort(Sort.Direction.fromString(direction), "pickedUp");
     }
 
     public Donation findById(Long id) {

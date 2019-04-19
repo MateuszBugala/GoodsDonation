@@ -46,7 +46,7 @@
                 <th>Użytkownik</th>
             </security:authorize>
             <th>Dla instytucji</th>
-            <th><a href="${pageContext.request.contextPath}/donations/all?pickedUp=true" style="color: blue; font-weight: bold">Odebrane</a></th>
+            <th><a href="${pageContext.request.contextPath}/donations/all?pickedUp=${pickedUp eq 'desc' ? 'asc' : 'desc'}" style="color: blue; font-weight: bold">Odebrane</a></th>
             <th>Data odebrania</th>
             <th>Przekazane instytucji</th>
             <th>Data przekazania</th>

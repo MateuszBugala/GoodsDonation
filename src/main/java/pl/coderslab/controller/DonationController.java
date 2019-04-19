@@ -39,13 +39,16 @@ public class DonationController {
 
     @RequestMapping("/all")
     public String all(Model model, String pickedUp) {
-        if (pickedUp != null) {
-            model.addAttribute("donations", donationService.findAllOrderByPickedUp(true));
-            return "app/donations/all";
-        } else {
+        if (pickedUp == null) {
             model.addAttribute("donations", donationService.findAll());
-            return "app/donations/all";
+        } else if (pickedUp.equals("desc")) {
+            model.addAttribute("donations", donationService.findAllSortByPickedUpDesc());
+            model.addAttribute("pickedUp", "desc");
+        } else if (pickedUp.equals("asc")) {
+            model.addAttribute("donations", donationService.findAllSortByPickedUpAsc());
+            model.addAttribute("pickedUp", "asc");
         }
+        return "app/donations/all";
     }
 
     @RequestMapping("/my-donations")
@@ -60,7 +63,7 @@ public class DonationController {
         Donation donation = (Donation) session.getAttribute("donationTemp");
 
         List<DonatedItem> donatedItems = new ArrayList<>();
-        for (int i = 0; i < selectedItems.length ; i++) {
+        for (int i = 0; i < selectedItems.length; i++) {
             System.out.println(selectedItems[i]);
             DonatedItem item = donatedItemService.findById(Long.parseLong(selectedItems[i]));
             donatedItems.add(item);
@@ -77,7 +80,7 @@ public class DonationController {
     }
 
     @PostMapping("/step-2")
-    public String step2b(Model model, @RequestParam int bagsQty, HttpSession session ) {
+    public String step2b(Model model, @RequestParam int bagsQty, HttpSession session) {
         Donation donation = (Donation) session.getAttribute("donationTemp");
         donation.setQty(bagsQty);
         model.addAttribute("donationTemp", donation);
@@ -101,9 +104,9 @@ public class DonationController {
         Long selCityId = (Long) session.getAttribute("selCity");
         List<Institution> chosenInstitutions;
         if (selCityId == 0) {
-            chosenInstitutions =  institutionService.findAll();
+            chosenInstitutions = institutionService.findAll();
         } else {
-            chosenInstitutions =  institutionService.findAllByCityId(selCityId);
+            chosenInstitutions = institutionService.findAllByCityId(selCityId);
         }
         model.addAttribute("chosenInstitutions", chosenInstitutions);
         return "app/donations/form4";
@@ -149,7 +152,7 @@ public class DonationController {
     }
 
     @PostMapping("/step-6")
-    public String step6b(Model model,HttpSession session, SessionStatus status) {
+    public String step6b(Model model, HttpSession session, SessionStatus status) {
         Donation donation = (Donation) session.getAttribute("donationTemp");
         donationService.save(donation);
         status.setComplete();
@@ -194,23 +197,22 @@ public class DonationController {
     }
 
     @PostMapping("/picked-up")
-    public String pickedUp(@RequestParam Long donationId,@RequestParam String data, Model model) {
+    public String pickedUp(@RequestParam Long donationId, @RequestParam String data, Model model) {
         Donation donation = donationService.findById(donationId);
         donation.setPickedUp(true);
         donation.setActualPickUpDate(LocalDate.parse(data));
         donationService.update(donation);
-        return "redirect:/donations/details/"+donationId;
+        return "redirect:/donations/details/" + donationId;
     }
 
     @PostMapping("/received")
-    public String received(@RequestParam Long donationId,@RequestParam String data, Model model) {
+    public String received(@RequestParam Long donationId, @RequestParam String data, Model model) {
         Donation donation = donationService.findById(donationId);
         donation.setDonated(true);
         donation.setDonationDate(LocalDate.parse(data));
         donationService.update(donation);
-        return "redirect:/donations/details/"+donationId;
+        return "redirect:/donations/details/" + donationId;
     }
-
 
 
 }
