@@ -21,3 +21,8 @@ INSERT INTO `donated_items` VALUES
 (3, 'zabawki'),
 (4, 'książki'),
 (5, 'inne');
+
+INSERT INTO users VALUES
+(1, 1, 'admin@admin.com', 1, 'Admin1', '$2a$10$4Qdo73hGeRlktb.epxkTLuDW9bgXQpDQmT2/psgMJmHNQRdMc8snG'),
+(2, 1, 'user@user.com', 1, 'User1', '$2a$10$4Qdo73hGeRlktb.epxkTLuDW9bgXQpDQmT2/psgMJmHNQRdMc8snG');
+INSERT INTO user_role VALUES (1, 2), (2, 1);

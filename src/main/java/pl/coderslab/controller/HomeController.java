@@ -23,12 +23,6 @@ import java.util.Set;
 public class HomeController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserServiceImpl userServiceImpl;
-
-    @Autowired
     private DonatedItemService donatedItemService;
 
     @Autowired
