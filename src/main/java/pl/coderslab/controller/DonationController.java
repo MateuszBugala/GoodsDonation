@@ -38,15 +38,21 @@ public class DonationController {
     private InstitutionService institutionService;
 
     @RequestMapping("/all")
-    public String all(Model model, String pickedUp) {
-        if (pickedUp == null) {
+    public String all(Model model, String pickedUp, String actualPickUpDate) {
+        if (pickedUp == null && actualPickUpDate == null) {
             model.addAttribute("donations", donationService.findAll());
-        } else if (pickedUp.equals("desc")) {
+        } else if ("desc".equals(pickedUp)) {
             model.addAttribute("donations", donationService.findAllSortByPickedUpDesc());
             model.addAttribute("pickedUp", "desc");
-        } else if (pickedUp.equals("asc")) {
+        } else if ("asc".equals(pickedUp)) {
             model.addAttribute("donations", donationService.findAllSortByPickedUpAsc());
             model.addAttribute("pickedUp", "asc");
+        } else if ("desc".equals(actualPickUpDate)) {
+            model.addAttribute("donations", donationService.findAllSortByActualPickUpDateDesc());
+            model.addAttribute("actualPickUpDate", "desc");
+        } else if ("asc".equals(actualPickUpDate)) {
+            model.addAttribute("donations", donationService.findAllSortByActualPickUpDateAsc());
+            model.addAttribute("actualPickUpDate", "asc");
         }
         return "app/donations/all";
     }

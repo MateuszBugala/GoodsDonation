@@ -22,15 +22,23 @@ public class DonationService {
     }
 
     public List<Donation> findAllSortByPickedUpAsc() {
-        return donationRepository.findAll(sortByPickedUp("ASC"));
+        return donationRepository.findAll(sortBy("ASC", "pickedUp"));
     }
 
     public List<Donation> findAllSortByPickedUpDesc() {
-        return donationRepository.findAll(sortByPickedUp("DESC"));
+        return donationRepository.findAll(sortBy("DESC", "pickedUp"));
     }
 
-    private Sort sortByPickedUp(String direction) {
-        return new Sort(Sort.Direction.fromString(direction), "pickedUp");
+    public List<Donation> findAllSortByActualPickUpDateAsc() {
+        return donationRepository.findAll(sortBy("ASC", "actualPickUpDate"));
+    }
+
+    public List<Donation> findAllSortByActualPickUpDateDesc() {
+        return donationRepository.findAll(sortBy("DESC", "actualPickUpDate"));
+    }
+
+    private Sort sortBy(String direction, String property) {
+        return new Sort(Sort.Direction.fromString(direction), property);
     }
 
     public Donation findById(Long id) {
