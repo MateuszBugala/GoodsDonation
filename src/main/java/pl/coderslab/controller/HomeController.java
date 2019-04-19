@@ -66,36 +66,4 @@ public class HomeController {
         }
         return "app/dashboard";
     }
-
-    //  create test users:
-    @GetMapping("/create-user")
-    @ResponseBody
-    public String createUser() throws UserServiceImpl.DuplicatedEmailException {
-        User user = new User();
-        user.setEmail("user@user.com");
-        user.setPassword("1");
-        user.setName("User1");
-        userServiceImpl.saveUser(user);
-        User user2 = new User();
-        user2.setEmail("admin@admin.com");
-        user2.setPassword("1");
-        user2.setName("Admin1");
-        user2.setActivated(true);
-        userServiceImpl.saveAdmin(user2);
-        return "users created";
-    }
-
-    @GetMapping("/create-admin")
-    @ResponseBody
-    public String createAdmin() {
-        User user = new User();
-        user.setEmail("admin@admin.com");
-        user.setPassword("1");
-        user.setName("Admin1");
-        user.setActivated(true);
-        userServiceImpl.saveAdmin(user);
-        return "admin created";
-    }
-
-
 }
