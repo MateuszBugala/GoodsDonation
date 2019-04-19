@@ -42,10 +42,8 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             Role userRole = roleRepository.findByName("ROLE_USER");
             user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-            String token = UUID.randomUUID().toString(); /*todo*/
             userRepository.save(user);
-            createVerificationToken(user, token);
-            emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), token, "accountActivation");
+            emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), createVerificationToken(user), "accountActivation");
 
         } else {
             throw new DuplicatedEmailException("There is already such email address in database");
@@ -129,9 +127,11 @@ public class UserServiceImpl implements UserService {
         return tokenRepository.findByToken(VerificationToken);
     }
 
-    public void createVerificationToken(User user, String token) {
+    public String createVerificationToken(User user) {
+        String token = UUID.randomUUID().toString();
         Token myToken = new Token(token, user);
         tokenRepository.save(myToken);
+        return token;
     }
 
     public void deleteVerificationToken(Token token) {
@@ -144,9 +144,7 @@ public class UserServiceImpl implements UserService {
             Token oldToken = tokenRepository.findByUser(user);
             if (LocalDateTime.now().isAfter(oldToken.getExpiryDate())) { /*todo wysyłanie przed wygaśnięciem*/
                 deleteVerificationToken(oldToken);
-                String newToken = UUID.randomUUID().toString();
-                createVerificationToken(user, newToken);
-                emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), newToken, "accountActivation");
+                emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), createVerificationToken(user), "accountActivation");
             }
         }
     }
@@ -158,9 +156,7 @@ public class UserServiceImpl implements UserService {
             if (oldToken != null) {
                 deleteVerificationToken(oldToken);
             }
-            String newToken = UUID.randomUUID().toString();
-            createVerificationToken(user, newToken);
-            emailService.send(user.getEmail(), "Reset hasła GoodsDonation", user.getName(), newToken, "resetPassword");
+            emailService.send(user.getEmail(), "Reset hasła GoodsDonation", user.getName(), createVerificationToken(user), "resetPassword");
         }
     }
 
