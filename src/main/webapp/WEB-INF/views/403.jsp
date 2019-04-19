@@ -43,7 +43,7 @@
                 <c:when test="${not empty param.activated}">
                     <h3>Twoje konto nie zostało jeszcze aktywowane</h3>
                     <p data-step="1" class="active">Sprawdź adres email podany przy logowaniu i kliknij w link
-                        aktywacyjny</p>
+                        aktywacyjny - jeśli go nie otrzymałeś wygeneruj go ponownie poniżej</p>
                 </c:when>
 
                 <c:when test="${not empty param.expired}">
@@ -67,7 +67,7 @@
 
     <div class="form--steps-container">
         <c:choose>
-            <c:when test="${not empty param.expired}">
+            <c:when test="${not empty param.expired || not empty param.activated}">
                 <form method="post" action="/users/resend">
                     <div data-step="5" class="active">
                         <h3 style="font-size: 2rem">Wpisz adres email podany przy zakładaniu konta:</h3>
