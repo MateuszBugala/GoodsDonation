@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Message;
 import pl.coderslab.service.MessageService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -26,36 +24,12 @@ public class MessageController {
         return "app/messages/all";
     }
 
-    @GetMapping("/add")
-    public String add(Model model) {
-        model.addAttribute("message", new Message());
-        return "app/messages/add";
-    }
-
-
     @PostMapping("/add")
-    public String save(@Valid Message message, BindingResult result) {
-        if (result.hasErrors()) {
-            return "/messages/add";
-        }
+    public String save(@RequestParam String name, @RequestParam String email, @RequestParam String messageText, HttpServletRequest request) {
+        Message message = new Message(name, email, messageText);
         messageService.save(message);
-        return "redirect:/messages/all";
-    }
-
-    @GetMapping("/edit/{id}")
-    public String update(@PathVariable Long id, Model model) {
-        model.addAttribute("message", messageService.findById(id));
-        return "app/messages/edit";
-    }
-
-
-    @PostMapping("/edit")
-    public String update(@Valid Message message, BindingResult result) {
-        if (result.hasErrors()) {
-            return "/messages/edit";
-        }
-        messageService.save(message);
-        return "redirect:/messages/all";
+        String referer = request.getHeader("referer");
+        return "redirect:"+referer;
     }
 
     @RequestMapping("/delete/{id}")

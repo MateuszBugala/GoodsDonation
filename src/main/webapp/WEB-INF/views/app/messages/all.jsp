@@ -30,14 +30,14 @@
     <div class="form--steps-container">
 
 
-        <table border="1">
+        <table border="1" style="background-color: #fff">
 
             <thead>
             <th>LP</th>
             <th>ID</th>
             <th>Imię użytkownika</th>
             <th>Email użytkownika</th>
-            <th>Wiadomość</th>
+            <th style="width: 1250px">Wiadomość</th>
             <th colspan="2">Akcje</th>
             </thead>
 
@@ -48,7 +48,7 @@
                     <td>${message.id}</td>
                     <td>${message.name}</td>
                     <td>${message.email}</td>
-                    <td>${message.message}</td>
+                    <td>${message.messageText}</td>
 
                     <td style="width: 50px; text-align: center;">
                         <a href="/messages/edit/${message.id}" class="btn--small" style="color: blue; font-weight: bold">Edytuj</a>

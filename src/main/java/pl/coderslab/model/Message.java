@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "messages")
@@ -19,8 +20,18 @@ public class Message {
     @Email
     private String email;
 
+    @Size(max=500)
     @NotBlank
-    private String message;
+    private String messageText;
+
+    public Message() {
+    }
+
+    public Message(String name, String email, String messageText) {
+        this.name = name;
+        this.email = email;
+        this.messageText = messageText;
+    }
 
     public Long getId() {
         return id;
@@ -46,11 +57,11 @@ public class Message {
         this.email = email;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMessageText() {
+        return messageText;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
     }
 }
