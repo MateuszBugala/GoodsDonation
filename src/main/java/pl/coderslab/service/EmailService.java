@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import pl.coderslab.model.Token;
 import pl.coderslab.model.User;
 import pl.coderslab.repository.TokenRepository;
 
@@ -42,23 +41,31 @@ public class EmailService {
         send(user.getEmail(), "Reset hasła GoodsDonation", user.getName(), tokenRepository.findByUser(user).getToken(), "resetPassword");
     }
 
-    private void send(String to, String subject, String name, String token, String emailTemplate) throws MessagingException {
+    private static Properties prop = new Properties();
 
-        Properties prop = new Properties();
+    private static void fetchConfig() {
         try (InputStream input = new FileInputStream("src/main/resources/mail.properties")) {
             prop.load(input);
         } catch (IOException io) {
             io.printStackTrace();
             System.err.println("Cannot open and load mail.properties file");
         }
+    }
 
-        Session session = Session.getDefaultInstance(prop,
+//    added mail.properties to be refreshed at runtime:
+    private static Properties refreshConfig() {
+        prop.clear();
+        fetchConfig();
+        return prop;
+    }
+
+    private void send(String to, String subject, String name, String token, String emailTemplate) throws MessagingException {
+        Session session = Session.getDefaultInstance(refreshConfig(),
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(prop.getProperty("mail.from"), prop.getProperty("password"));
+                        return new PasswordAuthentication(refreshConfig().getProperty("mail.from"), refreshConfig().getProperty("password"));
                     }
                 });
-
 
             MimeMessage message = new MimeMessage(session);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -68,5 +75,7 @@ public class EmailService {
             Transport.send(message);
             System.out.println("Email sent successfully");
     }
+
+
 
 }
