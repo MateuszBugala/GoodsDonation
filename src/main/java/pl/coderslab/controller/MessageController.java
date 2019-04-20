@@ -28,6 +28,7 @@ public class MessageController {
     public String save(@RequestParam String name, @RequestParam String email, @RequestParam String messageText, HttpServletRequest request) {
         Message message = new Message(name, email, messageText);
         messageService.save(message);
+        messageService.sendNewMessageNotification(3L); /*todo*/
         String referer = request.getHeader("referer");
         return "redirect:"+referer;
     }

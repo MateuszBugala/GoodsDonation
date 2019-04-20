@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GoodsDonation</title>
+</head>
+<body>
+
+<h3>Cześć <span data-th-text="${name}">Sebastian</span>,</h3>
+
+<div>użytkownik serwisu GoodsDonation wysłał wiadomość.</div>
+<div>Jej fragment znajduje się poniżej. Żeby odczytać całą wiadomość zaloguj się do panelu administracyjnego.</div>
+<div style="margin: 2%; background-color: #ebebeb; max-width: 30%"><span data-th-text="${token}">fragment</span>...</div>
+<div>*Otrzymujesz to powiadomienie, ponieważ jesteś głównym administratorem strony.</div>
+</body>
+</html>

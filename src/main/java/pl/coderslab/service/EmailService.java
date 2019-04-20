@@ -41,6 +41,10 @@ public class EmailService {
         send(user.getEmail(), "Reset hasła GoodsDonation", user.getName(), tokenRepository.findByUser(user).getToken(), "resetPassword");
     }
 
+    public void sendNewMessageNotification(User user, String messageText) throws MessagingException {
+        send(user.getEmail(), "Nowa wiadomość użytkownika GoodsDonation", user.getName(), messageText, "newMessage");
+    }
+
     private static Properties prop = new Properties();
 
     private static void fetchConfig() {
