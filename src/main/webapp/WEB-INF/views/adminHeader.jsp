@@ -19,6 +19,7 @@
             <li><a href="${pageContext.request.contextPath}/users/all" class="btn btn--without-border">Użytkownicy</a></li>
             <li><a href="${pageContext.request.contextPath}/donations/all" class="btn btn--without-border">Darowizny</a></li>
             <li><a href="${pageContext.request.contextPath}/institutions/all" class="btn btn--without-border">Zaufane instytucje</a></li>
+            <li><a href="${pageContext.request.contextPath}/messages/all" class="btn btn--without-border">Wiadomości</a></li>
         </ul>
     </nav>
 </header>
