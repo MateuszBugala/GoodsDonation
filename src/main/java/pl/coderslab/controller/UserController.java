@@ -12,6 +12,7 @@ import pl.coderslab.model.User;
 import pl.coderslab.config.security.CurrentUser;
 import pl.coderslab.service.UserServiceImpl;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -55,10 +56,12 @@ public class UserController {
                     }
                 }
             }
-
             return "redirect:/activation?sent=true";
         } catch (UserServiceImpl.DuplicatedEmailException e) {
             return "redirect:/users/add?duplicatedemail=true";
+        } catch (MessagingException e) {
+            System.err.println("Cannot send email" + "\n" +e);
+            return "redirect:/activation?sent=false";
         }
     }
 
@@ -147,8 +150,13 @@ public class UserController {
 
     @PostMapping("/resend")
     public String resendVerificationToken(@RequestParam String email) {
-        userService.resendVerificationToken(email);
-        return "redirect:/activation?resent=true";
+        try {
+            userService.resendVerificationToken(email);
+            return "redirect:/activation?resent=true";
+        } catch (MessagingException e) {
+            System.err.println("Cannot send email" + "\n" +e);
+            return "redirect:/activation?resent=false";
+        }
     }
 
     @GetMapping("/change-password")

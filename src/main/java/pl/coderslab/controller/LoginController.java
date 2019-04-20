@@ -12,6 +12,7 @@ import pl.coderslab.config.security.CurrentUser;
 import pl.coderslab.repository.TokenRepository;
 import pl.coderslab.service.UserServiceImpl;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
@@ -52,8 +53,13 @@ public class LoginController {
 
     @PostMapping("/reset-password")
     public String resetPassword(@RequestParam String email) {
-        userService.resetPassword(email);
-        return "redirect:/reset-password?sent=true";
+        try {
+            userService.resetPassword(email);
+            return "redirect:/reset-password?sent=true";
+        } catch (MessagingException e) {
+            System.err.println("Cannot send email" + "\n" +e);
+            return "redirect:/reset-password?sent=false";
+        }
     }
 
     @GetMapping("/new-password")

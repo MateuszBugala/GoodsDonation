@@ -50,7 +50,7 @@
                     </script>
                 </c:when>
 
-                <c:when test="${not empty param.sent}">
+                <c:when test="${param.sent == true}">
 
                     <h3>Przed zalogowaniem musisz aktywować konto</h3>
                     <p data-step="1"  class="active">Na podany adres wysłaliśmy link aktywacyjny</p>
@@ -62,7 +62,13 @@
                     </script>
                 </c:when>
 
-                <c:when test="${not empty param.resent}">
+                <c:when test="${param.sent == false}">
+
+                    <h3>Konto zostało stworzone jednak nie jest aktywne</h3>
+                    <p data-step="1"  class="active">Wysyłka linka aktywacyjnego na podany adres nie powiodła się - skontaktuj się z administratorem strony: admin@admin.pl</p>
+                </c:when>
+
+                <c:when test="${param.resent == true}">
 
                     <h3>Jeśli podany adres email był w naszej bazie, wysłaliśmy tam nowy link aktywacyjny</h3>
                     <p data-step="1"  class="active"></p>
@@ -73,6 +79,13 @@
                         }, 8000);
                     </script>
                 </c:when>
+
+                <c:when test="${param.resent == false}">
+
+                    <h3>Wysyłka linka aktywacyjnego na podany adres nie powiodła się - skontaktuj się z administratorem strony: admin@admin.pl</h3>
+                    <p data-step="1"  class="active"></p>
+                </c:when>
+
             </c:choose>
         </div>
     </div>

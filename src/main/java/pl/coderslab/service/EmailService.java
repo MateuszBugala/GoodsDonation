@@ -34,15 +34,15 @@ public class EmailService {
         return output;
     }
 
-    public void sendAccountActivationEmail(User user) {
+    public void sendAccountActivationEmail(User user) throws MessagingException {
         send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), tokenRepository.findByUser(user).getToken(), "accountActivation");
     }
 
-    public void sendResetPasswordEmail(User user) {
+    public void sendResetPasswordEmail(User user) throws MessagingException {
         send(user.getEmail(), "Reset hasła GoodsDonation", user.getName(), tokenRepository.findByUser(user).getToken(), "resetPassword");
     }
 
-    private void send(String to, String subject, String name, String token, String emailTemplate) {
+    private void send(String to, String subject, String name, String token, String emailTemplate) throws MessagingException {
 
         Properties prop = new Properties();
         try (InputStream input = new FileInputStream("src/main/resources/mail.properties")) {
@@ -59,7 +59,7 @@ public class EmailService {
                     }
                 });
 
-        try {
+
             MimeMessage message = new MimeMessage(session);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
@@ -67,11 +67,6 @@ public class EmailService {
             message.setContent(generateMailHtml(token, name, to, emailTemplate), "text/html; charset=UTF-8");
             Transport.send(message);
             System.out.println("Email sent successfully");
-        } catch (MessagingException e) {
-//            throw new RuntimeException(e);
-            System.err.println("Cannot send email" + e);
-        }
-
     }
 
 }

@@ -11,6 +11,7 @@ import pl.coderslab.repository.RoleRepository;
 import pl.coderslab.repository.TokenRepository;
 import pl.coderslab.repository.UserRepository;
 
+import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) throws DuplicatedEmailException {
+    public void saveUser(User user) throws DuplicatedEmailException, MessagingException {
         if (userRepository.findByEmail(user.getEmail()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             Role userRole = roleRepository.findByName("ROLE_USER");
@@ -45,7 +46,6 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             createVerificationToken(user);
             emailService.sendAccountActivationEmail(user);
-            /*todo add exceptions */
         } else {
             throw new DuplicatedEmailException("There is already such email address in database");
         }
@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
         tokenRepository.delete(token.getId());
     }
 
-    public void resendVerificationToken(String email) {
+    public void resendVerificationToken(String email) throws MessagingException {
         User user = userRepository.findByEmailAndActivated(email, false);
         if (user != null) {
             Token oldToken = tokenRepository.findByUser(user);
@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void resetPassword(String email) {
+    public void resetPassword(String email) throws MessagingException {
         User user = userRepository.findByEmailAndActivated(email, true);
         if (user != null) {
             Token oldToken = tokenRepository.findByUser(user);

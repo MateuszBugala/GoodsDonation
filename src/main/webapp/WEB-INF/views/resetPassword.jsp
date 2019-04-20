@@ -28,8 +28,14 @@
 <section class="login-page" style="text-align: center">
 
     <c:choose>
-        <c:when test="${not empty param.sent}">
+        <c:when test="${param.sent == true}">
             <h2 style="font-size: 2.5rem">Jeśli podany adres email był w naszej bazie, wysłaliśmy tam link do zmiany hasła</h2>
+        </c:when>
+
+        <c:when test="${param.sent == false}">
+            <h2 style="font-size: 2.5rem">Wysyłka linka do zmiany hasła na podany adres <span style="text-decoration: underline">nie powiodła się</span>
+            </h2>
+            <h3 style="font-size: 2.5rem">Skontaktuj się z administratorem strony: admin@admin.pl</h3>
         </c:when>
 
         <c:when test="${not empty param.id}">
