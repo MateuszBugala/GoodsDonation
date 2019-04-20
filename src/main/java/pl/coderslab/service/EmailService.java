@@ -8,6 +8,7 @@ import org.thymeleaf.context.Context;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -19,33 +20,31 @@ public class EmailService {
     @Autowired
     private TemplateEngine templateEngine;
 
-    public String generateMailHtml(String token, String name, String email, String templateFileName)
-    {
+    private String generateMailHtml(String token, String name, String email, String templateFileName) {
         Map<String, Object> variables = new HashMap<>();
         variables.put("token", token);
         variables.put("name", name);
         variables.put("email", email);
         String output = this.templateEngine.process(templateFileName, new Context(Locale.getDefault(), variables));
-
         return output;
     }
 
-    public void send(String to,String subject, String name, String token, String emailTemplate) {
+//    todo 2x metody
 
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class",
-                "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
-        String from = "aaab35404@gmail.com";
-        String password = "xxx";
+    public void send(String to, String subject, String name, String token, String emailTemplate) {
 
-        Session session = Session.getDefaultInstance(props,
+        Properties prop = new Properties();
+        try (InputStream input = new FileInputStream("src/main/resources/mail.properties")) {
+            prop.load(input);
+        } catch (IOException io) {
+            io.printStackTrace();
+            System.err.println("Cannot open and load mail server properties file.");
+        }
+
+        Session session = Session.getDefaultInstance(prop,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(from, password);
+                        return new PasswordAuthentication(prop.getProperty("mail.from"), prop.getProperty("password"));
                     }
                 });
 
@@ -56,9 +55,10 @@ public class EmailService {
             message.setSubject(subject);
             message.setContent(generateMailHtml(token, name, to, emailTemplate), "text/html; charset=UTF-8");
             Transport.send(message);
-            System.out.println("email sent successfully");
+            System.out.println("Email sent successfully");
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+//            throw new RuntimeException(e);
+            System.err.println("Cannot send email" + e);
         }
 
     }
