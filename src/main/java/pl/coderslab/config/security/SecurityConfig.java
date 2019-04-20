@@ -22,9 +22,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/users/add", "/login", "/create-user", "/create-admin", "/403", "/users/activation", "/users/resend", "/activation", "/reset-password", "/new-password", "/messages/add").permitAll()
+                .antMatchers("/", "/403", "/login", "/messages/add",
+                        "/users/add", "/users/activation", "/activation", "/users/resend", "/reset-password", "/new-password").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                .antMatchers("/users/all").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/admin", "/users/all", "/users/add-admin", "/users/delete/**", "/users/status/**",
+                        "/donations/all", "/donations/details/**", "/donations/edit/**", "/donations/delete/**", "/donations/received", "/donations/picked-up",
+                        "/institutions/**", "/cities/**",
+                        "/messages/all", "/messages/delete/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and().csrf().disable().formLogin().loginPage("/login").successForwardUrl("/start").failureHandler(customAuthenticationFailureHandler())
                 .usernameParameter("email")
@@ -62,7 +66,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CustomAuthenticationFailureHandler customAuthenticationFailureHandler() {
         return new CustomAuthenticationFailureHandler();
     }
-
 
 
 }
