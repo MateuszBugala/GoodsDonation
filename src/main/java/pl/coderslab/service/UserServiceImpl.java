@@ -43,8 +43,9 @@ public class UserServiceImpl implements UserService {
             Role userRole = roleRepository.findByName("ROLE_USER");
             user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
             userRepository.save(user);
-            emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), createVerificationToken(user), "accountActivation");
-
+            createVerificationToken(user);
+            emailService.sendAccountActivationEmail(user);
+            /*todo add exceptions */
         } else {
             throw new DuplicatedEmailException("There is already such email address in database");
         }
@@ -127,11 +128,10 @@ public class UserServiceImpl implements UserService {
         return tokenRepository.findByToken(VerificationToken);
     }
 
-    public String createVerificationToken(User user) {
+    public void createVerificationToken(User user) {
         String token = UUID.randomUUID().toString();
         Token myToken = new Token(token, user);
         tokenRepository.save(myToken);
-        return token;
     }
 
     public void deleteVerificationToken(Token token) {
@@ -143,7 +143,8 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             Token oldToken = tokenRepository.findByUser(user);
             deleteVerificationToken(oldToken);
-            emailService.send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), createVerificationToken(user), "accountActivation");
+            createVerificationToken(user);
+            emailService.sendAccountActivationEmail(user);
         }
     }
 
@@ -154,7 +155,8 @@ public class UserServiceImpl implements UserService {
             if (oldToken != null) {
                 deleteVerificationToken(oldToken);
             }
-            emailService.send(user.getEmail(), "Reset hasła GoodsDonation", user.getName(), createVerificationToken(user), "resetPassword");
+            createVerificationToken(user);
+            emailService.sendResetPasswordEmail(user);
         }
     }
 

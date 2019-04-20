@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import pl.coderslab.model.Token;
+import pl.coderslab.model.User;
+import pl.coderslab.repository.TokenRepository;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -19,6 +22,8 @@ public class EmailService {
 
     @Autowired
     private TemplateEngine templateEngine;
+    @Autowired
+    private TokenRepository tokenRepository;
 
     private String generateMailHtml(String token, String name, String email, String templateFileName) {
         Map<String, Object> variables = new HashMap<>();
@@ -29,16 +34,22 @@ public class EmailService {
         return output;
     }
 
-//    todo 2x metody
+    public void sendAccountActivationEmail(User user) {
+        send(user.getEmail(), "Aktywuj swoje konto na GoodsDonation", user.getName(), tokenRepository.findByUser(user).getToken(), "accountActivation");
+    }
 
-    public void send(String to, String subject, String name, String token, String emailTemplate) {
+    public void sendResetPasswordEmail(User user) {
+        send(user.getEmail(), "Reset hasła GoodsDonation", user.getName(), tokenRepository.findByUser(user).getToken(), "resetPassword");
+    }
+
+    private void send(String to, String subject, String name, String token, String emailTemplate) {
 
         Properties prop = new Properties();
         try (InputStream input = new FileInputStream("src/main/resources/mail.properties")) {
             prop.load(input);
         } catch (IOException io) {
             io.printStackTrace();
-            System.err.println("Cannot open and load mail server properties file.");
+            System.err.println("Cannot open and load mail.properties file");
         }
 
         Session session = Session.getDefaultInstance(prop,
