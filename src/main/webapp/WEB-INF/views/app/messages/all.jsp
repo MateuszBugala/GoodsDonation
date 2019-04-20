@@ -37,8 +37,8 @@
             <th>ID</th>
             <th>Imię użytkownika</th>
             <th>Email użytkownika</th>
-            <th style="width: 1250px">Wiadomość</th>
-            <th colspan="2">Akcje</th>
+            <th style="width: 80%">Treść wiadomości</th>
+            <th colspan="1">Akcje</th>
             </thead>
 
             <tbody>
@@ -50,9 +50,6 @@
                     <td>${message.email}</td>
                     <td>${message.messageText}</td>
 
-                    <td style="width: 50px; text-align: center;">
-                        <a href="/messages/edit/${message.id}" class="btn--small" style="color: blue; font-weight: bold">Edytuj</a>
-                    </td>
                     <td style="width: 50px; text-align: center">
                         <a href="/messages/delete/${message.id}" class="btn--small" style="color: blue; font-weight: bold"
                            onclick="return confirm('Czy na pewno usunąć pozycję?');">Usuń</a>
