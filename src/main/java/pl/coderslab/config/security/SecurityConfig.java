@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/donations/all", "/donations/details/**", "/donations/edit/**", "/donations/delete/**", "/donations/received", "/donations/picked-up",
                         "/institutions/**", "/cities/**",
                         "/messages/all", "/messages/delete/**").hasAuthority("ROLE_ADMIN")
+                .regexMatchers("/users/edit.{1,}").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and().csrf().disable().formLogin().loginPage("/login").successForwardUrl("/start").failureHandler(customAuthenticationFailureHandler())
                 .usernameParameter("email")

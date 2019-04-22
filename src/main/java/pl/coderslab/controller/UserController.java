@@ -13,6 +13,7 @@ import pl.coderslab.config.security.CurrentUser;
 import pl.coderslab.service.UserServiceImpl;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -85,9 +86,15 @@ public class UserController {
         }
     }
 
-    @GetMapping("/edit/{id}")
-    public String update(@PathVariable Long id, Model model, HttpSession session) {
-        model.addAttribute("user", userService.findById(id));
+    @GetMapping("/edit")
+    public String update(Model model, @AuthenticationPrincipal CurrentUser currentUser, @RequestParam(required = false) Long id, HttpServletRequest request) {
+        Long correctID = null;
+        if (id == null) {
+            correctID = currentUser.getUser().getId();
+        } else if (id != null && request.isUserInRole("ROLE_ADMIN")) {
+            correctID = id;
+        }
+        model.addAttribute("user", userService.findById(correctID));
         return "app/users/edit";
     }
 
@@ -96,7 +103,7 @@ public class UserController {
         if (currentUser.getUser().getId() == id) {
             userService.updateName(id, name);
             currentUser.getUser().setName(name);
-            return "redirect:/users/profile/"+id;
+            return "redirect:/users/profile";
         }
         userService.updateName(id, name);
         return "redirect:/users/all";

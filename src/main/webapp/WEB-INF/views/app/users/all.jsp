@@ -73,7 +73,7 @@
                             blokadę</a>
                     </td>
                     <td style="width: 50px; text-align: center;">
-                        <a href="/users/edit/${user.id}" class="btn--small" style="color: blue; font-weight: bold">Edytuj</a>
+                        <a href="/users/edit?id=${user.id}" class="btn--small" style="color: blue; font-weight: bold">Edytuj</a>
                     </td>
                     <td style="width: 50px; text-align: center">
                         <a href="/users/delete/${user.id}" class="btn--small" style="color: blue; font-weight: bold"

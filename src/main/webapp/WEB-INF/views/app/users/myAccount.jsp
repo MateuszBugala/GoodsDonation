@@ -41,7 +41,7 @@
         <div class="form-group form-group--buttons" style="display: inline-block">
             <button type="button" class="btn btn--without-border" onclick="history.back()">Wróć</button>
             <button type="button" class="btn"
-                    onclick="location.href='${pageContext.request.contextPath}/users/edit/${user.id}'">Edytuj dane
+                    onclick="location.href='${pageContext.request.contextPath}/users/edit'">Edytuj dane
             </button>
         </div>
 
