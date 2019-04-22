@@ -18,7 +18,7 @@
 </security:authorize>
 
 
-<section class="login-page">
+<section class="login-page" style="text-align: center">
     <h2>Edytuj dane</h2>
     <c:if test="${not empty param.duplicatedemail}">
         <h3 style="color: indianred">Użytkownik z podanym adresem email już istnieje - użyj innego adresu</h3>
@@ -38,7 +38,7 @@
         </div>
 
 
-        <div class="form-group form-group--buttons">
+        <div class="form-group form-group--buttons" style="display: inline-block">
             <button type="button" class="btn btn--without-border" onclick="history.back()">Wróć</button>
             <button class="btn" type="submit">Zmień dane</button>
         </div>
