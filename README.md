@@ -8,6 +8,8 @@ It solves a problem of:
 Some features:
 - As a Donor: 
 	- individual account
+		- account activation by email
+		- password reset by email
   - what items, are to be given
   - which charity institution will be a beneficiary – decision basing on location (city) or charity profile of the available institutions
   - exact pick up details
@@ -18,8 +20,6 @@ Some features:
 	- control of donations and changing their status (“received”/”delivered” etc.)
 
 Future development:
-- account activation by email
-- password reset by email
 - data validation
 - extended filtering options for institutions
 
