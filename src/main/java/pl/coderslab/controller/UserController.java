@@ -1,7 +1,9 @@
 package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Controller
 @RequestMapping(path = "/users", produces = "text/html; charset=UTF-8")
@@ -42,26 +43,20 @@ public class UserController {
 
 
     @PostMapping("/add")
-    public String save(@Valid User user, BindingResult result, @AuthenticationPrincipal CurrentUser currentUser) {
+    public String save(@Valid User user, BindingResult result, @AuthenticationPrincipal CurrentUser currentUser, HttpServletRequest request) {
         try {
             if (result.hasErrors()) {
                 return "register";
             }
             userService.saveUser(user);
-//different redirect if user created by admin:
-            if (currentUser != null) {
-                Set<Role> roles = currentUser.getUser().getRoles();
-                for (Role el : roles) {
-                    if (el.getName().equals("ROLE_ADMIN")) {
-                        return "redirect:/users/all";
-                    }
-                }
+            if (request.isUserInRole("ROLE_ADMIN")) {
+                return "redirect:/users/all";
             }
             return "redirect:/activation?sent=true";
         } catch (UserServiceImpl.DuplicatedEmailException e) {
             return "redirect:/users/add?duplicatedemail=true";
         } catch (MessagingException e) {
-            System.err.println("Cannot send email" + "\n" +e);
+            System.err.println("Cannot send email" + "\n" + e);
             return "redirect:/activation?sent=false";
         }
     }
@@ -89,9 +84,12 @@ public class UserController {
     @GetMapping("/edit")
     public String update(Model model, @AuthenticationPrincipal CurrentUser currentUser, @RequestParam(required = false) Long id, HttpServletRequest request) {
         Long correctID = null;
+//        Collection<? extends GrantedAuthority> authorities = currentUser.getAuthorities();
+//        boolean authorized = authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
         if (id == null) {
             correctID = currentUser.getUser().getId();
         } else if (id != null && request.isUserInRole("ROLE_ADMIN")) {
+//        } else if (id != null && authorized) {
             correctID = id;
         }
         model.addAttribute("user", userService.findById(correctID));
@@ -124,9 +122,9 @@ public class UserController {
     }
 
     @RequestMapping("/profile")
-    public String all(Model model,@AuthenticationPrincipal CurrentUser currentUser) {
-            model.addAttribute("user", userService.findById(currentUser.getUser().getId()));
-            return "app/users/myAccount";
+    public String all(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        model.addAttribute("user", userService.findById(currentUser.getUser().getId()));
+        return "app/users/myAccount";
     }
 
     @RequestMapping("/status/{id}")
@@ -161,19 +159,19 @@ public class UserController {
             userService.resendVerificationToken(email);
             return "redirect:/activation?resent=true";
         } catch (MessagingException e) {
-            System.err.println("Cannot send email" + "\n" +e);
+            System.err.println("Cannot send email" + "\n" + e);
             return "redirect:/activation?resent=false";
         }
     }
 
     @GetMapping("/change-password")
-    public String changePassword(){
+    public String changePassword() {
         return "app/users/changePassword";
     }
 
     @PostMapping("/change-password")
-    public String changePassword(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam String oldPassword, @RequestParam String newPassword){
-        if (userService.authorization(currentUser.getUser(),oldPassword)) {
+    public String changePassword(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam String oldPassword, @RequestParam String newPassword) {
+        if (userService.authorization(currentUser.getUser(), oldPassword)) {
             userService.updatePassword(userService.findById(currentUser.getUser().getId()), newPassword);
             return "redirect:/users/profile?changed=true";
         } else {
