@@ -48,7 +48,7 @@ public class EmailService {
     private static Properties prop = new Properties();
 
     private static void fetchConfig() {
-        try (InputStream input = new FileInputStream("src/main/resources/mail.properties")) {
+        try (InputStream input = EmailService.class.getClassLoader().getResourceAsStream("mail.properties")) {
             prop.load(input);
         } catch (IOException io) {
             io.printStackTrace();
