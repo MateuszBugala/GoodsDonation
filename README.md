@@ -17,7 +17,8 @@ Some features:
 - As an Admin:
 	- full control of verified institutions
 	- management of the users (with “disable user” – feature)
-	- control of donations and changing their status (“received”/”delivered” etc.)
+	- control of donations (with sorting function) and changing their status (“received”/”delivered” etc.)
+	- email auto-notification when a message from user is sent
 
 Future development:
 - data validation
