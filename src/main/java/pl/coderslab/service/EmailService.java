@@ -56,7 +56,7 @@ public class EmailService {
         }
     }
 
-//    added mail.properties to be refreshed at runtime:
+    //    added mail.properties to be refreshed at runtime:
     private static Properties refreshConfig() {
         prop.clear();
         fetchConfig();
@@ -71,15 +71,20 @@ public class EmailService {
                     }
                 });
 
-            MimeMessage message = new MimeMessage(session);
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        MimeMessage message = new MimeMessage(session);
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-            message.setSubject(subject);
-            message.setContent(generateMailHtml(token, name, to, emailTemplate), "text/html; charset=UTF-8");
-            Transport.send(message);
-            System.out.println("Email sent successfully");
+        message.setSubject(subject);
+        try {
+            message.setFrom(new InternetAddress("noreply@noreply.com",refreshConfig().getProperty("mail.fromName")));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            System.err.println("Cannot add email 'from' custom name");
+        }
+        message.setContent(generateMailHtml(token, name, to, emailTemplate), "text/html; charset=UTF-8");
+        Transport.send(message);
+        System.out.println("Email sent successfully");
     }
-
 
 
 }
