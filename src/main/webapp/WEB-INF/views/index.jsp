@@ -76,7 +76,7 @@
         <div class="stats--item">
             <em>
                 <c:if test="${institutionsQty == 0}">Jeszcze 0</c:if>
-                <c:if test="${institutionsQty > 0}">${qinstitutionsQtyty}</c:if>
+                <c:if test="${institutionsQty > 0}">${institutionsQty}</c:if>
             </em>
             <h3>Wspartych organizacji</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magnam, sint nihil cupiditate quas
