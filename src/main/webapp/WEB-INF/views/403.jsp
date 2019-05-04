@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,6 +7,17 @@
     <%@ include file="dependecies.jsp" %>
 </head>
 <body>
+
+<sec:authorize access="hasRole('ADMIN')">
+    <%@ include file="adminHeader.jsp" %>
+</sec:authorize>
+
+<sec:authorize access="hasRole('USER')">
+    <%@ include file="loggedHeader.jsp" %>
+</sec:authorize>
+
+<sec:authentication property="principal" var="principal"/>
+<c:if test="${principal == 'anonymousUser'}">
 
 <header>
 
@@ -35,10 +46,11 @@
 
 </header>
 
+</c:if>
+
 <section class="form--steps">
     <div class="form--steps-instructions">
-        <div class="form--steps-container">
-
+        <div class="form--steps-container" <%--style="float: left; width: unset"--%>>
             <c:choose>
                 <c:when test="${not empty param.activated}">
                     <h3>Twoje konto nie zostało jeszcze aktywowane</h3>
@@ -57,12 +69,25 @@
                 </c:when>
 
                 <c:otherwise>
+                    <div style="display: inline-block">
                     <h3>Niestety nie masz dostępu do tej strony</h3>
                     <p data-step="1" class="active">Jeśli uważasz, że to błąd, napisz: admin@admin.pl</p>
+                    </div>
+                    <div style="display: inline-block; vertical-align: top;margin-left: 5%">
+
+                        <button type="button" class="btn"
+                                style="display: inline; background-color: #fff;"
+                                onclick="history.back()" type="button">
+                            Wróć
+                        </button>
+                    </div>
                 </c:otherwise>
+
 
             </c:choose>
         </div>
+
+
     </div>
 
     <div class="form--steps-container">
